@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Win-Win One-Pager</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<script src="../nav.js" defer></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+  body{margin:0;font-family:'IBM Plex Sans',Arial,sans-serif;color:#14213D;}
+  a{color:#3D8361;} a:hover{color:#2d6349;}
+</style>
+</helmet>
+
+<div style="width:816px;background:#FBFBF8;box-sizing:border-box;display:flex;flex-direction:column;">
+
+  <div style="background:#14213D;padding:48px 56px 40px;display:flex;flex-direction:column;gap:10px;">
+    <p style="margin:0;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:#E8A33D;font-weight:600;">Business case</p>
+    <h1 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:36px;font-weight:600;color:#FBFBF8;line-height:1.2;">Why AI Energy Transparency Is a Win-Win for Providers</h1>
+    <p style="margin:4px 0 0;font-size:16px;color:#C9D6D3;max-width:620px;line-height:1.5;">This isn't an activism ask — it's an argument that disclosure and efficiency work are the same work, already underway inside most AI companies.</p>
+  </div>
+
+  <div style="padding:36px 56px 8px;">
+    <p style="margin:0;font-size:15px;color:#4A5568;line-height:1.55;">Every major provider is already racing to cut inference cost through smaller models, smarter routing, and better batching. The ask here is narrow: publish honest numbers about that work, and put a version of that choice in front of users.</p>
+  </div>
+
+  <div style="padding:20px 56px 8px;display:flex;flex-direction:column;gap:18px;">
+
+    <div style="display:flex;gap:16px;align-items:flex-start;">
+      <div style="flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:#3D8361;color:#FBFBF8;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;">1</div>
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <p style="margin:0;font-size:17px;font-weight:600;color:#14213D;">Trust &amp; differentiation</p>
+        <p style="margin:0;font-size:14.5px;color:#4A5568;line-height:1.5;">Disclosure is uneven across the industry today. The provider that discloses first and clearly becomes the reference point every comparison is measured against.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:16px;align-items:flex-start;">
+      <div style="flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:#E8A33D;color:#14213D;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;">2</div>
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <p style="margin:0;font-size:17px;font-weight:600;color:#14213D;">Efficiency work serves margin and emissions at once</p>
+        <p style="margin:0;font-size:14.5px;color:#4A5568;line-height:1.5;">Inference is now the dominant cost AND the dominant energy draw. Routing, batching and reasoning-budget controls lower both at the same time — no tradeoff to manage.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:16px;align-items:flex-start;">
+      <div style="flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:#3D8361;color:#FBFBF8;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;">3</div>
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <p style="margin:0;font-size:17px;font-weight:600;color:#14213D;">Procurement &amp; regulatory readiness</p>
+        <p style="margin:0;font-size:14.5px;color:#4A5568;line-height:1.5;">Enterprise RFPs increasingly ask for carbon-per-query metrics. Building a clean disclosure process now means answering from readiness, not scrambling later.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:16px;align-items:flex-start;">
+      <div style="flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:#E8A33D;color:#14213D;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;">4</div>
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <p style="margin:0;font-size:17px;font-weight:600;color:#14213D;">Risk reduction</p>
+        <p style="margin:0;font-size:14.5px;color:#4A5568;line-height:1.5;">Vague “green AI” claims invite scrutiny. Real, audited numbers — including the parts that aren’t flattering — are a defensible position that marketing language never is.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;gap:16px;align-items:flex-start;">
+      <div style="flex:0 0 auto;width:34px;height:34px;border-radius:50%;background:#3D8361;color:#FBFBF8;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;">5</div>
+      <div style="display:flex;flex-direction:column;gap:2px;">
+        <p style="margin:0;font-size:17px;font-weight:600;color:#14213D;">Direct infrastructure savings</p>
+        <p style="margin:0;font-size:14.5px;color:#4A5568;line-height:1.5;">Eco mode, model routing and a batch queue shift real load off expensive, low-latency serving — the user-facing feature and the backend cost structure point the same way.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin:28px 56px 0;padding:24px 28px;background:#1B2A4A;border-radius:14px;display:flex;flex-direction:column;gap:12px;">
+    <p style="margin:0;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;color:#8A9A96;font-weight:600;">Four low-risk first steps</p>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <p style="margin:0;font-size:14.5px;color:#DCE4E2;line-height:1.5;"><b style="color:#E8A33D;">1.</b> Publish one page stating your current methodology for estimating per-request energy use.</p>
+      <p style="margin:0;font-size:14.5px;color:#DCE4E2;line-height:1.5;"><b style="color:#E8A33D;">2.</b> Add one line to your model card per model, disclosing training-run CO₂e.</p>
+      <p style="margin:0;font-size:14.5px;color:#DCE4E2;line-height:1.5;"><b style="color:#E8A33D;">3.</b> Surface model size and reasoning-depth choice in your main interface, not a settings submenu.</p>
+      <p style="margin:0;font-size:14.5px;color:#DCE4E2;line-height:1.5;"><b style="color:#E8A33D;">4.</b> Pilot a “not urgent” option on one feature where latency doesn’t matter.</p>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;padding:18px 56px 36px;display:flex;justify-content:space-between;align-items:baseline;border-top:1px solid #e3e6e4;">
+    <p style="margin:0;font-size:12px;color:#8A9A96;">November 2026</p>
+    <p style="margin:0;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:#8A9A96;">Powering Intelligence, Responsibly</p>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":816,"height":1056}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>

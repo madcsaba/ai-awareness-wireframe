@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Win-Win Social Graphic</title>
+<script src="./vendor/react.js"></script>
+<script src="./vendor/react-dom.js"></script>
+<script src="./support.js"></script>
+<script src="../nav.js" defer></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&amp;family=IBM+Plex+Sans:wght@400;500;600&amp;display=swap">
+<style>
+  body{margin:0;font-family:'IBM Plex Sans',Arial,sans-serif;}
+</style>
+</helmet>
+
+<div style="width:1080px;height:1080px;background:#14213D;box-sizing:border-box;padding:96px;display:flex;flex-direction:column;justify-content:space-between;">
+
+  <p style="margin:0;font-size:20px;letter-spacing:3px;text-transform:uppercase;color:#E8A33D;font-weight:600;">For AI providers</p>
+
+  <div style="display:flex;flex-direction:column;gap:36px;">
+    <h1 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:66px;font-weight:600;color:#FBFBF8;line-height:1.18;max-width:820px;">What cuts your AI bill also cuts emissions.</h1>
+
+    <div style="display:flex;gap:28px;align-items:stretch;">
+      <div style="width:6px;background:#3D8361;border-radius:3px;"></div>
+      <p style="margin:0;font-size:27px;color:#C9D6D3;line-height:1.5;max-width:720px;">Inference is now the dominant cost driver <i>and</i> the dominant energy draw. Routing, batching, and reasoning-budget work already lower both — together.</p>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:baseline;">
+    <p style="margin:0;font-size:19px;color:#8A9A96;">Why AI Energy Transparency Is a Win-Win for Providers</p>
+    <p style="margin:0;font-size:16px;letter-spacing:1px;text-transform:uppercase;color:#8A9A96;">Powering Intelligence, Responsibly</p>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1080,"height":1080}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {};
+  }
+}
+</script>
+</body>
+</html>
