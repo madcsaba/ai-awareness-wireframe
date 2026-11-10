@@ -3833,8 +3833,10 @@ main{color-scheme:light}
     "eco-feedback-hu.html": ["eco-feedback.html", "eco-feedback-hu.html"],
     "petition.html": ["petition.html", "petition-hu.html"],
     "petition-hu.html": ["petition.html", "petition-hu.html"],
-    "the-weight-of-a-click.html": ["the-weight-of-a-click.html", null],
-    "powering-intelligence.html": ["powering-intelligence.html", null],
+    "the-weight-of-a-click.html": ["the-weight-of-a-click.html", "the-weight-of-a-click-hu.html"],
+    "the-weight-of-a-click-hu.html": ["the-weight-of-a-click.html", "the-weight-of-a-click-hu.html"],
+    "powering-intelligence.html": ["powering-intelligence.html", "powering-intelligence-hu.html"],
+    "powering-intelligence-hu.html": ["powering-intelligence.html", "powering-intelligence-hu.html"],
     "social-graphic": ["social-graphic", null],
     "one-pager": ["one-pager", null]
   };
@@ -3869,13 +3871,21 @@ main{color-scheme:light}
       ["petition", "✍️ " + (l === "hu" ? "Petíció" : "Petition"), l === "hu" ? "petition-hu.html" : "petition.html"]
     ];
     var more = [
-      ["💬 " + (l === "hu" ? "Túl a chatablakon" : "Beyond the chatbox"), "beyond-the-chatbox.html", "HU/EN"],
-      ["🚀 " + (l === "hu" ? "Hogyan kezdj bele" : "How to get started"), "start.html", "HU/EN"],
-      ["📖 " + (l === "hu" ? "A projekt története" : "The story"), "story.html", "HU/EN"],
-      ["🖱️ The Weight of a Click", "the-weight-of-a-click.html"],
-      ["⚡ " + (l === "hu" ? "Prezentáció" : "Presentation"), "powering-intelligence.html"],
-      ["📊 Social Graphic", "social-graphic/Social.dc.html"],
-      ["📄 One-Pager", "one-pager/Main.dc.html"]
+      [l === "hu" ? "Próbáld ki" : "Try it", [
+        ["🖱️ The Weight of a Click", l === "hu" ? "the-weight-of-a-click-hu.html" : "the-weight-of-a-click.html", "HU/EN"]
+      ]],
+      [l === "hu" ? "Olvasd el" : "Read", [
+        ["💬 " + (l === "hu" ? "Túl a chatablakon" : "Beyond the chatbox"), "beyond-the-chatbox.html", "HU/EN"],
+        ["📖 " + (l === "hu" ? "A projekt története" : "The story"), "story.html", "HU/EN"],
+        ["⚡ Powering Intelligence", l === "hu" ? "powering-intelligence-hu.html" : "powering-intelligence.html", "HU/EN"]
+      ]],
+      [l === "hu" ? "Vegyél részt" : "Take action", [
+        ["🚀 " + (l === "hu" ? "Hogyan kezdj bele" : "How to get started"), "start.html", "HU/EN"]
+      ]],
+      [l === "hu" ? "Design referenciák" : "Design references", [
+        ["📄 One-Pager", "one-pager/Main.dc.html"],
+        ["📊 Social Graphic", "social-graphic/Social.dc.html"]
+      ]]
     ];
     var cur = M[l === "hu" ? 1 : 0] || key;
 
@@ -3888,8 +3898,10 @@ main{color-scheme:light}
       }).join("") + "</nav>" +
       '<span class="emore"><button type="button" class="ecaret">' +
       (l === "hu" ? "Továbbiak ▾" : "More ▾") + '</button><span class="edrop">' +
-      more.map(function (m) {
-        return '<a href="' + u(m[1]) + '">' + m[0] + ' <i>' + (m[2] || "EN") + '</i></a>';
+      more.map(function (grp) {
+        return '<span class="egrp">' + grp[0] + '</span>' + grp[1].map(function (m) {
+          return '<a href="' + u(m[1]) + '">' + m[0] + ' <i>' + (m[2] || "EN") + '</i></a>';
+        }).join("");
       }).join("") + "</span></span>" +
       '<span class="elang"><button type="button" data-l="hu" class="' + (l === "hu" ? "on" : "") + '">HU</button>' +
       '<button type="button" data-l="en" class="' + (l === "en" ? "on" : "") + '"' +
@@ -3920,7 +3932,7 @@ main{color-scheme:light}
       "#ecoai-nav .enav::-webkit-scrollbar{display:none}" +
       "#ecoai-nav .enav a{padding:7px 10px;border-radius:9px;font-size:13.5px}" +
       "#ecoai-nav .enav a:hover{background:#f1f4f8}" +
-      "#ecoai-nav .enav a.on{background:#eef4ff;color:#2563eb;font-weight:700}" +
+      "#ecoai-nav .enav a.on{background:#eaf7ef;color:#0f7a37;font-weight:700}" +
       "#ecoai-nav .emore{position:relative;flex:0 0 auto}" +
       "#ecoai-nav .ecaret{border:1px solid #e3e6ea;background:#fff;border-radius:9px;padding:7px 10px;" +
       "font:inherit;font-size:13.5px;color:#334155;cursor:pointer;white-space:nowrap}" +
@@ -3931,10 +3943,13 @@ main{color-scheme:light}
       "#ecoai-nav .edrop a:hover{background:#f1f4f8}" +
       "#ecoai-nav .edrop i{font-style:normal;font-size:10px;background:#eef1f5;color:#6b7280;" +
       "border-radius:5px;padding:1px 5px;margin-left:5px}" +
+      "#ecoai-nav .egrp{display:block;font-size:10.5px;letter-spacing:.07em;text-transform:uppercase;" +
+      "font-weight:700;color:#8fa396;padding:10px 11px 3px;}" +
+      "#ecoai-nav .egrp:first-child{padding-top:6px}" +
       "#ecoai-nav .elang{display:flex;background:#eef1f5;border-radius:10px;padding:3px;flex:0 0 auto}" +
       "#ecoai-nav .elang button{border:0;background:transparent;font:inherit;font-size:12.5px;font-weight:700;" +
       "color:#6b7280;padding:5px 9px;border-radius:8px;cursor:pointer}" +
-      "#ecoai-nav .elang button.on{background:#fff;color:#1a1d21;box-shadow:0 1px 2px rgba(0,0,0,.12)}" +
+      "#ecoai-nav .elang button.on{background:#fff;color:#0f7a37;box-shadow:0 1px 2px rgba(0,0,0,.12)}" +
       "body{padding-top:50px !important}";
     document.head.appendChild(st);
 

@@ -23,26 +23,55 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
 </script>
 <style>
   :root{--bg:#f6f7f9;--panel:#fff;--line:#e3e6ea;--ink:#1a1d21;--dim:#6b7280;
-    --acc:#2563eb;--green:#16a34a;--display:ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial}
+    --acc:#16a34a;--acc-d:#0f7a37;--acc-soft:#eaf7ef;--blue:#2563eb;
+    --display:ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial;--serif:Georgia,'Times New Roman',serif}
   *{box-sizing:border-box}
   body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--display);padding:44px 18px 70px}
   .wrap{max-width:960px;margin:0 auto}
+
+  /* ---- hero ---- */
+  .hero{background:linear-gradient(135deg,#132b1d,#1a3f28);border-radius:22px;padding:40px 40px 34px;
+    color:#f3f7f4;margin-bottom:40px}
+  .hero .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8fd9ac;font-weight:700;margin-bottom:10px}
+  .hero h1{font:600 32px/1.22 var(--serif);margin:0 0 12px;letter-spacing:-.01em;color:#fff}
+  .hero p{color:#cfe3d7;max-width:620px;margin:0 0 22px;font-size:15.5px;line-height:1.6}
+  .hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-flex;align-items:center;gap:8px;font:700 14.5px var(--display);text-decoration:none;
+    border-radius:11px;padding:11px 18px;transition:.15s}
+  .btn.primary{background:var(--acc);color:#fff}
+  .btn.primary:hover{background:var(--acc-d)}
+  .btn.ghost{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25)}
+  .btn.ghost:hover{background:rgba(255,255,255,.18)}
+
   h1{font-size:28px;margin:0 0 6px;letter-spacing:-.02em}
   .sub{color:var(--dim);margin:0 0 30px;max-width:660px}
+
+  /* ---- sections ---- */
+  .sect{margin-bottom:38px}
+  .sect-head{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+  .sect-head h2{font-size:19px;margin:0;letter-spacing:-.01em}
+  .sect-head .n{font:700 11px var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--acc-d);
+    background:var(--acc-soft);border-radius:99px;padding:3px 10px}
+  .sect-sub{color:var(--dim);font-size:13.5px;margin:0 0 16px;max-width:620px}
+
   .grid{display:grid;gap:16px}
   @media(min-width:720px){.grid{grid-template-columns:1fr 1fr}}
-  a.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:16px;
+  a.card,.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:16px;
     padding:20px;text-decoration:none;color:inherit;transition:.15s}
-  a.card:hover{border-color:var(--acc);transform:translateY(-2px);box-shadow:0 8px 24px rgba(37,99,235,.10)}
+  a.card:hover{border-color:var(--acc);transform:translateY(-2px);box-shadow:0 8px 24px rgba(22,163,74,.12)}
   a.card.wide{grid-column:1/-1}
   .ico{font-size:26px}
-  h2{font-size:17px;margin:10px 0 5px}
+  h2.ch{font-size:17px;margin:10px 0 5px}
   p{margin:0;font-size:13.5px;color:var(--dim)}
   .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
   .tag{font-size:11px;border-radius:99px;padding:2px 9px;background:#eef1f5;color:var(--dim)}
-  .tag.new{background:#e7f7ed;color:var(--green)}
+  .dual-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .dual-links a{font:700 12.5px var(--display);text-decoration:none;color:var(--acc-d);background:var(--acc-soft);
+    border-radius:9px;padding:7px 12px}
+  .dual-links a:hover{background:#d9f0e1}
+
   .foot{margin-top:34px;font-size:12.5px;color:var(--dim);border-top:1px solid var(--line);padding-top:16px}
-  .foot a{color:var(--acc)}
+  .foot a{color:var(--acc-d)}
   /* nyelv-váltás: a nav.js data-lang attribútuma vezérel */
   html[data-lang="hu"] .en{display:none}
   html[data-lang="en"] .hu{display:none}
@@ -50,10 +79,23 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
 </head>
 <body>
 <div class="wrap">
-  <h1>
-    <span class="hu">🌿 AI tudatossági UI – wireframe csomag</span>
-    <span class="en">🌿 AI awareness UI – wireframe pack</span>
-  </h1>
+
+  <div class="hero">
+    <div class="kicker"><span class="hu">AI energiatudatosság</span><span class="en">AI energy awareness</span></div>
+    <h1>
+      <span class="hu">🌿 Láthatóvá tenni egy kérdés valódi árát</span>
+      <span class="en">🌿 Making the real cost of a question visible</span>
+    </h1>
+    <p>
+      <span class="hu">Egy nap alatt készült wireframe- és kampánycsomag arról, hogy mennyi energiát használ egy AI-kérés – és hogyan választhatnál tudatosabban. Próbáld ki az appot, vagy olvasd el, hogyan született a projekt.</span>
+      <span class="en">A wireframe and campaign pack, built in one day, about how much energy an AI request actually uses – and how you could choose more mindfully. Try the app, or read how the project came together.</span>
+    </p>
+    <div class="ctas">
+      <a class="btn primary" href="app/">🌿 <span class="hu">Nyisd meg az appot</span><span class="en">Open the app</span></a>
+      <a class="btn ghost" href="story.html">📖 <span class="hu">Hogyan készült 1 nap alatt</span><span class="en">How it was built in a day</span></a>
+    </div>
+  </div>
+
   <p class="sub">
     <span class="hu">Hogyan lehet új felülettel és UX-szel növelni a felhasználói tudatosságot a nagy AI modellek
       használatával kapcsolatban — modellválasztás, energia-költség visszajelzés, eco-feedback és mobil app.</span>
@@ -61,150 +103,185 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
       model selection, energy-cost feedback, eco-feedback and a mobile app.</span>
   </p>
 
-  <div class="grid">
-    <!-- kiemelt: összevont cikk (öko-tudatos AI + túl a chatablakon + UX-vázlatok) -->
-    <a class="card wide" href="beyond-the-chatbox.html" style="border-color:var(--green);background:linear-gradient(180deg,#f2fbf5,#fff)">
-      <span class="ico">💬</span>
-      <h2><span class="hu">Túl a chatablakon – az öko-tudatos AI kora</span><span class="en">Beyond the chatbox – the era of eco-aware AI</span></h2>
-      <p><span class="hu">Kiáltvány: melyik feladathoz melyik modell elég (hatékonysági mátrix), és miért a felületbe kódolt UX –
-        token-méter, szelíd terelés, Auto-Eco – növeli a tudatosságot. Három vázlattal.</span>
-        <span class="en">Manifesto: which model is enough for which task (efficiency matrix), and why UX built into the
-        interface – token meter, nudging, Auto-Eco – raises awareness. With three sketches.</span></p>
-      <div class="tags"><span class="tag new">új / new</span><span class="tag">HU+EN</span><span class="tag">kiáltvány / manifesto</span></div>
-    </a>
+  <!-- ================= PRÓBÁLD KI / TRY IT ================= -->
+  <section class="sect">
+    <div class="sect-head">
+      <h2><span class="hu">Próbáld ki</span><span class="en">Try it</span></h2>
+      <span class="n">1</span>
+    </div>
+    <p class="sect-sub">
+      <span class="hu">Interaktív wireframe-ek és a működő app — kattints, és nézd meg élesben.</span>
+      <span class="en">Interactive wireframes and the working app — click through and see it live.</span>
+    </p>
+    <div class="grid">
+      <a class="card wide" href="the-weight-of-a-click.html" data-hu="the-weight-of-a-click-hu.html">
+        <span class="ico">🖱️</span>
+        <h2 class="ch">The Weight of a Click</h2>
+        <p><span class="hu">Mindful AI Campaign – 60 másodperces bevezető: szerkesztői stílusú, interaktív
+          kampányoldal a nagy AI modellek környezeti lábnyomáról és a tudatos használatról.</span>
+          <span class="en">Mindful AI Campaign – 60s intro: an editorial, interactive campaign page about
+          the environmental footprint of large AI models and mindful use.</span></p>
+        <div class="tags"><span class="tag">kampány / campaign</span>
+          <span class="tag">interaktív / interactive</span><span class="tag">HU+EN</span></div>
+      </a>
 
-    <!-- teljes szélességű kiemelt kártya -->
-    <a class="card wide" href="the-weight-of-a-click.html">
-      <span class="ico">🖱️</span>
-      <h2>The Weight of a Click</h2>
-      <p><span class="hu">Mindful AI Campaign – 60 másodperces bevezető: szerkesztői stílusú, interaktív
-        kampányoldal a nagy AI modellek környezeti lábnyomáról és a tudatos használatról.</span>
-        <span class="en">Mindful AI Campaign – 60s intro: an editorial, interactive campaign page about
-        the environmental footprint of large AI models and mindful use.</span></p>
-      <div class="tags"><span class="tag new">új / new</span><span class="tag">kampány / campaign</span>
-        <span class="tag">interaktív / interactive</span><span class="tag">EN</span></div>
-    </a>
+      <a class="card" href="index-en.html" data-hu="hu.html">
+        <span class="ico">🖥️</span>
+        <h2 class="ch">Desktop wireframe</h2>
+        <p><span class="hu">Márkás modellválasztó (OpenAI / Anthropic / Google / helyi), élő
+          idő-költség-energia becsélés, válasz meta-sáv, nudge-ek, útválasztás, dashboard és
+          márkák összehasonlító táblázata.</span>
+          <span class="en">Brand-aware model picker (OpenAI / Anthropic / Google / local), live
+          time-cost-energy estimates, response meta bar, nudges, routing, dashboard and a brand
+          comparison table.</span></p>
+        <div class="tags"><span class="tag">márkák / brands</span>
+          <span class="tag">eco toast</span><span class="tag">HU+EN</span></div>
+      </a>
 
-    <a class="card wide" href="start.html">
-      <span class="ico">🚀</span>
-      <h2><span class="hu">Hogyan kezdj bele</span><span class="en">How to get started</span></h2>
-      <p><span class="hu">Öt kitölthető indító sablon (weboldal, app, áttervezés, szöveg, grafikon) másolás gombbal – hogy az AI-val
-        kevesebb körből, kevesebb energiából készüljön el, amit szeretnél.</span>
-        <span class="en">Five fill-in starter templates (website, app, redesign, copy, charts) with a copy button – so AI gets
-        your project done in fewer rounds, with less energy.</span></p>
-      <div class="tags"><span class="tag new">új / new</span><span class="tag">HU+EN</span><span class="tag">útmutató / guide</span></div>
-    </a>
+      <a class="card" href="mobile-app.html" data-hu="mobile-app-hu.html">
+        <span class="ico">📱</span>
+        <h2 class="ch">Mobil app</h2>
+        <p><span class="hu">4 képernyős telefon wireframe: Chat (bottom-sheet model picker + küldés),
+          Footprint (energia-lábnyom, heti trend, javaslatok), Models és Streak (jutalmak, badges).</span>
+          <span class="en">4-screen phone wireframe: Chat (bottom-sheet model picker + send),
+          Footprint (energy footprint, weekly trend, suggestions), Models and Streak (rewards, badges).</span></p>
+        <div class="tags"><span class="tag">interaktív / interactive</span><span class="tag">HU+EN</span></div>
+      </a>
 
-    <a class="card wide" href="story.html">
-      <span class="ico">📖</span>
-      <h2><span class="hu">A projekt története</span><span class="en">The story of this project</span></h2>
-      <p><span class="hu">Honnan indultunk, mi volt az aggály, hogyan lett belőle vázlat, kampány és alkalmazás –
-        és őszintén arról, hogyan lehetett volna mindezt kevesebb energiából megcsinálni.</span>
-        <span class="en">Where we started, what the concern was, how it became sketches, a campaign and an app –
-        and an honest look at how it all could have taken less energy.</span></p>
-      <div class="tags"><span class="tag new">új / new</span><span class="tag">HU+EN</span><span class="tag">story</span></div>
-    </a>
+      <a class="card" href="eco-feedback.html" data-hu="eco-feedback-hu.html">
+        <span class="ico">✨</span>
+        <h2 class="ch"><span class="hu">Eco-feedback animáció</span><span class="en">Eco-feedback animation</span></h2>
+        <p><span class="hu">A legkisebb energiafogyasztást jutalmazó feedback: ring gauge, kWh/CO₂ számláló,
+          levél-robbanás, streak — 3 trigger (eco / balanced / heavy) és viselkedés-szabályok.</span>
+          <span class="en">Reward for the least-energy choice: ring gauge, kWh/CO₂ counter,
+          leaf burst, streak — 3 triggers (eco / balanced / heavy) plus behaviour rules.</span></p>
+        <div class="tags"><span class="tag">animáció / animation</span><span class="tag">3 változat / variants</span></div>
+      </a>
 
-    <a class="card wide" href="app/">
-      <span class="ico">🌿</span>
-      <h2>EcoAI app (PWA)</h2>
-      <p><span class="hu">A mobil wireframe működő, telepíthető alkalmazásként: modellválasztó energia szerint,
-        küldés előtti becslés és javaslatok, kérésenkénti kWh/CO₂, valódi lábnyom-dashboard, széria és jelvények.
-        Offline is működik, minden adat a készüléken marad. (A válaszok szimuláltak.)</span>
-        <span class="en">The mobile wireframe as a working, installable app: energy-sorted model picker,
-        pre-send estimate and nudges, per-request kWh/CO₂, a real footprint dashboard, streaks and badges.
-        Works offline, all data stays on the device. (Replies are simulated.)</span></p>
-      <div class="tags"><span class="tag new">új / new</span><span class="tag">app · PWA</span>
-        <span class="tag">offline</span><span class="tag">HU+EN</span></div>
-    </a>
+      <a class="card" href="app/">
+        <span class="ico">🌿</span>
+        <h2 class="ch">EcoAI app (PWA)</h2>
+        <p><span class="hu">A mobil wireframe működő, telepíthető alkalmazásként: modellválasztó energia szerint,
+          küldés előtti becslés és javaslatok, kérésenkénti kWh/CO₂, valódi lábnyom-dashboard, széria és jelvények.
+          Offline is működik, minden adat a készüléken marad. (A válaszok szimuláltak.)</span>
+          <span class="en">The mobile wireframe as a working, installable app: energy-sorted model picker,
+          pre-send estimate and nudges, per-request kWh/CO₂, a real footprint dashboard, streaks and badges.
+          Works offline, all data stays on the device. (Replies are simulated.)</span></p>
+        <div class="tags"><span class="tag">app · PWA</span>
+          <span class="tag">offline</span><span class="tag">HU+EN</span></div>
+      </a>
+    </div>
+  </section>
 
-    <a class="card" href="index-en.html" data-hu="hu.html">
-      <span class="ico">🖥️</span>
-      <h2>Desktop wireframe</h2>
-      <p><span class="hu">Márkás modellválasztó (OpenAI / Anthropic / Google / helyi), élő
-        idő-költség-energia becsélés, válasz meta-sáv, nudge-ek, útválasztás, dashboard és
-        márkák összehasonlító táblázata.</span>
-        <span class="en">Brand-aware model picker (OpenAI / Anthropic / Google / local), live
-        time-cost-energy estimates, response meta bar, nudges, routing, dashboard and a brand
-        comparison table.</span></p>
-      <div class="tags"><span class="tag new">új / new</span><span class="tag">márkák / brands</span>
-        <span class="tag">eco toast</span></div>
-    </a>
+  <!-- ================= OLVASD EL / READ ================= -->
+  <section class="sect">
+    <div class="sect-head">
+      <h2><span class="hu">Olvasd el</span><span class="en">Read</span></h2>
+      <span class="n">2</span>
+    </div>
+    <p class="sect-sub">
+      <span class="hu">A probléma, a háttér és a döntési segédletek — hosszabb, végiggondolt szövegek.</span>
+      <span class="en">The problem, the background and decision guides — longer, considered reads.</span>
+    </p>
+    <div class="grid">
+      <a class="card wide" href="beyond-the-chatbox.html" style="border-color:var(--acc);background:linear-gradient(180deg,#f2fbf5,#fff)">
+        <span class="ico">💬</span>
+        <h2 class="ch"><span class="hu">Túl a chatablakon – az öko-tudatos AI kora</span><span class="en">Beyond the chatbox – the era of eco-aware AI</span></h2>
+        <p><span class="hu">Kiáltvány: melyik feladathoz melyik modell elég (hatékonysági mátrix), és miért a felületbe kódolt UX –
+          token-méter, szelíd terelés, Auto-Eco – növeli a tudatosságot. Három vázlattal.</span>
+          <span class="en">Manifesto: which model is enough for which task (efficiency matrix), and why UX built into the
+          interface – token meter, nudging, Auto-Eco – raises awareness. With three sketches.</span></p>
+        <div class="tags"><span class="tag">HU+EN</span><span class="tag">kiáltvány / manifesto</span></div>
+      </a>
 
-    <a class="card" href="mobile-app.html" data-hu="mobile-app-hu.html">
-      <span class="ico">📱</span>
-      <h2>Mobil app</h2>
-      <p><span class="hu">4 képernyős telefon wireframe: Chat (bottom-sheet model picker + küldés),
-        Footprint (energia-lábnyom, heti trend, javaslatok), Models és Streak (jutalmak, badges).</span>
-        <span class="en">4-screen phone wireframe: Chat (bottom-sheet model picker + send),
-        Footprint (energy footprint, weekly trend, suggestions), Models and Streak (rewards, badges).</span></p>
-      <div class="tags"><span class="tag new">új / new</span><span class="tag">interaktív / interactive</span></div>
-    </a>
+      <a class="card wide" href="story.html">
+        <span class="ico">📖</span>
+        <h2 class="ch"><span class="hu">A projekt története</span><span class="en">The story of this project</span></h2>
+        <p><span class="hu">Honnan indultunk, mi volt az aggály, hogyan lett belőle vázlat, kampány és alkalmazás –
+          és őszintén arról, hogyan lehetett volna mindezt kevesebb energiából megcsinálni.</span>
+          <span class="en">Where we started, what the concern was, how it became sketches, a campaign and an app –
+          and an honest look at how it all could have taken less energy.</span></p>
+        <div class="tags"><span class="tag">HU+EN</span><span class="tag">story</span></div>
+      </a>
 
-    <a class="card" href="eco-feedback.html" data-hu="eco-feedback-hu.html">
-      <span class="ico">✨</span>
-      <h2>Eco-feedback animáció / animation</h2>
-      <p><span class="hu">A legkisebb energiafogyasztást jutalmazó feedback: ring gauge, kWh/CO₂ számláló,
-        levél-robbanás, streak — 3 trigger (eco / balanced / heavy) és viselkedés-szabályok.</span>
-        <span class="en">Reward for the least-energy choice: ring gauge, kWh/CO₂ counter,
-        leaf burst, streak — 3 triggers (eco / balanced / heavy) plus behaviour rules.</span></p>
-      <div class="tags"><span class="tag">animáció / animation</span><span class="tag">3 változat / variants</span></div>
-    </a>
+      <a class="card" href="models.html">
+        <span class="ico">🧠</span>
+        <h2 class="ch"><span class="hu">Melyik modellt használd?</span><span class="en">Which model should you use?</span></h2>
+        <p><span class="hu">Döntéstámogató útmutató: mire jó egy-egy modell, feladat-alapú javaslatok
+          példa-promptokkal, összehasonlító táblázat, 5 szabály és gyakori tévhitek.</span>
+          <span class="en">Decision guide: what each model is good for — task-based picks with example
+          prompts, a comparison table, 5 rules and common myths.</span></p>
+        <div class="tags"><span class="tag">HU+EN</span>
+          <span class="tag">útmutató / guide</span></div>
+      </a>
 
-    <a class="card" href="models.html">
-      <span class="ico">🧠</span>
-      <h2><span class="hu">Melyik modellt használd?</span><span class="en">Which model should you use?</span></h2>
-      <p><span class="hu">Döntéstámogató útmutató: mire jó egy-egy modell, feladat-alapú javaslatok
-        példa-promptokkal, összehasonlító táblázat, 5 szabály és gyakori tévhitek.</span>
-        <span class="en">Decision guide: what each model is good for — task-based picks with example
-        prompts, a comparison table, 5 rules and common myths.</span></p>
-      <div class="tags"><span class="tag new">új / new</span><span class="tag">HU+EN</span>
-        <span class="tag">útmutató / guide</span></div>
-    </a>
+      <a class="card" href="powering-intelligence.html" data-hu="powering-intelligence-hu.html">
+        <span class="ico">⚡</span>
+        <h2 class="ch">Powering Intelligence, Responsibly</h2>
+        <p><span class="hu">Hosszabb kampányoldal a felelős AI-energiahasználatról.</span>
+          <span class="en">Long-form campaign page on responsible AI energy use.</span></p>
+        <div class="tags"><span class="tag">HU+EN</span></div>
+      </a>
+    </div>
+  </section>
 
-    <a class="card" href="hu.html">
-      <span class="ico">🇭🇺</span>
-      <h2>Wireframe (magyar)</h2>
-      <p><span class="hu">A magyar nyelvű vázlat: modellválasztó, energia-kvóta sáv, válasz meta-sáv,
-        mikro-nudge-ek, automatikus útválasztás és tudatossági dashboard.</span>
-        <span class="en">The Hungarian version of the desktop wireframe (mirror of the English one).</span></p>
-      <div class="tags"><span class="tag">HU</span></div>
-    </a>
+  <!-- ================= VEGYÉL RÉSZT / TAKE ACTION ================= -->
+  <section class="sect">
+    <div class="sect-head">
+      <h2><span class="hu">Vegyél részt</span><span class="en">Take action</span></h2>
+      <span class="n">3</span>
+    </div>
+    <p class="sect-sub">
+      <span class="hu">Amivel most elindulhatsz: saját projekt, vagy a petíció aláírása.</span>
+      <span class="en">What you can act on right now: your own project, or signing the petition.</span>
+    </p>
+    <div class="grid">
+      <a class="card" href="start.html">
+        <span class="ico">🚀</span>
+        <h2 class="ch"><span class="hu">Hogyan kezdj bele</span><span class="en">How to get started</span></h2>
+        <p><span class="hu">Öt kitölthető indító sablon (weboldal, app, áttervezés, szöveg, grafikon) másolás gombbal – hogy az AI-val
+          kevesebb körből, kevesebb energiából készüljön el, amit szeretnél.</span>
+          <span class="en">Five fill-in starter templates (website, app, redesign, copy, charts) with a copy button – so AI gets
+          your project done in fewer rounds, with less energy.</span></p>
+        <div class="tags"><span class="tag">HU+EN</span><span class="tag">útmutató / guide</span></div>
+      </a>
 
-    <a class="card" href="petition.html" data-hu="petition-hu.html">
-      <span class="ico">✍️</span>
-      <h2>Petition / Petíció</h2>
-      <p><span class="hu">Transparent, User-Controllable AI Energy Use – követelés: szabványos
-        energia-címke minden modellhez, őszinte becslés a küldés előtt, valódi modellválasztás.</span>
-        <span class="en">Transparent, User-Controllable AI Energy Use – demands: a standard energy
-        label for every model, an honest pre-send estimate, a real model choice.</span></p>
-      <div class="tags"><span class="tag new">új / new</span><span class="tag">HU+EN</span></div>
-    </a>
+      <a class="card" href="petition.html" data-hu="petition-hu.html">
+        <span class="ico">✍️</span>
+        <h2 class="ch">Petition / Petíció</h2>
+        <p><span class="hu">Transparent, User-Controllable AI Energy Use – követelés: szabványos
+          energia-címke minden modellhez, őszinte becslés a küldés előtt, valódi modellválasztás.</span>
+          <span class="en">Transparent, User-Controllable AI Energy Use – demands: a standard energy
+          label for every model, an honest pre-send estimate, a real model choice.</span></p>
+        <div class="tags"><span class="tag">HU+EN</span></div>
+      </a>
+    </div>
+  </section>
 
-    <a class="card" href="powering-intelligence.html">
-      <span class="ico">⚡</span>
-      <h2><span class="hu">Prezentáció</span><span class="en">Presentation</span> – Powering Intelligence, Responsibly</h2>
-      <p><span class="hu">17 diás prezentáció a felelős AI-energiahasználatról, böngészőben lapozható formában.</span>
-        <span class="en">A 17-slide presentation on responsible AI energy use, ready to browse.</span></p>
-      <div class="tags"><span class="tag new">új / new</span><span class="tag">EN</span></div>
-    </a>
-
-    <a class="card" href="social-graphic/Social.dc.html">
-      <span class="ico">📊</span>
-      <h2>Social graphic</h2>
-      <p><span class="hu">Win-Win közösségi média grafika – design mockup (design reference).</span>
-        <span class="en">Win-Win social media graphic – design reference mockup.</span></p>
-      <div class="tags"><span class="tag new">új / new</span><span class="tag">EN</span></div>
-    </a>
-
-    <a class="card" href="one-pager/Main.dc.html">
-      <span class="ico">📄</span>
-      <h2>One-pager handout</h2>
-      <p><span class="hu">Win-Win egyoldalas tájékoztató – design mockup (design reference).</span>
-        <span class="en">Win-Win one-page handout – design reference mockup.</span></p>
-      <div class="tags"><span class="tag new">új / new</span><span class="tag">EN</span></div>
-    </a>
-  </div>
+  <!-- ================= DESIGN REFERENCIÁK ================= -->
+  <section class="sect">
+    <div class="sect-head">
+      <h2><span class="hu">Design referenciák</span><span class="en">Design references</span></h2>
+      <span class="n">4</span>
+    </div>
+    <p class="sect-sub">
+      <span class="hu">A „win-win” üzleti dokumentum design-exportjai — csak referencia, nem interaktív oldal.</span>
+      <span class="en">Design exports of the “win-win” business document — reference only, not an interactive page.</span>
+    </p>
+    <div class="grid">
+      <div class="card">
+        <span class="ico">🎨</span>
+        <h2 class="ch"><span class="hu">Win-Win design mockupok</span><span class="en">Win-Win design mockups</span></h2>
+        <p><span class="hu">Egyoldalas tájékoztató és közösségi média grafika ugyanabból a tartalomból, a workshop-deck vizuális identitásában.</span>
+          <span class="en">A one-page handout and a social media graphic from the same content, in the workshop deck's visual identity.</span></p>
+        <div class="dual-links">
+          <a href="one-pager/Main.dc.html">📄 <span class="hu">Egyoldalas tájékoztató</span><span class="en">One-pager handout</span></a>
+          <a href="social-graphic/Social.dc.html">📊 <span class="hu">Közösségi grafika</span><span class="en">Social graphic</span></a>
+        </div>
+        <div class="tags"><span class="tag">EN</span></div>
+      </div>
+    </div>
+  </section>
 
   <div class="foot">
     <span class="hu">Minden oldal statikus HTML — kattints, próbáld ki, oszd meg a linket.
