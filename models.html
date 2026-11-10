@@ -22,7 +22,7 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
 <style>
   :root{--bg:#f6f7f9;--panel:#fff;--line:#e3e6ea;--ink:#1a1d21;--dim:#6b7280;
     --acc:#2563eb;--green:#16a34a;--amber:#d97706;--red:#dc2626;
-    --anthropic:#d97757;--openai:#10a37f;--google:#4285f4;--local:#16a34a;
+    --anthropic:#d97757;--openai:#10a37f;--google:#4285f4;--local:#16a34a;--deepseek:#4d6bfe;
     --display:ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial;
     --mono:ui-monospace,SFMono-Regular,Menlo,monospace}
   *{box-sizing:border-box}
@@ -36,7 +36,7 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   .logo{width:18px;height:18px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;
     color:#fff;font-size:11px;font-weight:800;flex:0 0 auto;vertical-align:-3px}
   .logo.anthropic{background:var(--anthropic)}.logo.openai{background:var(--openai)}
-  .logo.google{background:var(--google)}.logo.local{background:var(--local)}
+  .logo.google{background:var(--google)}.logo.local{background:var(--local)}.logo.deepseek{background:var(--deepseek)}
 
   /* 1 · chips */
   .chips{display:flex;gap:8px;flex-wrap:wrap}
@@ -51,8 +51,10 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   .task h3{margin:0 0 4px;font-size:17px}
   .task .why{color:var(--dim);font-size:13.5px;margin:0 0 14px}
   .picks{display:grid;gap:10px}
-  @media(min-width:700px){.picks{grid-template-columns:1fr 1fr 1fr}}
-  .pick{border:1.5px solid var(--line);border-radius:13px;padding:12px 13px;background:#fbfcfd;position:relative}
+  @media(min-width:700px){.picks{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}}
+  .pick{border:1.5px solid var(--line);border-radius:13px;padding:12px 13px;background:#fbfcfd;position:relative;cursor:pointer;transition:border-color .15s,background .15s}
+  .pick:hover{border-color:#c9ced6}.pick:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+  .pick.best::after{content:"✓";position:absolute;top:9px;right:11px;color:var(--green);font-weight:800}
   .pick.best{border-color:var(--green);background:#f2fbf5}
   .pick .rank{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
   .pick.best .rank{color:var(--green)}
@@ -177,6 +179,9 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
       <div class="pick"><span class="rank"><span class="hu">3. nagy átalakításhoz</span><span class="en">3rd, big rewrites</span></span>
         <b><span class="logo anthropic">A</span> Claude Opus</b><span class="vend">Anthropic</span>
         <div class="meta"><span>⚡ 0,03 kWh</span><span>⏱ ~25 s</span></div></div>
+      <div class="pick"><span class="rank"><span class="hu">olcsó alternatíva</span><span class="en">budget alternative</span></span>
+        <b><span class="logo deepseek">D</span> DeepSeek V3</b><span class="vend">DeepSeek</span>
+        <div class="meta"><span>⚡ 0,0005 kWh</span><span>⏱ ~3 s</span></div></div>
     </div>
     <div class="prompt"><span class="lbl"><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></span>
       <span class="hu">„Ebben a fájlban a 42. sor hibát dob. Magyarázd meg, miért, és adj 3 soros javítást — csak a javított kódot, komment nélkül."</span>
@@ -200,6 +205,9 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
       <div class="pick"><span class="rank"><span class="hu">3. nyitott kérdésekre</span><span class="en">3rd, open questions</span></span>
         <b><span class="logo google">G</span> Gemini Deep Think</b><span class="vend">Google</span>
         <div class="meta"><span>⚡ 0,05 kWh</span><span>⏱ ~35 s</span></div></div>
+      <div class="pick"><span class="rank"><span class="hu">nyílt modell, lépésenként</span><span class="en">open model, step by step</span></span>
+        <b><span class="logo deepseek">D</span> DeepSeek R1</b><span class="vend">DeepSeek</span>
+        <div class="meta"><span>⚡ 0,02 kWh</span><span>⏱ ~30 s</span></div></div>
     </div>
     <div class="prompt"><span class="lbl"><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></span>
       <span class="hu">„Vetess össze két megoldást erre a problémára: mérlegeld az érveket pro és kontra, jelezd, hol gyenge a bizonyíték, és adj ajánlást a bizonytalanság jelzésével."</span>
@@ -389,6 +397,23 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     </div>
   </details>
 
+  <details class="model">
+    <summary><span class="logo deepseek">D</span> DeepSeek V3 / R1 <span style="color:var(--dim);font-weight:400;font-size:12px">DeepSeek · open weights</span></summary>
+    <div class="body">
+      <div class="cols">
+        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
+          <ul><li><span class="hu">kódban és matekban erős, nagyon olcsó (MoE: kérdésenként csak a modell egy része dolgozik)</span><span class="en">strong at code and maths, very cheap (MoE: only part of the model works per request)</span></li>
+              <li><span class="hu">az R1 lépésenként „gondolkodik” – nehéz feladatnál jó</span><span class="en">R1 “thinks” step by step – good for hard problems</span></li>
+              <li><span class="hu">nyílt súlyok: saját szerveren is futtatható</span><span class="en">open weights: can run on your own server</span></li></ul></div>
+        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
+          <ul><li><span class="hu">a hivatalos szolgáltatás Kínában tárolja az adatot – érzékeny anyaghoz ne</span><span class="en">the official service stores data in China – not for sensitive material</span></li>
+              <li><span class="hu">az R1 hosszú gondolatmenete sok energiát visz – egyszerű kérdésre a V3 elég</span><span class="en">R1's long reasoning costs a lot of energy – V3 is enough for simple asks</span></li></ul></div>
+      </div>
+      <div class="bar"><i style="width:80%;background:var(--green)"></i><i style="width:55%;background:var(--amber)"></i></div>
+      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: V3 ~5× · R1 ~200× · minőség: ★★★★☆</div>
+    </div>
+  </details>
+
   <!-- 4 · TABLE -->
   <h2><span class="hu">4 · Összehasonlítás egy lapon</span><span class="en">4 · Side-by-side comparison</span></h2>
   <div class="tbl-wrap">
@@ -429,6 +454,10 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
           <td><span class="hu">nehéz logika, tudomány</span><span class="en">hard logic, science</span></td>
           <td><span class="hu">„bizonyítsd be, hogy…"</span><span class="en">“prove that…”</span></td>
           <td class="num"><span class="pill a">0,04 kWh</span></td><td class="num">~30 s</td></tr>
+        <tr><td><span class="logo deepseek">D</span> DeepSeek V3 / R1</td>
+          <td><span class="hu">kód, matek olcsón; nyílt modell</span><span class="en">code, maths on a budget; open model</span></td>
+          <td><span class="hu">„javítsd ki ezt a függvényt"</span><span class="en">“fix this function”</span></td>
+          <td class="num"><span class="pill a">0,0005–0,02 kWh</span></td><td class="num">~3–30 s</td></tr>
         <tr><td><span class="logo local">L</span> Llama / Mistral</td>
           <td><span class="hu">privát, offline</span><span class="en">private, offline</span></td>
           <td><span class="hu">„fájl helyben feldolgozva"</span><span class="en">“file processed locally”</span></td>
@@ -489,6 +518,21 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
 </div>
 
 <script>
+  /* ajánlás-kártyák: kattintásra (vagy Enterrel) az lesz a kiválasztott */
+  document.querySelectorAll(".pick").forEach(function (p) {
+    p.tabIndex = 0; p.setAttribute("role", "button");
+    p.setAttribute("aria-pressed", p.classList.contains("best") ? "true" : "false");
+  });
+  function choose(p) {
+    p.parentNode.querySelectorAll(".pick").forEach(function (q) {
+      q.classList.toggle("best", q === p); q.setAttribute("aria-pressed", q === p ? "true" : "false");
+    });
+  }
+  document.addEventListener("click", function (e) { var p = e.target.closest(".pick"); if (p) choose(p); });
+  document.addEventListener("keydown", function (e) {
+    var p = e.target.closest && e.target.closest(".pick");
+    if (p && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); choose(p); }
+  });
   /* chip-szűrő: a feladat-kártyák szűrése + visszagörgetés */
   document.getElementById("chips").addEventListener("click", function (e) {
     var b = e.target.closest(".chip"); if (!b) return;

@@ -45,6 +45,27 @@
     display:flex;align-items:center;justify-content:center;overflow:visible}
   .stage .ph{color:#aeb6c0;font-size:13.5px}
 
+  /* ============ IN-CONTEXT DEMO (stage) ============ */
+  .stage{min-height:380px;overflow:hidden;align-items:stretch;justify-content:flex-start;flex-direction:column;padding:16px 16px 180px}
+  .stage .toast,.stage .glow{position:absolute;bottom:14px;width:min(520px,calc(100% - 28px))}
+  .stage .burst{position:absolute;bottom:110px}
+  .mock{background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 6px 20px rgba(15,23,42,.06);overflow:hidden;max-width:560px;width:100%;margin:0 auto}
+  .mbar{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid var(--line);font-size:13px;font-weight:700}
+  .mbar .dots{display:flex;gap:4px}.mbar .dots i{width:8px;height:8px;border-radius:50%;background:#e3e6ea}
+  .mlog{padding:12px;display:flex;flex-direction:column;gap:8px;min-height:92px}
+  .bub{max-width:85%;padding:8px 11px;border-radius:12px;font-size:13.5px;line-height:1.45}
+  .bub.u{align-self:flex-end;background:var(--acc);color:#fff;border-bottom-right-radius:4px}
+  .bub.a{align-self:flex-start;background:#f1f4f8;border-bottom-left-radius:4px}
+  .bub.a small{display:block;font:11px var(--mono);color:var(--dim);margin-bottom:2px}
+  .typing span{display:inline-block;width:6px;height:6px;margin:0 2px;border-radius:50%;background:#9aa3af;animation:tp 1s infinite}
+  .typing span:nth-child(2){animation-delay:.15s}.typing span:nth-child(3){animation-delay:.3s}
+  @keyframes tp{0%,60%,100%{opacity:.3;transform:translateY(0)}30%{opacity:1;transform:translateY(-3px)}}
+  .mpick{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:10px 12px;border-top:1px solid var(--line);background:#fbfcfd;font-size:12.5px;color:var(--dim)}
+  .mchip{border:1px solid var(--line);background:#fff;border-radius:99px;padding:6px 11px;font:inherit;font-size:12.5px;color:var(--ink);cursor:pointer}
+  .mchip:hover{border-color:#c9ced6}.mchip.on{border-color:var(--green);background:#e7f7ed;font-weight:700}
+  .mchip.play{margin-left:auto;background:var(--ink);color:#fff;border-color:var(--ink)}
+  @media(prefers-reduced-motion:reduce){.typing span{animation:none}}
+
   .toast{
     position:fixed;left:50%;bottom:26px;transform:translate(-50%,140%);
     width:min(520px,calc(100vw - 32px));background:#fff;border-radius:16px;
@@ -148,7 +169,17 @@
   </div>
 
   <h2>Animáció használat közben</h2>
-  <div class="stage"><span class="ph">…a felugró ablak alulról csúszik be, levél-robbanás, élő számlálók…</span></div>
+  <div class="stage" id="stage">
+    <div class="mock" aria-label="Bemutató csevegőablak">
+      <div class="mbar"><span class="dots"><i></i><i></i><i></i></span> 🌿 EcoAI chat</div>
+      <div class="mlog" id="mlog"><div class="bub u">Foglald össze ezt a cikket 5 pontban.</div></div>
+      <div class="mpick"><span>Modell:</span>
+        <button class="mchip" data-k="eco" data-m="GPT-5 mini">🌿 GPT-5 mini</button>
+        <button class="mchip" data-k="mid" data-m="Claude Sonnet">⚖️ Claude Sonnet</button>
+        <button class="mchip" data-k="heavy" data-m="Claude Opus">⚡ Claude Opus</button>
+        <button class="mchip play" id="mplay">▶ Végigjátszás</button></div>
+    </div>
+  </div>
 
   <div class="annot"><span class="anno-num">1</span><b>Üzenet (eco):</b> “🌿 <b>Legzöldebb választás.</b> A GPT-5 mini ~100× kevesebb energiát használ, mint a Claude Opus — ugyanaz a válasz ≈ 0,0001 kWh.” + élő megtakarítás-számláló.</div>
   <div class="annot"><span class="anno-num">2</span><b>Üzenet (helyi):</b> “🌿 <b>N nulla felhőenergia.</b> A helyi modell a te gépeden csinálta.”</div>
@@ -287,6 +318,33 @@
   }
 
   addEventListener('keydown', e => { if (e.key === 'Escape') closeToast(); });
+</script>
+<script>
+  /* in-context demo: the toast lives inside the stage, triggered by a mock chat */
+  (function(){
+    const stage=document.getElementById('stage');
+    ['glow','toast','burst'].forEach(id=>stage.appendChild(document.getElementById(id)));
+    const log=document.getElementById('mlog'), chips=[...stage.querySelectorAll('.mchip[data-k]')];
+    const ANS="Íme az 5 fő pont: 1) … 2) … 3) … 4) … 5) …", ASK="Foglald össze ezt a cikket 5 pontban.";
+    let busy=false, playing=null;
+    function run(chip){ return new Promise(res=>{
+      if(busy) return res(); busy=true;
+      chips.forEach(c=>c.classList.toggle('on',c===chip));
+      log.innerHTML='<div class="bub u">'+ASK+'</div><div class="bub a typing"><span></span><span></span><span></span></div>';
+      const wait={eco:500,mid:1100,heavy:2200}[chip.dataset.k];
+      setTimeout(()=>{ log.lastChild.outerHTML='<div class="bub a"><small>'+chip.dataset.m+'</small>'+ANS+'</div>';
+        fire(chip.dataset.k); busy=false; res(); }, reduced?0:wait);
+    });}
+    chips.forEach(c=>c.addEventListener('click',()=>{ playing=null; run(c); }));
+    document.getElementById('mplay').addEventListener('click',async()=>{
+      const me=playing={};
+      for(const c of chips){ if(playing!==me) return; await run(c); await new Promise(r=>setTimeout(r,6800)); }
+    });
+    /* trigger buttons above: bring the stage into view */
+    document.querySelectorAll('.card .btn').forEach(b=>b.addEventListener('click',()=>{
+      const r=stage.getBoundingClientRect(); if(r.bottom>innerHeight||r.top<0) stage.scrollIntoView({behavior:reduced?'auto':'smooth',block:'center'});
+    }));
+  })();
 </script>
 </body>
 </html>
