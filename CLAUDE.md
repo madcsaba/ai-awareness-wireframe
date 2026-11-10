@@ -14,8 +14,10 @@ Megnézéshez: `python3 -m http.server`, majd böngésző.
    (Régebbi oldalak párban vannak: `nev.html` + `nev-hu.html`, ill. `index-en.html` ↔ `hu.html`.)
 2. **`nav.js` → `MAP`:** az oldal (párnál mindkét fájl) bekerül:
    egyfájlos oldalnál `"nev.html": ["nev.html", "nev.html"]`; párnál mindkét fájl `["nev.html", "nev-hu.html"]`.
-   `null` = nincs fordítás. Ha a menüben is látszania kell: `items` (fő menü) vagy `more` (Továbbiak).
-3. **`index.html`:** kártya a főoldalon (`<a class="card wide">`, HU/EN szöveggel).
+   `null` = nincs fordítás. A „Minden oldal” menüben a `groups` megfelelő csoportjába kerüljön
+   (Próbáld ki / Olvasd el / Vegyél részt / Design referenciák); az `items` fő sávban csoportonként csak egy elem van.
+3. **`index.html`:** kártya a főoldalon, ugyanabba a szekcióba, mint a menüben (`<a class="card">`, HU/EN szöveggel).
+   „új” címke csak a legfrissebb oldalon legyen; egyetlen hero (az app) van, újabb `wide` kártyát ne tegyél.
 4. **Fejléc:** `<script src="nav.js" defer></script>` a `<head>`-ben, plusz `<title>`,
    `description`, és `og:*` meta (`og:url` a teljes Pages-URL, `og:image` → `og.png`).
    Mintának a `petition.html` / `petition-hu.html` a legrövidebb.
@@ -34,9 +36,9 @@ Megnézéshez: `python3 -m http.server`, majd böngésző.
 ## Kivételek – ne „javítsd” kérés nélkül
 
 - `the-weight-of-a-click.html`, `powering-intelligence.html`: átvett oldalak,
-  Google Fonts / Tailwind CDN-nel; csak angolul vannak.
+  Google Fonts / Tailwind CDN-nel; magyar fordításuk: `*-hu.html` (párban, a `MAP`-ben).
 - `one-pager/`, `social-graphic/`: dizájn-export (`*.dc.html` + vendor React), csak referencia.
-- `powering-intelligence.html` a `nav.js` egy inline másolatát tartalmazza: ha a `MAP` vagy a menü változik, ott is frissítsd.
+- `powering-intelligence.html` és `powering-intelligence-hu.html` a `nav.js` egy inline másolatát tartalmazza: ha a `MAP` vagy a menü változik, mindkettőben frissítsd.
 - `app/`: külön PWA (`sw.js`). Ha a shell fájljai változnak, emeld a `CACHE` verziót (`ecoai-vN`).
 
 ## Skill
