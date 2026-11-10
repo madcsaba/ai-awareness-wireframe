@@ -316,8 +316,8 @@
     $("mpName").textContent = m.name;
     $("mpDot").className = "dot " + m.tier;
     var e = estimate(m, text, text && isCached(text, m));
-    $("est").innerHTML = "<span>⏱ " + secStr(e.sec) + "</span><span>💰 " + (m.tier === "local" ? "$0" : costStr(e.cost)) + "</span>" +
-      '<span>⚡ <b class="' + m.tier + '">' + (m.tier === "local" ? t("cloud0") : kwhStr(e.kwh) + " kWh") + '</b></span><span class="cmp">' + t("compare") + "</span>";
+    $("est").innerHTML = '<span class="e-t">' + secStr(e.sec) + '</span><span class="e-c">' + (m.tier === "local" ? "$0" : costStr(e.cost)) + "</span>" +
+      '<span><b class="' + m.tier + '">' + (m.tier === "local" ? t("cloud0") : kwhStr(e.kwh) + " kWh") + '</b></span><span class="cmp">' + t("compare") + "</span>";
     $("ecoPill").hidden = !(m.tier === "eco" || m.tier === "local");
 
     var n = $("nudge");
@@ -375,7 +375,7 @@
       '<button type="button" data-ask="' + esc(t("eli12")) + '">' + esc(t("eli12")) + "</button>" +
       '<button type="button" data-retry="' + alt.id + '">' + esc(t("retryOn", { m: alt.name })) + "</button></div>";
   }
-  function scrollChat() { var v = $("v-chat"); v.scrollTop = v.scrollHeight; }
+  function scrollChat() { var v = $("v-chat"); v.scrollTop = S.messages.length ? v.scrollHeight : 0; }
 
   var busy = false;
   function send(text, modelId) {
@@ -491,16 +491,16 @@
       leaves();
     }
     setTimeout(function () { ring.style.strokeDashoffset = CIRC * (1 - pct / 100); }, reduced ? 0 : 350);
-    toastTimer = setTimeout(closeToast, 6000);
+    toastTimer = setTimeout(closeToast, 4500);
   }
   function leaves() {
     var b = $("burst"); b.innerHTML = "";
     var em = ["🌿", "🍃", "🌱", "💚"];
-    for (var i = 0; i < 12; i++) {
-      var s = document.createElement("span"), spark = i > 7;
+    for (var i = 0; i < 7; i++) {
+      var s = document.createElement("span"), spark = i > 4;
       s.className = "leaf"; s.textContent = spark ? "·" : em[i % 4];
-      s.style.setProperty("--dx", ((Math.random() - 0.5) * 240).toFixed(0) + "px");
-      s.style.setProperty("--dy", (-70 - Math.random() * 120).toFixed(0) + "px");
+      s.style.setProperty("--dx", ((Math.random() - 0.5) * 160).toFixed(0) + "px");
+      s.style.setProperty("--dy", (-50 - Math.random() * 70).toFixed(0) + "px");
       s.style.setProperty("--rot", ((Math.random() - 0.5) * 360).toFixed(0) + "deg");
       s.style.left = ((Math.random() - 0.5) * 100).toFixed(0) + "px";
       s.style.animationDelay = (Math.random() * 0.35).toFixed(2) + "s";
@@ -621,7 +621,7 @@
     for (var w = 6; w >= 0; w--) { var val = sum(within((w + 1) * 7, w * 7), "kwh"); weeks.push(val); maxW = Math.max(maxW, val); }
     var bars = weeks.map(function (val, i) {
       var h = maxW ? Math.max(3, val / maxW * 100) : 3;
-      return '<div class="b"><em>' + (val ? kwhStr(val) : "") + '</em><i class="' + (i === 6 ? "cur" : "") + '" style="height:' + h + '%"></i><span>' + (i === 6 ? t("nowWeek") : "−" + (6 - i)) + "</span></div>";
+      return '<div class="b' + (i === 6 ? " now" : "") + '" title="' + kwhStr(val) + ' kWh"><em>' + (i === 6 && val ? kwhStr(val) : "") + '</em><i class="' + (i === 6 ? "cur" : "") + '" style="height:' + h + '%"></i><span>' + (i === 6 ? t("nowWeek") : "−" + (6 - i)) + "</span></div>";
     }).join("");
 
     // tips
@@ -746,8 +746,13 @@
    * Tabs
    * ------------------------------------------------------------------ */
   var curTab = "chat";
+  function setTitle() {
+    var key = { chat: null, footprint: "tabFootprint", models: "tabModels", streak: "tabStreak" }[curTab];
+    $("viewTitle").textContent = key ? t(key) : "EcoAI";
+  }
   function showTab(v) {
     curTab = v;
+    setTitle();
     document.querySelectorAll(".tabs button").forEach(function (b) {
       var on = b.dataset.v === v; b.classList.toggle("on", on); b.setAttribute("aria-selected", on ? "true" : "false");
     });
@@ -780,7 +785,7 @@
   $("langSeg").addEventListener("click", function (e) {
     var b = e.target.closest("[data-l]"); if (!b) return;
     lang = b.dataset.l; store.set("ecoai-lang", lang);
-    applyTexts(); renderAll(); renderSettings();
+    applyTexts(); setTitle(); renderAll(); renderSettings();
   });
   $("themeSeg").addEventListener("click", function (e) {
     var b = e.target.closest("[data-t]"); if (!b) return;

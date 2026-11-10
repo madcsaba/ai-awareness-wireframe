@@ -1,7 +1,7 @@
 /* EcoAI service worker – offline app shell (cache-first, stale-while-revalidate) */
-var CACHE = "ecoai-v3";
+var CACHE = "ecoai-v4";
 var SHELL = ["./", "index.html", "app.css", "app.js", "manifest.webmanifest",
-  "icons/icon.svg", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "icons/apple-touch-icon.png"];
+  "icons/icon.svg", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "icons/apple-touch-icon.png", "fonts/inter-latin-wght-normal.woff2", "fonts/inter-latin-ext-wght-normal.woff2"];
 
 self.addEventListener("install", function (e) {
   e.waitUntil(caches.open(CACHE).then(function (c) { return c.addAll(SHELL); }).then(function () { return self.skipWaiting(); }));

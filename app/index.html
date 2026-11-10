@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>EcoAI – low-energy AI assistant</title>
 <meta name="description" content="EcoAI: an AI assistant app that shows the energy cost of every request and rewards the least-energy model choice.">
-<meta name="theme-color" content="#0f7a37">
+<meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1113" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -23,6 +24,7 @@ document.documentElement.lang=l;
 var t;try{t=localStorage.getItem("ecoai-theme")}catch(e){}
 if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);})();
 </script>
+<link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="app.css">
 </head>
 <body>
@@ -30,13 +32,10 @@ if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)
 
   <header class="apphead">
     <div class="row">
-      <img class="applogo" src="icons/icon.svg" alt="" width="30" height="30">
-      <div class="titles">
-        <h1>EcoAI</h1>
-        <div class="sub" data-i="tagline"></div>
-      </div>
-      <span class="eco-pill" id="ecoPill" hidden>🌿 <span data-i="ecoOn"></span></span>
-      <button class="iconbtn" id="settingsBtn" type="button" data-i-aria="settings">⚙️</button>
+      <img class="applogo" src="icons/icon.svg" alt="" width="28" height="28">
+      <h1 id="viewTitle">EcoAI</h1>
+      <span class="eco-pill" id="ecoPill" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg><span data-i="ecoOn"></span></span>
+      <button class="iconbtn" id="settingsBtn" type="button" data-i-aria="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></button>
     </div>
   </header>
 
@@ -44,7 +43,8 @@ if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)
     <!-- CHAT -->
     <section class="view on" id="v-chat" aria-live="polite">
       <div id="chatEmpty" class="empty">
-        <div class="empty-ico">🌿</div>
+        <div class="empty-ico"><img src="icons/icon.svg" alt="" width="56" height="56"></div>
+        <p class="tagline" data-i="tagline"></p>
         <h2 data-i="emptyTitle"></h2>
         <p data-i="emptyText"></p>
         <div class="starters" id="starters"></div>
@@ -72,15 +72,15 @@ if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)
     </div>
     <form class="comp-row" id="form" autocomplete="off">
       <input id="inp" type="text" enterkeyhint="send" data-i-ph="placeholder">
-      <button class="send" type="submit" data-i-aria="send">↑</button>
+      <button class="send" type="submit" data-i-aria="send"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
     </form>
   </div>
 
   <nav class="tabs" role="tablist">
-    <button class="on" data-v="chat" type="button" role="tab"><span class="ico">💬</span><span data-i="tabChat"></span></button>
-    <button data-v="footprint" type="button" role="tab"><span class="ico">🌱</span><span data-i="tabFootprint"></span></button>
-    <button data-v="models" type="button" role="tab"><span class="ico">🧩</span><span data-i="tabModels"></span></button>
-    <button data-v="streak" type="button" role="tab"><span class="ico">🔥</span><span data-i="tabStreak"></span></button>
+    <button class="on" data-v="chat" type="button" role="tab"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span data-i="tabChat"></span></button>
+    <button data-v="footprint" type="button" role="tab"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg><span data-i="tabFootprint"></span></button>
+    <button data-v="models" type="button" role="tab"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg><span data-i="tabModels"></span></button>
+    <button data-v="streak" type="button" role="tab"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg><span data-i="tabStreak"></span></button>
   </nav>
 
   <!-- model picker sheet -->
