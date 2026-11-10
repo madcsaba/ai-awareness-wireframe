@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Túl a chatablakon / Beyond the chatbox – EcoAI</title>
+<meta name="description" content="Az öko-tudatos AI kora: melyik feladathoz melyik modell elég, és miért a felületbe kódolt UX – token-méter, szelíd terelés, Auto-Eco – növeli a tudatosságot. / The era of eco-aware AI: which model fits which task, and why UX built into the interface – token meter, nudging, Auto-Eco – raises awareness.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🌿 Túl a chatablakon – az öko-tudatos AI kora / Beyond the chatbox">
+<meta property="og:description" content="Hatékonysági mátrix és három UX-elv (token-méter, szelíd terelés, Auto-Eco) wireframe-ekkel. / An efficiency matrix and three UX principles with wireframes.">
+<meta property="og:url" content="https://madcsaba.github.io/ai-awareness-wireframe/beyond-the-chatbox.html">
+<meta property="og:image" content="https://madcsaba.github.io/ai-awareness-wireframe/og.png">
+<script src="nav.js" defer></script>
+<script>
+(function(){var l;try{l=localStorage.getItem("ecoai-lang")}catch(e){}
+if(l!=="hu"&&l!=="en")l=(navigator.language||"").toLowerCase().indexOf("hu")===0?"hu":"en";
+document.documentElement.setAttribute("data-lang",l);document.documentElement.lang=l;})();
+</script>
+<style>
+  :root{--bg:#f6f7f9;--panel:#fff;--line:#e3e6ea;--ink:#1a1d21;--dim:#6b7280;--acc:#2563eb;
+    --green:#16a34a;--green-d:#0f7a37;--soft:#f2fbf5;--amber:#b45309;--amber-soft:#fdf3e3;
+    --display:ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial;--serif:Georgia,'Times New Roman',serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.7 var(--display);padding:40px 18px 80px}
+  .wrap{max-width:760px;margin:0 auto;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:44px 46px}
+  .kicker{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:700}
+  h1{font:600 34px/1.2 var(--serif);margin:10px 0 8px;letter-spacing:-.01em}
+  h2{font:600 24px/1.3 var(--serif);margin:44px 0 12px}
+  h3{font-size:17px;margin:0 0 4px}
+  p{margin:0 0 16px}
+  .lead{font-size:19px;color:#2b3036}
+  .chapter{display:inline-block;font-size:12px;font-weight:700;color:var(--green-d);background:var(--soft);
+    border-radius:99px;padding:3px 11px;margin-top:40px}
+  .chapter + h2{margin-top:10px}
+  .thesis{background:var(--soft);border-left:4px solid var(--green);border-radius:0 14px 14px 0;
+    padding:16px 20px;margin:24px 0;font:600 19px/1.5 var(--serif);color:#14361f}
+  /* hatékonysági mátrix */
+  .matrix{display:grid;gap:12px;margin:18px 0 8px}
+  @media(min-width:640px){.matrix{grid-template-columns:1fr 1fr}}
+  .cell{border:1px solid var(--line);border-radius:14px;padding:16px 18px;font-size:15.5px;line-height:1.55}
+  .cell .ico{font-size:22px}
+  .cell p{margin:6px 0 0;color:#3b4148}
+  .cell .pick{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:600;border-radius:99px;padding:2px 10px;background:#eef1f5;color:#3b4148}
+  .cell.light .pick{background:#e7f7ed;color:var(--green-d)}
+  .cell.heavy .pick{background:var(--amber-soft);color:var(--amber)}
+  /* UX-elvek */
+  .principle{display:grid;grid-template-columns:44px 1fr;gap:4px 14px;margin:30px 0 12px}
+  .principle .n{grid-row:span 2;width:40px;height:40px;border-radius:12px;background:var(--soft);color:var(--green-d);
+    display:grid;place-items:center;font:700 18px var(--serif)}
+  .principle p{margin:0;color:#3b4148}
+  /* wireframe-ek */
+  .wf{border:1.5px dashed #c7ccd3;border-radius:14px;background:#fbfcfd;padding:14px;margin:6px 0 10px 58px;font-size:14px;line-height:1.5}
+  .wf .cap{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);font-weight:700;margin-bottom:8px}
+  .box{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .box > div{padding:10px 14px;border-top:1px solid var(--line)}
+  .box > div:first-child{border-top:0}
+  .row{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;justify-content:space-between}
+  .chip{border:1px solid var(--line);border-radius:8px;padding:2px 9px;background:#f6f7f9;font-size:13px}
+  .eco{color:var(--green-d);font-weight:600}
+  .meter{height:6px;border-radius:99px;background:#eef1f5;overflow:hidden;flex:1 1 120px;max-width:180px}
+  .meter i{display:block;height:100%;width:22%;background:var(--green)}
+  .send{background:var(--acc);color:#fff;border-radius:8px;padding:4px 14px;font-weight:600;font-size:13px}
+  .warn{color:var(--amber);font-weight:700}
+  .opt{border:1px solid var(--line);border-radius:10px;padding:8px 12px;margin-top:8px}
+  .opt.rec{border-color:var(--green);background:var(--soft)}
+  .opt b{display:block}
+  .opt span{color:var(--dim);font-size:13px}
+  .save{display:flex;gap:16px;flex-wrap:wrap;margin-top:6px;font-weight:600}
+  .save span{color:var(--green-d)}
+  .dimtxt{color:var(--dim)}
+  .take{background:var(--soft);border-radius:16px;padding:22px 24px;margin:34px 0 10px}
+  .take p:last-child{margin:0}
+  .note{font-size:14px;color:var(--dim)}
+  .foot{margin-top:36px;font-size:13.5px;color:var(--dim);border-top:1px solid var(--line);padding-top:16px}
+  .wrap a{color:var(--acc)}
+  html[data-lang="hu"] .en{display:none}
+  html[data-lang="en"] .hu{display:none}
+  @media(max-width:600px){.wrap{padding:30px 20px}h1{font-size:28px}h2{font-size:21px}.wf{margin-left:0}}
+</style>
+</head>
+<body>
+<article class="wrap">
+
+<!-- ======================= MAGYAR ======================= -->
+<div class="hu">
+  <div class="kicker">Kiáltvány · Az öko-tudatos AI kora</div>
+  <h1>Túl a chatablakon</h1>
+  <p class="lead">Nem minden feladathoz kell a legnagyobb „frontier” modell. Ha tudatosan választunk, drasztikusan csökken a tokenköltség és a környezeti terhelés – de ehhez a felületnek is segítenie kell.</p>
+
+  <span class="chapter">1 · A probléma</span>
+  <h2>Az üres chatablak pazarló</h2>
+  <p>Az AI iparág felhasználói élménye egyetlen vizuális paradigmára épül: az üres chatablakra. Bár univerzális, a felhasználók hajlamosak minden feladatra – a helyesírás-ellenőrzéstől a komplex programozásig – ugyanazt a csúcsmodellt használni, mert a felület semmilyen visszajelzést nem ad a cselekvésük <b>„súlyáról”</b>.</p>
+  <div class="thesis">A tudatosságot nem blogposztokkal, hanem a felületbe kódolt, interaktív UX-döntésekkel lehet növelni.</div>
+
+  <span class="chapter">2 · A hatékonysági mátrix</span>
+  <h2>Melyik feladathoz melyik modell elég?</h2>
+  <div class="matrix">
+    <div class="cell light"><span class="ico">⚡</span><h3>Rutin feladatok, adatkinyerés</h3>
+      <p>Szövegformázás, JSON-generálás, alapvető kódolás. Töredéknyi energia, szinte azonnali válasz.</p>
+      <span class="pick">Kis lokális modell (SLM) vagy gyors felhős API – pl. Haiku, Flash, mini</span></div>
+    <div class="cell"><span class="ico">📚</span><h3>Hatalmas dokumentumok</h3>
+      <p>Több száz oldal vagy egy teljes kódbázis: nagy kontextusú modell + <b>kontextus-cache</b>, hogy ne olvassa újra ugyanazt – akár ~80% tokenmegtakarítás.</p>
+      <span class="pick">Nagy kontextus + cache-elés</span></div>
+    <div class="cell light"><span class="ico">🔒</span><h3>Adatvédelmi fókusz</h3>
+      <p>Érzékeny, belső adat: saját hardveren futó lokális modell – nulla hálózati terhelés, nulla tokenköltség, teljes adatszuverenitás.</p>
+      <span class="pick">Lokális modell (pl. Apple Silicon)</span></div>
+    <div class="cell heavy"><span class="ico">🧠</span><h3>Mély logikai elemzés</h3>
+      <p>Komplex architektúra, összetett kódolás, ahol az „elsőre hibátlan” eredmény számít. Ide – és csak ide – a nehézsúlyúakat.</p>
+      <span class="pick">Frontier modell</span></div>
+  </div>
+  <p class="note">Részletes, naprakész ajánlás modellenként: <a href="models.html">Modellek útmutató</a>.</p>
+
+  <span class="chapter">3 · Három UX-elv</span>
+  <h2>Mit kell az AI cégeknek beépíteniük?</h2>
+  <p>A Google, az OpenAI és az Anthropic felelőssége nem csupán egyre nagyobb modellek építése, hanem olyan felületek tervezése, amelyek alapértelmezésben a takarékos használat felé terelnek. Három elv, mindegyik egy vázlattal:</p>
+
+  <div class="principle"><span class="n">1</span><h3>Vizuális visszajelzés – Token- és öko-méter</h3>
+    <p>Ahogy az autó műszerfala zöld levéllel jutalmazza a takarékos vezetést, a chatablak is mutassa a kérés várható token- és energiaigényét – még küldés előtt.</p></div>
+  <div class="wf"><div class="cap">Vázlat 1 · Okos beviteli mező</div>
+    <div class="box">
+      <div>Kérlek, foglald össze a csatolt 12 oldalas jelentést 3 pontban, és emeld ki a fő pénzügyi mutatókat!</div>
+      <div><span class="chip">📎 Q3_penzugyi_jelentes.pdf (2,4 MB) ✕</span></div>
+      <div class="row"><span>⚙️ Modell: <span class="chip">Auto (Eco) ▾</span></span>
+        <span class="meter"><i></i></span><span class="dimtxt">Becsült token: 14 500</span></div>
+      <div class="row"><span class="eco">🍃 A rendszer döntése: kis, gyors modell (olcsó és gyors)</span><span class="send">⬆️ Küldés</span></div>
+    </div></div>
+
+  <div class="principle"><span class="n">2</span><h3>Intelligens nudging – szelíd terelés</h3>
+    <p>A felület proaktívan védjen a pazarlástól: túl nagy bemenetnél ajánlja fel a kontextus-cache-elést vagy egy kisebb modellt, mielőtt elindulna a tokenégetés.</p></div>
+  <div class="wf"><div class="cap">Vázlat 2 · Okos figyelmeztetés nagy fájlnál</div>
+    <div class="box"><div>
+      <div class="warn">⚠️ Nagy dokumentum (120 000 token)</div>
+      <div class="dimtxt">Úgy tűnik, egy teljes kézikönyvet töltöttél fel. Hogyan dolgozzuk fel?</div>
+      <div class="opt rec"><b>⚡ Kontextus-cache (ajánlott)</b><span>1 órán át a memóriában tartjuk – a további kérdések kb. 75%-kal kevesebb tokenbe és energiába kerülnek.</span></div>
+      <div class="opt"><b>📄 Csak a releváns oldalak</b><span>Vektoros kereséssel csak a kérdésedhez kapcsolódó részeket olvassuk be.</span></div>
+      <div class="opt"><b>🚀 Teljes feldolgozás (egyszeri)</b><span>Normál ár és energiafogyasztás.</span></div>
+    </div></div></div>
+
+  <div class="principle"><span class="n">3</span><h3>Auto-routing – láthatatlan hatékonyság</h3>
+    <p>A legjobb UX, ha nem is kell modellt választani: az „Auto-Eco” mód a prompt alapján dönti el, elég-e egy olcsó, gyors modell, vagy tényleg kell a frontier. A válasz végén egy kis panel megmutatja, mennyit spórolt – így a felhasználó tanul is belőle.</p></div>
+  <div class="wf"><div class="cap">Vázlat 3 · Hatékonysági visszajelzés a válasz végén</div>
+    <div class="box">
+      <div class="dimtxt">1. A bevétel 15%-kal nőtt… 2. Csökkentek a működési költségek… 3. Likviditási tartalék…</div>
+      <div>💡 <b>Hatékonysági info:</b> ezt a feladatot az <span class="eco">Auto-Eco</span> mód egy kis, gyors modellel oldotta meg 0,8 másodperc alatt.
+        <div class="save">A nagy modellhez képest: <span>🔋 −85% energia</span><span>🪙 −92% tokenköltség</span></div></div>
+    </div></div>
+  <p class="note">Élőben kipróbálható: <a href="eco-feedback-hu.html">Eco-feedback bemutató</a> · <a href="app/">EcoAI app</a>. A százalékok szemléltető becslések.</p>
+
+  <div class="take"><p><b>Az AI hatékonysága nem csupán spórolás</b> – hanem fenntartható, rendszerszintű megközelítés. A felületeknek alapértelmezésben a tudatos, erőforrás-optimalizált használat felé kell terelniük a társadalmat.</p>
+    <p>Ha egyetértesz: <a href="petition-hu.html">írd alá a petíciót</a>.</p></div>
+</div>
+
+<!-- ======================= ENGLISH ======================= -->
+<div class="en">
+  <div class="kicker">Manifesto · The era of eco-aware AI</div>
+  <h1>Beyond the chatbox</h1>
+  <p class="lead">Not every task needs a massive “frontier” model. Choosing consciously drastically cuts token costs and environmental footprint – but the interface has to help.</p>
+
+  <span class="chapter">1 · The problem</span>
+  <h2>The empty chatbox is wasteful</h2>
+  <p>The AI industry's user experience rests on a single visual paradigm: the empty chatbox. Universal as it is, users tend to use the same top-tier model for everything – from spell-checking to complex programming – because the interface gives no feedback on the <b>“weight”</b> of their actions.</p>
+  <div class="thesis">Awareness won't grow through blog posts and guidelines, but through interactive UX decisions coded into the interface.</div>
+
+  <span class="chapter">2 · The efficiency matrix</span>
+  <h2>Which model is enough for which task?</h2>
+  <div class="matrix">
+    <div class="cell light"><span class="ico">⚡</span><h3>Routine tasks &amp; data parsing</h3>
+      <p>Text formatting, JSON extraction, basic code completion. A fraction of the energy, near-instant replies.</p>
+      <span class="pick">Small local model (SLM) or fast cloud API – e.g. Haiku, Flash, mini</span></div>
+    <div class="cell"><span class="ico">📚</span><h3>Massive documents</h3>
+      <p>Hundreds of pages or a whole codebase: a large-context model plus <b>context caching</b>, so the same data isn't re-read – up to ~80% fewer tokens.</p>
+      <span class="pick">Large context + caching</span></div>
+    <div class="cell light"><span class="ico">🔒</span><h3>Privacy first</h3>
+      <p>Sensitive organisational data: a local model on your own hardware – zero network overhead, zero token cost, full data sovereignty.</p>
+      <span class="pick">Local model (e.g. Apple Silicon)</span></div>
+    <div class="cell heavy"><span class="ico">🧠</span><h3>Deep reasoning</h3>
+      <p>Complex architecture, intricate coding, high-stakes writing where “first-try success” matters. Reserve the heavyweights for this – and only this.</p>
+      <span class="pick">Frontier model</span></div>
+  </div>
+  <p class="note">Detailed, up-to-date advice per model: <a href="models.html">Models guide</a>.</p>
+
+  <span class="chapter">3 · Three UX principles</span>
+  <h2>What AI companies must build in</h2>
+  <p>The responsibility of Google, OpenAI and Anthropic is not only to build ever larger models, but to design interfaces that guide people towards efficient use by default. Three principles, each with a sketch:</p>
+
+  <div class="principle"><span class="n">1</span><h3>Visual feedback – Token &amp; eco-meter</h3>
+    <p>Just as a car dashboard rewards economical driving with a green leaf, the chatbox should show a request's expected token and energy demand – before you hit send.</p></div>
+  <div class="wf"><div class="cap">Sketch 1 · Smart input field</div>
+    <div class="box">
+      <div>Please summarise the attached 12-page report in 3 points, and highlight the main financial metrics!</div>
+      <div><span class="chip">📎 Q3_Financial_Report.pdf (2.4 MB) ✕</span></div>
+      <div class="row"><span>⚙️ Model: <span class="chip">Auto (Eco) ▾</span></span>
+        <span class="meter"><i></i></span><span class="dimtxt">Est. tokens: 14,500</span></div>
+      <div class="row"><span class="eco">🍃 System decision: small, fast model (fast &amp; cost-effective)</span><span class="send">⬆️ Send</span></div>
+    </div></div>
+
+  <div class="principle"><span class="n">2</span><h3>Intelligent nudging</h3>
+    <p>The interface should proactively protect users from waste: on excessive input, offer context caching or a smaller model before any tokens are burned.</p></div>
+  <div class="wf"><div class="cap">Sketch 2 · Smart nudge for large files</div>
+    <div class="box"><div>
+      <div class="warn">⚠️ Large document detected (120,000 tokens)</div>
+      <div class="dimtxt">It looks like you uploaded a full manual. How should we handle it?</div>
+      <div class="opt rec"><b>⚡ Context caching (recommended)</b><span>Kept in memory for 1 hour – follow-up questions cost about 75% fewer tokens and energy.</span></div>
+      <div class="opt"><b>📄 Relevant pages only</b><span>Vector search reads only the sections related to your prompt.</span></div>
+      <div class="opt"><b>🚀 Full processing (one-time)</b><span>Standard pricing and energy use.</span></div>
+    </div></div></div>
+
+  <div class="principle"><span class="n">3</span><h3>Auto-routing – invisible efficiency</h3>
+    <p>The best UX is when you don't have to pick a model at all: “Auto-Eco” analyses the prompt and decides whether a cheap, fast model can solve it, or a frontier model is genuinely needed. A small panel after the reply shows what was saved – so users learn as they go.</p></div>
+  <div class="wf"><div class="cap">Sketch 3 · Efficiency feedback after the reply</div>
+    <div class="box">
+      <div class="dimtxt">1. Revenue grew 15%… 2. Operating costs fell… 3. Liquidity reserves…</div>
+      <div>💡 <b>Efficiency info:</b> this task was solved by <span class="eco">Auto-Eco</span> mode with a small, fast model in 0.8 seconds.
+        <div class="save">Compared with a large model: <span>🔋 −85% energy</span><span>🪙 −92% token cost</span></div></div>
+    </div></div>
+  <p class="note">Try it live: <a href="eco-feedback.html">Eco-feedback demo</a> · <a href="app/">EcoAI app</a>. Percentages are illustrative estimates.</p>
+
+  <div class="take"><p><b>Efficiency in AI isn't just about saving money</b> – it's a sustainable, systems-thinking approach. Interfaces should guide society towards conscious, resource-optimised use by default.</p>
+    <p>If you agree: <a href="petition.html">sign the petition</a>.</p></div>
+</div>
+
+<div class="foot">
+  <span class="hu">🌿 <a href="index.html">Vissza a főoldalra</a> · <a href="models.html">Modellek</a> · <a href="story.html">A projekt története</a></span>
+  <span class="en">🌿 <a href="index.html">Back to home</a> · <a href="models.html">Models</a> · <a href="story.html">The story</a></span>
+</div>
+</article>
+</body>
+</html>
