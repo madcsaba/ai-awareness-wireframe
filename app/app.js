@@ -106,7 +106,8 @@
       bd_first: "First green pick", bd_ten: "10 green picks", bd_local: "Local model user", bd_cache: "Cache hero (5 hits)",
       bd_week: "7-day green streak", bd_month: "30-day green streak", bd_kwh: "Saved 0.1 kWh",
       days: ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
-      nowWeek: "now"
+      nowWeek: "now",
+      guideLink: "<b>Which model should you use?</b> Task-based guide with example prompts, a comparison table and common myths ›"
     },
     hu: {
       tagline: "alacsony energiájú asszisztensed", ecoOn: "eco mód BE", settings: "Beállítások",
@@ -169,7 +170,8 @@
       bd_first: "Első zöld választás", bd_ten: "10 zöld választás", bd_local: "Helyi modell használó", bd_cache: "Gyorsítótár-hős (5 találat)",
       bd_week: "7 napos zöld széria", bd_month: "30 napos zöld széria", bd_kwh: "0,1 kWh megtakarítás",
       days: ["H", "K", "Sze", "Cs", "P", "Szo", "V"],
-      nowWeek: "most"
+      nowWeek: "most",
+      guideLink: "<b>Melyik modellt használd?</b> Feladat-alapú útmutató példa-promptokkal, összehasonlító táblázattal és tévhitekkel ›"
     }
   };
 
@@ -677,7 +679,8 @@
    * Models
    * ------------------------------------------------------------------ */
   function renderModels() {
-    $("v-models").innerHTML = '<h2 class="sec" style="margin-top:2px">' + t("modelsTitle") + '</h2><p class="muted" style="color:var(--dim);font-size:12.5px;margin:0 2px 6px">' + t("modelsHint") + "</p>" + modelListHTML(S.defaultModel, "models");
+    $("v-models").innerHTML = '<h2 class="sec" style="margin-top:2px">' + t("modelsTitle") + '</h2><p class="muted" style="color:var(--dim);font-size:12.5px;margin:0 2px 6px">' + t("modelsHint") + "</p>" + modelListHTML(S.defaultModel, "models") +
+      '<a class="tip" href="../models.html" style="text-decoration:none;color:inherit;margin-top:14px"><span class="ti">🧠</span><span>' + t("guideLink") + "</span></a>";
   }
   $("v-models").addEventListener("click", function (e) {
     var r = e.target.closest("[data-model]"); if (!r) return;
