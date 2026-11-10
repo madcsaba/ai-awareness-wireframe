@@ -1,0 +1,597 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EcoAI – mobile app wireframe</title>
+<style>
+  :root{
+    --bg:#eceef2; --panel:#fff; --line:#e3e6ea; --ink:#1a1d21; --dim:#6b7280;
+    --acc:#2563eb; --green:#16a34a; --green-d:#0f7a37; --amber:#d97706; --red:#dc2626;
+    --anthropic:#d97757; --openai:#10a37f; --google:#4285f4; --local:#16a34a;
+    --display:ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial;
+    --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.45 var(--display);
+    display:flex;flex-wrap:wrap;gap:34px;justify-content:center;align-items:flex-start;padding:36px 16px 60px}
+  h1{font-size:22px;margin:0 0 4px;text-align:center}
+  .cap{color:var(--dim);font-size:13px;text-align:center;max-width:340px;margin:0 auto 18px}
+
+  /* ---------- phone shell ---------- */
+  .phone{width:390px;height:844px;background:#000;border-radius:52px;padding:11px;
+    box-shadow:0 30px 70px rgba(15,23,42,.35),0 0 0 2px #2a2d31;position:relative;flex:0 0 auto}
+  .screen{width:100%;height:100%;background:#f7f8fa;border-radius:42px;overflow:hidden;
+    position:relative;display:flex;flex-direction:column}
+  .notch{position:absolute;top:11px;left:50%;transform:translateX(-50%);width:120px;height:30px;
+    background:#000;border-radius:0 0 18px 18px;z-index:60}
+  .status{display:flex;justify-content:space-between;padding:14px 26px 4px;font-size:12.5px;font-weight:700}
+
+  /* ---------- app header ---------- */
+  .apphead{padding:10px 18px 12px;background:#fff;border-bottom:1px solid var(--line)}
+  .apphead .row{display:flex;align-items:center;gap:9px}
+  .apphead h2{font-size:17px;margin:0;font-weight:800;letter-spacing:-.01em}
+  .eco-pill{margin-left:auto;font-size:11px;font-weight:700;background:#e7f7ed;color:var(--green-d);
+    border-radius:99px;padding:4px 10px;display:flex;gap:5px;align-items:center}
+  .sub{font-size:12px;color:var(--dim);margin-top:3px}
+
+  /* ---------- views ---------- */
+  .views{flex:1;overflow:hidden;position:relative}
+  .view{position:absolute;inset:0;overflow-y:auto;padding:16px 16px 96px;display:none}
+  .view.on{display:block;animation:vIn .28s ease}
+  @keyframes vIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* ---------- chat ---------- */
+  .msg{max-width:86%;padding:10px 13px;border-radius:16px;font-size:14px;margin-bottom:10px;line-height:1.5}
+  .msg.me{background:var(--acc);color:#fff;margin-left:auto;border-bottom-right-radius:5px}
+  .msg.ai{background:#fff;border:1px solid var(--line);border-bottom-left-radius:5px}
+  .msg .meta{display:flex;gap:8px;align-items:center;font-size:11px;color:var(--dim);
+    margin-top:7px;padding-top:7px;border-top:1px solid var(--line);flex-wrap:wrap}
+  .msg .meta b{font-family:var(--mono);color:var(--green-d);font-weight:600}
+  .logo{width:14px;height:14px;border-radius:4px;display:inline-flex;align-items:center;justify-content:center;
+    color:#fff;font-size:9px;font-weight:800;flex:0 0 auto}
+  .logo.anthropic{background:var(--anthropic)} .logo.openai{background:var(--openai)}
+  .logo.google{background:var(--google)} .logo.local{background:var(--local)}
+  .sugg{display:flex;gap:7px;flex-wrap:wrap;margin:4px 0 14px}
+  .sugg button{border:1px solid var(--line);background:#fff;border-radius:99px;
+    padding:6px 12px;font:inherit;font-size:12.5px;color:var(--dim);cursor:pointer}
+
+  /* ---------- composer ---------- */
+  .composer{position:absolute;left:0;right:0;bottom:74px;background:#fff;border-top:1px solid var(--line);
+    padding:9px 12px 11px;z-index:20}
+  .comp-row{display:flex;gap:8px;align-items:center}
+  .comp-row input{flex:1;border:1px solid var(--line);border-radius:22px;padding:11px 14px;
+    font:inherit;font-size:14px;outline:none;min-width:0}
+  .comp-row input:focus{border-color:var(--acc)}
+  .send{width:42px;height:42px;border-radius:50%;border:0;background:var(--acc);color:#fff;
+    font-size:17px;cursor:pointer;flex:0 0 auto}
+  .mpick{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fbfcfd;
+    border-radius:99px;padding:5px 11px;font-size:12.5px;cursor:pointer;margin-bottom:8px;width:max-content}
+  .mpick .dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
+  .est{display:flex;gap:10px;font-size:11px;color:var(--dim);margin:0 2px 8px;font-family:var(--mono)}
+  .est b{color:var(--green-d)}
+
+  /* ---------- bottom tabs ---------- */
+  .tabs{position:absolute;left:0;right:0;bottom:0;height:74px;background:#fff;border-top:1px solid var(--line);
+    display:flex;z-index:30;padding-bottom:8px}
+  .tabs button{flex:1;border:0;background:none;font:inherit;font-size:10.5px;color:var(--dim);
+    cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;padding-top:11px}
+  .tabs button .ico{font-size:20px;filter:grayscale(1);opacity:.6}
+  .tabs button.on{color:var(--acc);font-weight:700}
+  .tabs button.on .ico{filter:none;opacity:1}
+
+  /* ---------- sheet (model picker) ---------- */
+  .sheet{position:absolute;inset:0;background:rgba(15,23,42,.4);z-index:70;opacity:0;pointer-events:none;
+    transition:opacity .25s}
+  .sheet.on{opacity:1;pointer-events:auto}
+  .sheet .pane{position:absolute;left:0;right:0;bottom:0;background:#fff;border-radius:22px 22px 0 0;
+    padding:8px 16px 26px;transform:translateY(100%);transition:transform .32s cubic-bezier(.2,1,.3,1);max-height:78%;overflow:auto}
+  .sheet.on .pane{transform:none}
+  .grab{width:40px;height:4.5px;border-radius:99px;background:#d7dbe1;margin:6px auto 12px}
+  .pane h3{margin:0 0 4px;font-size:16px}
+  .pane .hint{font-size:12.5px;color:var(--dim);margin:0 0 12px}
+  .tier{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);
+    display:flex;justify-content:space-between;margin:14px 0 6px}
+  .tier .eco{color:var(--green);text-transform:none;letter-spacing:0;font-family:var(--mono)}
+  .mrow{display:flex;gap:11px;align-items:flex-start;padding:11px;border:1.5px solid var(--line);
+    border-radius:13px;margin-bottom:8px;cursor:pointer;background:#fff}
+  .mrow.sel{border-color:var(--acc);background:#eef4ff}
+  .mrow b{font-size:14px}
+  .mrow .vend{font-size:11.5px;color:var(--dim)}
+  .mrow p{margin:3px 0 0;font-size:12px;color:var(--dim);line-height:1.4}
+  .mrow .kwh{margin-left:auto;font:11.5px var(--mono);color:var(--green);white-space:nowrap}
+  .mrow .kwh.mid{color:var(--amber)} .mrow .kwh.big{color:var(--red)}
+  .tag{font-size:10px;border-radius:6px;padding:1px 6px;background:#eef1f5;color:var(--dim);margin-left:5px}
+  .tag.best{background:#e7f7ec;color:var(--green-d)}
+
+  /* ---------- eco toast ---------- */
+  .toast{position:absolute;left:12px;right:12px;bottom:160px;background:#fff;border-radius:16px;
+    box-shadow:0 16px 40px rgba(15,23,42,.25);padding:13px 14px 0;display:flex;gap:12px;
+    z-index:80;opacity:0;transform:translateY(150%);overflow:hidden}
+  .toast.show{animation:tIn .55s cubic-bezier(.2,1.25,.35,1) forwards}
+  .toast.hide{animation:tOut .3s ease forwards}
+  @keyframes tIn{0%{transform:translateY(150%);opacity:0}60%{transform:translateY(-8px);opacity:1}
+    100%{transform:translateY(0);opacity:1}}
+  @keyframes tOut{to{transform:translateY(150%);opacity:0}}
+  .toast::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;
+    background:linear-gradient(90deg,var(--green),#4ade80);transform-origin:left;
+    animation:strip .5s ease both, shrink 6s linear .5s forwards}
+  .toast.amber::before{background:linear-gradient(90deg,var(--amber),#fbbf24)}
+  @keyframes strip{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @keyframes shrink{to{transform:scaleX(0)}}
+  .ring{position:relative;width:46px;height:46px;flex:0 0 auto;margin-top:2px}
+  .ring svg{transform:rotate(-90deg)}
+  .ring circle{fill:none;stroke-width:5.5;stroke-linecap:round}
+  .ring .bg{stroke:#eceff3}
+  .ring .fg{stroke:var(--green);stroke-dasharray:119.4;stroke-dashoffset:119.4;
+    transition:stroke-dashoffset 1s cubic-bezier(.3,1,.4,1) .35s}
+  .toast.amber .ring .fg{stroke:var(--amber)}
+  .ring .pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    font:700 11px var(--mono);color:var(--green-d)}
+  .toast.amber .ring .pct{color:var(--amber)}
+  .ttl{font-weight:800;font-size:14px}
+  .badge{font-size:9.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+    background:#e7f7ed;color:var(--green-d);border-radius:99px;padding:2px 7px;margin-left:6px}
+  .toast.amber .badge{background:#fdf3e3;color:var(--amber)}
+  .msg2{font-size:12.5px;color:var(--dim);margin-top:3px;line-height:1.45}
+  .msg2 b{color:var(--ink)}
+  .save{font:11.5px var(--mono);color:var(--green-d);margin-top:5px}
+  .toast.amber .save{color:var(--amber)}
+  .streak{display:flex;gap:4px;margin:8px 0 12px}
+  .streak i{width:14px;height:5.5px;border-radius:99px;background:#eceff3;transform:scaleX(0);transform-origin:left}
+  .toast.show .streak i{animation:fill .3s ease forwards}
+  @keyframes fill{to{transform:scaleX(1)}}
+  .burst{position:absolute;left:50%;bottom:230px;width:0;height:0;pointer-events:none;z-index:79}
+  .leaf{position:absolute;font-size:15px;opacity:0}
+  .toast.show ~ .burst .leaf{animation:leafUp 1.5s cubic-bezier(.25,.8,.35,1) forwards}
+  @keyframes leafUp{0%{opacity:0;transform:translate(0,0) scale(.4) rotate(0)}15%{opacity:1}
+    100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.15) rotate(var(--rot))}}
+  .glow{position:absolute;left:12px;right:12px;bottom:150px;height:140px;border-radius:24px;
+    pointer-events:none;z-index:78;opacity:0;background:radial-gradient(ellipse at bottom,#22c55e33,transparent 70%)}
+  .glow.show{animation:glow 2.6s ease forwards}
+  @keyframes glow{0%{opacity:0;transform:translateY(20px) scale(.85)}25%{opacity:1;transform:none}100%{opacity:0}}
+
+  /* ---------- footprint screen ---------- */
+  .big-card{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:13px}
+  .big-card h3{margin:0 0 2px;font-size:14px}
+  .kwh-big{font:800 34px/1.1 var(--display);letter-spacing:-.02em}
+  .kwh-big small{font-size:14px;font-weight:600;color:var(--dim)}
+  .co2{font-size:12.5px;color:var(--dim);margin-top:3px}
+  .track{height:9px;border-radius:99px;background:#eceff3;overflow:hidden;display:flex;margin-top:13px}
+  .track i{display:block;height:100%}
+  .legend{display:flex;gap:11px;flex-wrap:wrap;font-size:11px;color:var(--dim);margin-top:8px;align-items:center}
+  .legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px}
+  .trend{display:flex;align-items:flex-end;gap:5px;height:74px;margin-top:12px}
+  .trend div{flex:1;background:#dbe7fb;border-radius:4px 4px 0 0;position:relative}
+  .trend div.hi{background:#f3d9c9}
+  .trend div.g{background:#cdeed9}
+  .trend-x{display:flex;gap:5px;font-size:9.5px;color:var(--dim);margin-top:4px}
+  .trend-x span{flex:1;text-align:center}
+  .tip{display:flex;gap:10px;background:#f2fbf5;border:1px solid #bbe7c9;border-radius:13px;
+    padding:11px 12px;font-size:12.5px;color:var(--green-d);margin-top:11px;align-items:flex-start}
+  .tip b{color:#0b5c2a}
+  .tip .go{margin-left:auto;background:var(--green);color:#fff;border:0;border-radius:9px;
+    padding:6px 11px;font:inherit;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap}
+  .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .stat{background:#fff;border:1px solid var(--line);border-radius:13px;padding:11px 12px}
+  .stat b{font-size:19px;font-family:var(--mono)}
+  .stat span{display:block;font-size:11px;color:var(--dim);margin-top:2px}
+  .sec{font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);margin:20px 0 9px;font-weight:700}
+
+  /* streak screen bits */
+  .streak-hero{background:linear-gradient(135deg,#16a34a,#4ade80);border-radius:16px;padding:17px;color:#fff}
+  .streak-hero .n{font-size:40px;font-weight:800;line-height:1}
+  .streak-hero p{margin:5px 0 0;font-size:12.5px;opacity:.92}
+  .dayrow{display:flex;gap:6px;margin-top:13px}
+  .dayrow div{flex:1;text-align:center;font-size:9.5px;opacity:.85}
+  .dayrow div i{display:block;height:26px;border-radius:7px;background:rgba(255,255,255,.25);margin-bottom:3px;
+    font-style:normal;font-size:13px;line-height:26px}
+  .dayrow div.ok i{background:rgba(255,255,255,.9);color:var(--green-d)}
+</style>
+</head>
+<body>
+
+<div>
+  <h1>EcoAI – mobile app</h1>
+  <p class="cap">AI assistant that rewards the least-energy choice · tap the tabs, picker and Send</p>
+
+  <div class="phone">
+    <div class="notch"></div>
+    <div class="screen">
+      <div class="status"><span>9:41</span><span>▮▮▮ ⚡ 100%</span></div>
+
+      <div class="apphead">
+        <div class="row">
+          <span class="logo local" style="width:22px;height:22px;border-radius:7px;font-size:12px">E</span>
+          <div><h2>EcoAI</h2><div class="sub">your low-energy assistant</div></div>
+          <span class="eco-pill">🌿 eco mode <b id="ecoState">ON</b></span>
+        </div>
+      </div>
+
+      <div class="views">
+
+        <!-- ============ CHAT ============ -->
+        <div class="view on" id="v-chat">
+          <div class="msg me">Summarize this 40-page study into 5 bullets.</div>
+          <div class="msg ai">
+            Here are the five key findings:
+            <br>1. … 2. … 3. … 4. … 5. …
+            <div class="meta">
+              <span class="logo openai">O</span> GPT-5 mini · 1.2 s
+              <b>⚡ 0,0001 kWh</b> <span>≈ 0,03 g CO₂</span> <span>cache hit</span>
+            </div>
+          </div>
+          <div class="sugg">
+            <button>Make it shorter</button><button>Explain like I'm 12</button>
+            <button>Retry on Claude Sonnet</button>
+          </div>
+          <div class="msg ai">
+            Done — 5 bullets, 120 words.
+            <div class="meta"><span class="logo openai">O</span> GPT-5 mini · 0,9 s <b>⚡ 0,0001 kWh</b></div>
+          </div>
+        </div>
+
+        <!-- ============ FOOTPRINT ============ -->
+        <div class="view" id="v-foot">
+          <div class="big-card">
+            <h3>Your energy, last 30 days</h3>
+            <div class="kwh-big">0,41 <small>kWh</small></div>
+            <div class="co2">≈ 170 g CO₂ · <b style="color:var(--green-d)">−38%</b> vs. last month</div>
+            <div class="track">
+              <i style="width:30%;background:var(--openai)"></i><i style="width:22%;background:var(--anthropic)"></i>
+              <i style="width:14%;background:var(--google)"></i><i style="width:20%;background:var(--amber)"></i>
+              <i style="width:14%;background:var(--red)"></i>
+            </div>
+            <div class="legend">
+              <span><i style="background:var(--openai)"></i>OpenAI 30%</span>
+              <span><i style="background:var(--anthropic)"></i>Anthropic 22%</span>
+              <span><i style="background:var(--google)"></i>Google 14%</span>
+              <span><i style="background:var(--amber)"></i>mid 20%</span>
+              <span><i style="background:var(--red)"></i>reasoning 14%</span>
+            </div>
+          </div>
+
+          <div class="sec">Weekly trend</div>
+          <div class="big-card">
+            <div class="trend">
+              <div style="height:70%"></div><div class="hi" style="height:95%"></div>
+              <div style="height:60%"></div><div class="g" style="height:44%"></div>
+              <div class="g" style="height:38%"></div><div class="g" style="height:30%"></div>
+              <div class="g" style="height:26%"></div>
+            </div>
+            <div class="trend-x"><span>W1</span><span>W2</span><span>W3</span><span>W4</span><span>W5</span><span>W6</span><span>W7</span></div>
+            <div class="tip">
+              <span>🌿</span>
+              <span><b>30 of your 42 requests</b> would be fine on the small model → <b>−38% energy</b>.</span>
+              <button class="go" onclick="fireToast('eco')">Apply</button>
+            </div>
+            <div class="tip">
+              <span>⚡</span>
+              <span><b>6 Opus calls</b> → move to Claude Sonnet: same quality, <b>−80% energy</b>.</span>
+              <button class="go" onclick="fireToast('mid')">Apply</button>
+            </div>
+          </div>
+
+          <div class="sec">This month</div>
+          <div class="stat-grid">
+            <div class="stat"><b>128</b><span>requests</span></div>
+            <div class="stat"><b>12</b><span>green picks 🔥</span></div>
+            <div class="stat"><b>72%</b><span>cache hit rate</span></div>
+            <div class="stat"><b>2,1</b><span>g CO₂ / request</span></div>
+          </div>
+        </div>
+
+        <!-- ============ MODELS ============ -->
+        <div class="view" id="v-models">
+          <div class="sec" style="margin-top:4px">Pick your default</div>
+
+          <div class="tier">Fast &amp; efficient <span class="eco">≈ 0,0001 kWh</span></div>
+          <div class="mrow sel" onclick="selModel(this,'openai','O','GPT-5 mini','OpenAI','small')">
+            <span class="logo openai">O</span>
+            <div><b>GPT-5 mini</b><span class="tag best">Default</span><div class="vend">OpenAI</div>
+              <p>Summaries, translation, classification. Lowest energy use.</p></div>
+            <span class="kwh">≈ 0,0001</span>
+          </div>
+          <div class="mrow" onclick="selModel(this,'anthropic','A','Claude Haiku','Anthropic','small')">
+            <span class="logo anthropic">A</span>
+            <div><b>Claude Haiku</b><div class="vend">Anthropic</div>
+              <p>Quick Q&amp;A, structured extraction.</p></div>
+            <span class="kwh">≈ 0,0001</span>
+          </div>
+          <div class="mrow" onclick="selModel(this,'google','G','Gemini Flash','Google','small')">
+            <span class="logo google">G</span>
+            <div><b>Gemini Flash</b><div class="vend">Google</div>
+              <p>Long documents, multimodal at high speed.</p></div>
+            <span class="kwh">≈ 0,0002</span>
+          </div>
+
+          <div class="tier">Balanced <span class="eco" style="color:var(--amber)">≈ 0,001 kWh</span></div>
+          <div class="mrow" onclick="selModel(this,'anthropic','A','Claude Sonnet','Anthropic','mid')">
+            <span class="logo anthropic">A</span>
+            <div><b>Claude Sonnet</b><div class="vend">Anthropic</div>
+              <p>Coding, analysis, long documents.</p></div>
+            <span class="kwh mid">≈ 0,001</span>
+          </div>
+          <div class="mrow" onclick="selModel(this,'openai','O','GPT-5','OpenAI','mid')">
+            <span class="logo openai">O</span>
+            <div><b>GPT-5</b><div class="vend">OpenAI</div>
+              <p>Daily chat, reasoning-lite.</p></div>
+            <span class="kwh mid">≈ 0,001</span>
+          </div>
+
+          <div class="tier">Deep reasoning <span class="eco" style="color:var(--red)">≈ 0,03 kWh</span></div>
+          <div class="mrow" onclick="selModel(this,'anthropic','A','Claude Opus','Anthropic','big')">
+            <span class="logo anthropic">A</span>
+            <div><b>Claude Opus</b><div class="vend">Anthropic</div>
+              <p>Complex research, multi-step work.</p></div>
+            <span class="kwh big">≈ 0,03</span>
+          </div>
+
+          <div class="tier">Open · local <span class="eco">0 kWh cloud</span></div>
+          <div class="mrow" onclick="selModel(this,'local','L','Llama · local','On-device','local')">
+            <span class="logo local">L</span>
+            <div><b>Llama / Mistral</b><span class="tag best">Greenest</span><div class="vend">open source · on-device</div>
+              <p>Runs on your phone — zero cloud energy, full privacy.</p></div>
+            <span class="kwh">0 cloud</span>
+          </div>
+        </div>
+
+        <!-- ============ STREAK ============ -->
+        <div class="view" id="v-streak">
+          <div class="streak-hero">
+            <div class="n" id="streakN">5</div>
+            <p>green picks in a row 🔥 — you're saving <b>0,14 kWh</b> this week</p>
+            <div class="dayrow">
+              <div class="ok"><i>✓</i>Mo</div><div class="ok"><i>✓</i>Tu</div>
+              <div class="ok"><i>✓</i>We</div><div class="ok"><i>✓</i>Th</div>
+              <div class="ok"><i>✓</i>Fr</div><div><i></i>Sa</div><div><i></i>Su</div>
+            </div>
+          </div>
+
+          <div class="sec">Eco badges</div>
+          <div class="stat-grid">
+            <div class="stat"><b>🌱</b><span>First green pick</span></div>
+            <div class="stat"><b>⚡</b><span>10× energy saved</span></div>
+            <div class="stat"><b>🔒</b><span>Local model user</span></div>
+            <div class="stat" style="opacity:.45"><b>🏆</b><span>30-day streak — locked</span></div>
+          </div>
+
+          <div class="sec">Leaderboard (team, opt-in)</div>
+          <div class="big-card" style="padding:12px 14px">
+            <div style="display:flex;gap:10px;align-items:center;font-size:13.5px;padding:7px 0">
+              <b>1.</b><span>Anna K.</span><span style="margin-left:auto;font-family:var(--mono);color:var(--green-d)">0,08 kWh</span></div>
+            <div style="display:flex;gap:10px;align-items:center;font-size:13.5px;padding:7px 0;border-top:1px solid var(--line)">
+              <b>2.</b><span>You</span><span style="margin-left:auto;font-family:var(--mono);color:var(--green-d)">0,11 kWh</span></div>
+            <div style="display:flex;gap:10px;align-items:center;font-size:13.5px;padding:7px 0;border-top:1px solid var(--line)">
+              <b>3.</b><span>Péter S.</span><span style="margin-left:auto;font-family:var(--mono)">0,19 kWh</span></div>
+          </div>
+        </div>
+
+      </div><!-- /views -->
+
+      <!-- ============ COMPOSER (chat only) ============ -->
+      <div class="composer" id="composer">
+        <div class="est"><span id="estT">⏱ ~2 s</span><span id="estC">💰 $0,0001</span><span id="estE">⚡ <b>0,0001 kWh</b></span></div>
+        <div class="mpick" onclick="openSheet()">
+          <span class="logo openai" id="mpLogo">O</span>
+          <span id="mpName">GPT-5 mini</span><span class="dot"></span>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </div>
+        <div class="comp-row">
+          <input id="inp" placeholder="Ask anything…">
+          <button class="send" onclick="send()">↑</button>
+        </div>
+      </div>
+
+      <!-- ============ MODEL SHEET ============ -->
+      <div class="sheet" id="sheet">
+        <div class="pane" onclick="event.stopPropagation()">
+          <div class="grab"></div>
+          <h3>Choose a model</h3>
+          <p class="hint">Organized by energy use — the efficient ones come first.</p>
+
+          <div class="tier">Fast &amp; efficient <span class="eco">≈ 0,0001 kWh</span></div>
+          <div class="mrow sel" onclick="sheetPick(this,'openai','O','GPT-5 mini','small')">
+            <span class="logo openai">O</span>
+            <div><b>GPT-5 mini</b><span class="tag best">Recommended</span><div class="vend">OpenAI</div>
+              <p>Fastest replies, lowest energy.</p></div>
+            <span class="kwh">≈ 0,0001</span>
+          </div>
+          <div class="mrow" onclick="sheetPick(this,'anthropic','A','Claude Haiku','small')">
+            <span class="logo anthropic">A</span>
+            <div><b>Claude Haiku</b><div class="vend">Anthropic</div><p>Quick Q&amp;A, extraction.</p></div>
+            <span class="kwh">≈ 0,0001</span>
+          </div>
+          <div class="mrow" onclick="sheetPick(this,'google','G','Gemini Flash','small')">
+            <span class="logo google">G</span>
+            <div><b>Gemini Flash</b><div class="vend">Google</div><p>Long docs, multimodal.</p></div>
+            <span class="kwh">≈ 0,0002</span>
+          </div>
+
+          <div class="tier">Balanced <span class="eco" style="color:var(--amber)">≈ 0,001 kWh</span></div>
+          <div class="mrow" onclick="sheetPick(this,'anthropic','A','Claude Sonnet','mid')">
+            <span class="logo anthropic">A</span>
+            <div><b>Claude Sonnet</b><div class="vend">Anthropic</div><p>Coding, analysis.</p></div>
+            <span class="kwh mid">≈ 0,001</span>
+          </div>
+          <div class="mrow" onclick="sheetPick(this,'openai','O','GPT-5','mid')">
+            <span class="logo openai">O</span>
+            <div><b>GPT-5</b><div class="vend">OpenAI</div><p>Daily chat.</p></div>
+            <span class="kwh mid">≈ 0,001</span>
+          </div>
+
+          <div class="tier">Deep reasoning <span class="eco" style="color:var(--red)">≈ 0,03 kWh</span></div>
+          <div class="mrow" onclick="sheetPick(this,'anthropic','A','Claude Opus','big')">
+            <span class="logo anthropic">A</span>
+            <div><b>Claude Opus</b><div class="vend">Anthropic</div><p>Complex research.</p></div>
+            <span class="kwh big">≈ 0,03</span>
+          </div>
+
+          <div class="tier">Open · local <span class="eco">0 kWh cloud</span></div>
+          <div class="mrow" onclick="sheetPick(this,'local','L','Llama · local','local')">
+            <span class="logo local">L</span>
+            <div><b>Llama / Mistral</b><span class="tag best">Greenest</span><div class="vend">on-device</div>
+              <p>Zero cloud energy, full privacy.</p></div>
+            <span class="kwh">0 cloud</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ============ ECO TOAST ============ -->
+      <div class="glow" id="glow"></div>
+      <div class="toast" id="toast" role="status" aria-live="polite">
+        <div class="ring">
+          <svg width="46" height="46"><circle class="bg" cx="23" cy="23" r="19"></circle>
+            <circle class="fg" id="ringFg" cx="23" cy="23" r="19"></circle></svg>
+          <span class="pct" id="ringPct">1%</span>
+        </div>
+        <div style="min-width:0">
+          <div class="ttl"><span id="ttlTxt">Greenest choice</span><span class="badge" id="badge">eco</span></div>
+          <div class="msg2" id="msg"></div>
+          <div class="save" id="save"></div>
+          <div class="streak" id="streak"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+      <div class="burst" id="burst"></div>
+
+      <!-- ============ TABS ============ -->
+      <div class="tabs">
+        <button class="on" data-v="chat" onclick="tab(this)"><span class="ico">💬</span>Chat</button>
+        <button data-v="foot" onclick="tab(this)"><span class="ico">🌱</span>Footprint</button>
+        <button data-v="models" onclick="tab(this)"><span class="ico">🧩</span>Models</button>
+        <button data-v="streak" onclick="tab(this)"><span class="ico">🔥</span>Streak</button>
+      </div>
+
+    </div><!-- /screen -->
+  </div><!-- /phone -->
+</div>
+
+<script>
+  const $ = id => document.getElementById(id);
+  const CIRC = 2*Math.PI*19, WORST = 0.03, CO2 = 400;
+  const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let cur = {model:'GPT-5 mini', brand:'openai', tier:'small'}, streakN = 4, toastTimer;
+  const num = v => v.toFixed(4).replace('.', ',');
+  const E = {small:['~2 s','$0,0001','0,0001'], mid:['~4 s','$0,002','0,001'],
+             big:['~25 s','$0,15','0,03'], local:['~3 s','$0 (device)','0 cloud']};
+
+  function tab(btn){
+    document.querySelectorAll('.tabs button').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
+    $('v-'+btn.dataset.v).classList.add('on');
+    $('composer').style.display = btn.dataset.v==='chat' ? '' : 'none';
+  }
+
+  /* ---- model sheet ---- */
+  function openSheet(){ $('sheet').classList.add('on'); }
+  $('sheet').addEventListener('click', e=>{ if(e.target.id==='sheet') $('sheet').classList.remove('on'); });
+
+  function sheetPick(row, brand, letter, model, tier){
+    row.parentElement.querySelectorAll('.mrow').forEach(r=>r.classList.remove('sel'));
+    row.classList.add('sel');
+    setModel(brand, letter, model, tier);
+    $('sheet').classList.remove('on');
+    fireToast(tier, model);
+  }
+  function selModel(row, brand, letter, model, vendor, tier){
+    row.parentElement.querySelectorAll('.mrow').forEach(r=>r.classList.remove('sel'));
+    row.classList.add('sel');
+    setModel(brand, letter, model, tier);
+    fireToast(tier, model);
+  }
+  function setModel(brand, letter, model, tier){
+    cur = {brand, model, tier};
+    const lg = $('mpLogo'); lg.className = 'logo '+brand; lg.textContent = letter;
+    $('mpName').textContent = model;
+    const e = E[tier] || E.small;
+    $('estT').textContent = '⏱ '+e[0]; $('estC').textContent = '💰 '+e[1];
+    $('estE').innerHTML = '⚡ <b>'+e[2]+' kWh</b>';
+    $('estE').style.color = tier==='big' ? 'var(--amber)' : '';
+  }
+
+  /* ---- send: reply uses the picked model ---- */
+  function send(){
+    const v = $('inp').value.trim(); if(!v) return;
+    const box = $('v-chat');
+    const me = document.createElement('div'); me.className='msg me'; me.textContent = v;
+    box.appendChild(me); $('inp').value='';
+    setTimeout(()=>{
+      const lg = cur.brand;
+      const ai = document.createElement('div'); ai.className='msg ai';
+      ai.innerHTML = `Here's your answer — 5 bullets, 120 words.
+        <div class="meta"><span class="logo ${lg}">${$('mpLogo').textContent}</span> ${cur.model} · 1,1 s
+        <b>⚡ ${E[cur.tier][2]} kWh</b> ${cur.tier==='local'?'<span>on-device</span>':'<span>≈ 0,03 g CO₂</span>'}</div>`;
+      box.appendChild(ai);
+      box.scrollTop = box.scrollHeight;
+      fireToast(cur.tier, cur.model);
+    }, 500);
+    box.scrollTop = box.scrollHeight;
+  }
+  $('inp').addEventListener('keydown', e=>{ if(e.key==='Enter') send(); });
+
+  /* ---- eco toast ---- */
+  function fireToast(tier, model){
+    const isEco = tier==='small'||tier==='local', isHeavy = tier==='big';
+    const energy = tier==='local'?0:tier==='small'?0.0001:tier==='mid'?0.001:0.03;
+    const t = $('toast');
+    clearTimeout(toastTimer);
+    t.classList.remove('show','hide','amber'); void t.offsetWidth;
+    if (isHeavy) t.classList.add('amber');
+
+    $('badge').textContent = isEco?'eco':isHeavy?'heads-up':'ok';
+    $('ttlTxt').textContent = tier==='local'?'Zero cloud energy':
+      isEco?'Greenest choice':isHeavy?'Energy-heavy tier':'Good balance';
+    $('msg').innerHTML = tier==='local'?`<b>${model}</b> ran on your phone — nothing left the device.`
+      : isEco?`<b>${model}</b> uses ~100× less energy than Claude Opus — same answer for this task.`
+      : isHeavy?`<b>${model}</b> draws ~300× more energy. Great for hard tasks — quick asks? Try <b>GPT-5 mini</b>.`
+      :`<b>${model}</b> — solid quality at a moderate cost. Nice middle ground.`;
+
+    const saved = Math.max(0, WORST-energy);
+    $('save').innerHTML = energy===0?'⚡ 0 kWh cloud · on-device · ≈ 0 g CO₂'
+      : saved===0?`uses <b>${num(energy)} kWh</b> ≈ ${Math.round(energy*CO2)} g CO₂ · heaviest tier`
+      :`uses <b>${num(energy)} kWh</b> · saves <b>${num(saved)} kWh</b> ≈ ${Math.round(saved*CO2)} g CO₂`;
+
+    const pct = tier==='local'?1:Math.round(energy/WORST*100)||1;
+    const ring = $('ringFg'); ring.style.strokeDashoffset = CIRC;
+    $('ringPct').textContent = pct+'%';
+
+    streakN = isHeavy?0:Math.min(6, streakN+1);
+    $('streakN').textContent = Math.max(streakN,1);
+    document.querySelectorAll('#streak i').forEach((el,i)=>{
+      el.style.animationDelay = (0.5+i*0.06)+'s';
+      el.style.background = i<streakN?'var(--green)':'#eceff3';
+    });
+
+    t.classList.add('show');
+    if (!reduced && !isHeavy){
+      const g = $('glow'); g.classList.remove('show'); void g.offsetWidth; g.classList.add('show');
+      leaves();
+    }
+    setTimeout(()=>{ ring.style.strokeDashoffset = CIRC*(1-pct/100); }, reduced?0:350);
+    toastTimer = setTimeout(closeToast, 6000);
+  }
+
+  function leaves(){
+    const b = $('burst'); b.innerHTML='';
+    const em=['🌿','🍃','🌱','💚'];
+    for(let i=0;i<12;i++){
+      const s=document.createElement('span'); const spark=i>7;
+      s.className='leaf'; s.textContent=spark?'·':em[i%4];
+      s.style.setProperty('--dx',((Math.random()-0.5)*240).toFixed(0)+'px');
+      s.style.setProperty('--dy',(-70-Math.random()*120).toFixed(0)+'px');
+      s.style.setProperty('--rot',((Math.random()-0.5)*360).toFixed(0)+'deg');
+      s.style.left=((Math.random()-0.5)*100).toFixed(0)+'px';
+      s.style.animationDelay=(Math.random()*0.35).toFixed(2)+'s';
+      if(spark){s.style.fontSize=(10+Math.random()*9)+'px';s.style.color='var(--green)';}
+      b.appendChild(s);
+    }
+  }
+  function closeToast(){
+    const t=$('toast'); if(!t.classList.contains('show')) return;
+    t.classList.remove('show'); t.classList.add('hide');
+  }
+  $('toast').addEventListener('click', closeToast);
+</script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI tudatossági UI – wireframe</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --panel:#fff; --line:#e3e6ea; --ink:#1a1d21; --dim:#6b7280;
+    --acc:#2563eb; --green:#16a34a; --amber:#d97706; --red:#dc2626;
+    --display:ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial;
+    --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 var(--display);padding:32px 16px 80px}
+  .wrap{max-width:1040px;margin:0 auto}
+  h1{font-size:26px;margin:0 0 4px}
+  .sub{color:var(--dim);margin:0 0 28px}
+  h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:36px 0 12px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px}
+  .grid{display:grid;gap:16px}
+  @media(min-width:760px){.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}}
+
+  /* ---------- prompt composer ---------- */
+  .composer{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+  .composer textarea{width:100%;border:0;padding:16px;font:inherit;resize:vertical;min-height:88px;outline:none}
+  .bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:10px 12px;border-top:1px solid var(--line);background:#fbfcfd}
+  .bar .spacer{flex:1}
+
+  /* model picker */
+  .mp{position:relative}
+  .mp>button{display:flex;gap:8px;align-items:center;border:1px solid var(--line);background:#fff;border-radius:10px;padding:7px 11px;font:inherit;font-size:13.5px;cursor:pointer}
+  .mp>button:hover{border-color:#c9ced6}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+  .dot.mid{background:var(--amber)} .dot.big{background:var(--red)}
+  .menu{position:absolute;bottom:calc(100% + 8px);left:0;width:340px;background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 12px 32px rgba(0,0,0,.14);padding:8px;display:none;z-index:9}
+  .mp.open .menu{display:block}
+  .m{display:flex;gap:10px;align-items:flex-start;padding:9px 10px;border-radius:10px;cursor:pointer}
+  .m:hover{background:#f1f4f8}
+  .m.sel{background:#eef4ff;outline:1.5px solid var(--acc)}
+  .m b{font-size:13.5px}
+  .m .tag{font-size:11px;border-radius:6px;padding:1px 6px;background:#eef1f5;color:var(--dim);margin-left:6px}
+  .m .tag.best{background:#e7f7ed;color:var(--green)}
+  .m p{margin:2px 0 0;font-size:12.5px;color:var(--dim)}
+  .m .eco{margin-left:auto;font:11.5px var(--mono);color:var(--green);white-space:nowrap;padding-top:2px}
+
+  /* mode chips */
+  .modes{display:flex;gap:6px;background:#eef1f5;border-radius:10px;padding:3px}
+  .modes button{border:0;background:transparent;font:inherit;font-size:13px;padding:5px 11px;border-radius:8px;cursor:pointer;color:var(--dim)}
+  .modes button.on{background:#fff;color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.12);font-weight:600}
+
+  /* send */
+  .send{border:0;background:var(--acc);color:#fff;font:inherit;font-weight:600;padding:8px 16px;border-radius:10px;cursor:pointer}
+  .send:disabled{background:#a9b4c4;cursor:not-allowed}
+
+  .hintline{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--dim);padding:8px 14px 12px}
+  .hintline b{color:var(--ink);font-family:var(--mono);font-weight:600}
+
+  /* usage meter under composer */
+  .meter{margin-top:10px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .meter .row{display:flex;justify-content:space-between;font-size:12.5px;color:var(--dim);margin-bottom:6px}
+  .meter .row b{color:var(--ink)}
+  .track{height:8px;border-radius:99px;background:#eceff3;overflow:hidden;display:flex}
+  .track i{display:block;height:100%}
+  .seg-a{background:var(--green)} .seg-b{background:var(--amber)} .seg-c{background:#93c5fd}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--dim);margin-top:8px}
+  .legend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+
+  /* ---------- response meta chips ---------- */
+  .resp{margin-top:24px}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .chip{font-size:12.5px;border:1px solid var(--line);background:#fff;border-radius:99px;padding:4px 11px;display:flex;gap:6px;align-items:center}
+  .chip b{font-family:var(--mono);font-weight:600}
+  .chip.eco{border-color:#bbe7c9;background:#f2fbf5;color:var(--green)}
+  .chip.slow{border-color:#f3ddb6;background:#fdf8ee;color:var(--amber)}
+  .btn-ghost{border:1px solid var(--line);background:#fff;border-radius:9px;padding:5px 11px;font:inherit;font-size:12.5px;cursor:pointer}
+  .btn-ghost:hover{border-color:#c9ced6}
+  .contrast{margin-top:10px;font-size:13px;color:var(--dim);background:#fbfcfd;border:1px dashed var(--line);border-radius:10px;padding:10px 12px}
+  .contrast b{color:var(--ink)}
+
+  /* ---------- wireframe annotation blocks ---------- */
+  .annot{border-left:3px solid var(--acc);padding:2px 0 2px 12px;margin:10px 0 0;font-size:13.5px;color:var(--dim)}
+  .annot b{color:var(--ink)}
+  .anno-num{display:inline-flex;width:20px;height:20px;border-radius:50%;background:var(--acc);color:#fff;font-size:11.5px;font-weight:700;align-items:center;justify-content:center;margin-right:7px;vertical-align:2px}
+  ul{margin:8px 0 0;padding-left:18px;color:var(--dim);font-size:13.5px}
+  li{margin:3px 0}
+  li b{color:var(--ink)}
+  .skel{height:12px;border-radius:6px;background:linear-gradient(90deg,#eef1f5 25%,#e3e7ec 37%,#eef1f5 63%);background-size:400% 100%;animation:sh 1.4s ease infinite}
+  @keyframes sh{0%{background-position:100% 0}100%{background-position:0 0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>Modelltudatosság – felületi vázlat</h1>
+  <p class="sub">Prompt-szerkesztő modellválasztóval, energiaköltség-mutatóval és válaszszintű visszajelzéssel · wireframe</p>
+
+  <!-- ============ 1. PROMPT COMPOSER ============ -->
+  <h2>1 · Prompt-szerkesztő (composer)</h2>
+  <div class="composer">
+    <textarea placeholder="Kérdezz, vagy írd le, mire van szükséged…">Foglald össze ezt a 40 oldalas tanulmányt 5 pontba, magyarul.</textarea>
+    <div class="bar">
+      <!-- model picker -->
+      <div class="mp" id="mp">
+        <button type="button" onclick="document.getElementById('mp').classList.toggle('open')">
+          <span class="dot mid" id="mpDot"></span>
+          <span id="mpLabel">Közepes · <b>gyors &amp; olcsó</b></span>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+        <div class="menu" role="listbox">
+          <div class="m" onclick="pick(this,'small','Kis · takarékos','small')">
+            <span class="dot"></span>
+            <div><b>Kis modell</b><span class="tag best">Ajánlott ehhez</span>
+              <p>Összefoglaló, fordítás, kategorizálás. Gyors válasz, a legalacsonyabb energiaigény.</p></div>
+            <span class="eco">≈ 0,0001 kWh</span>
+          </div>
+          <div class="m sel" onclick="pick(this,'mid','Közepes · gyors &amp; olcsó','mid')">
+            <span class="dot mid"></span>
+            <div><b>Közepes modell</b><span class="tag">Kiegyensúlyozott</span>
+              <p>Napi chat, kód, jó minőség megfizethető számításigény mellett.</p></div>
+            <span class="eco">≈ 0,001 kWh</span>
+          </div>
+          <div class="m" onclick="pick(this,'big','Nagy · mély gondolkodás','big')">
+            <span class="dot big"></span>
+            <div><b>Nagy modell + gondolkodás</b>
+              <p>Összetett elemzés, hosszú kontextus, kutatás. Lassú, drága, magas energia.</p></div>
+            <span class="eco">≈ 0,02 kWh</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- speed/quality modes -->
+      <div class="modes">
+        <button type="button">Gyors</button>
+        <button type="button" class="on">Kiegyensúlyozott</button>
+        <button type="button">Mély gondolkodás</button>
+      </div>
+
+      <div class="spacer"></div>
+      <button class="send" id="sendBtn">Küldés</button>
+    </div>
+    <div class="hintline">
+      <span>⏱ Becsült válasz: <b id="estTime">~3 mp</b></span>
+      <span>💰 Becsült költség: <b id="estCost">≈ $0,0004</b></span>
+      <span>⚡ Energia: <b id="estEnergy">≈ 0,001 kWh</b></span>
+      <span style="color:var(--green)">🌿 ~10× kevesebb, mint a nagy modell</span>
+    </div>
+  </div>
+
+  <!-- usage meter -->
+  <div class="meter">
+    <div class="row"><span>Havi energia-kvóta (csapat) · <b>3,2 / 5,0 kWh</b></span><span>64% felhasználva · 20 nap múlva újul</span></div>
+    <div class="track">
+      <i class="seg-a" style="width:38%"></i><i class="seg-b" style="width:26%"></i><i class="seg-c" style="width:12%"></i>
+    </div>
+    <div class="legend">
+      <span><i class="seg-a"></i>kis modellek</span>
+      <span><i class="seg-b"></i>közepes</span>
+      <span><i class="seg-c"></i>nagy modell</span>
+      <span style="margin-left:auto">Zöld mód: <b style="color:var(--green)">bekapcsolva</b> — kis modell + cache + rövid válasz</span>
+    </div>
+  </div>
+
+  <div class="annot"><span class="anno-num">1</span><b>A döntés a prompt mellett van</b> — a modellválasztó a küldés gomb mellett, 1 kattintással elérhető, sosem elrejtve.</div>
+  <div class="annot"><span class="anno-num">2</span><b>Alapértelmezés a takarékos</b> — a közepes/kis modell a default; a nagy kifejezett választás.</div>
+  <div class="annot"><span class="anno-num">3</span><b>Azonnali, számszerű visszajelzés</b> — idő, pénz és energia a küldés előtt látszik, nem utólag.</div>
+
+  <!-- ============ 2. RESPONSE META ============ -->
+  <h2>2 · Válasz meta-sávja</h2>
+  <div class="card resp">
+    <div style="font-size:14.5px;color:var(--dim)">…itt jelenik meg a modell válasza (wireframe: szöveghelyettes)…</div>
+    <div class="skel" style="width:92%;margin-top:14px"></div>
+    <div class="skel" style="width:85%;margin-top:8px"></div>
+    <div class="skel" style="width:60%;margin-top:8px"></div>
+
+    <div class="chips">
+      <span class="chip"><span class="dot mid"></span> Közepes modell · 1,2 s</span>
+      <span class="chip">⚡ <b>0,0009 kWh</b></span>
+      <span class="chip eco">🌿 840 token · ~0,3 g CO₂</span>
+      <span class="chip">cache: <b>hit</b> (72% olcsóbb)</span>
+      <span style="flex:1"></span>
+      <button class="btn-ghost" onclick="document.getElementById('alt').hidden=!document.getElementById('alt').hidden">Másik modellel újra</button>
+      <button class="btn-ghost">Rövidítsd</button>
+    </div>
+
+    <div class="contrast" id="alt" hidden>
+      💡 <b>Hasonlat:</b> ugyanez a feladat a nagy modellel <b>≈ 0,02 kWh</b> és <b>≈ 18 mp</b> lett volna.
+      <button class="btn-ghost" style="margin-left:8px">Futtasd naggyal</button>
+    </div>
+  </div>
+
+  <div class="annot"><span class="anno-num">4</span><b>Kontraszt, nem bűntudat</b> — a „mi lett volna, ha" megmutatása segít a tanulásban, de nem tilos semmi.</div>
+
+  <!-- ============ 3. NUDGE ============ -->
+  <h2>3 · Mikro-interakciók (nudge-ek)</h2>
+  <div class="grid g3">
+    <div class="card">
+      <b>Hosszú generálás közben</b>
+      <ul>
+        <li>futó <b>token-számláló</b> + energia-becslés</li>
+        <li>„<b>Leállítod?</b> Eddig ~2 400 token."</li>
+        <li progress → „A válasz 80%-nál tart"</li>
+      </ul>
+    </div>
+    <div class="card">
+      <b>Ismétlődő újrakérés</b>
+      <ul>
+        <li>3× ugyanaz más szavakkal →</li>
+        <li>„<b>Pontosítsd inkább</b> a kérésed – gyorsabb és olcsóbb, mint az újrakérés."</li>
+        <li>javasolt prompt-sablon egy kattintással</li>
+      </ul>
+    </div>
+    <div class="card">
+      <b>Nehéz feladat kis modellel</b>
+      <ul>
+        <li>a kis modell gyenge válasza után:</li>
+        <li>„Ehhez a <b>nagy modell</b> jobb lehet – futtassam?</b>"</li>
+        <li>1 kattintás → auto-útválasztás logikával</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- ============ 4. ROUTING LOGIC ============ -->
+  <h2>4 · Automatikus útválasztás (automatikus, de látható)</h2>
+  <div class="card">
+    <div class="grid g3">
+      <div>
+        <div style="font-size:12.5px;color:var(--dim)">Bemenet osztályozása</div>
+        <div style="font-family:var(--mono);font-size:13px;margin-top:6px">
+          „összefoglaló" → <span style="color:var(--green)">kis</span><br>
+          „kód, hiba" → <span style="color:var(--amber)">közepes</span><br>
+          „elemzés, kutatás" → <span style="color:var(--red)">nagy</span>
+        </div>
+      </div>
+      <div>
+        <div style="font-size:12.5px;color:var(--dim)">Megerősítés a UI-n</div>
+        <div class="chip" style="margin-top:6px;display:inline-flex"><span class="dot"></span> Automatikus: <b>Kis modell</b> · módosítható</div>
+        <div style="font-size:12.5px;color:var(--dim);margin-top:8px">A felhasználó mindig felülírhatja a döntést.</div>
+      </div>
+      <div>
+        <div style="font-size:12.5px;color:var(--dim)">Napló (átláthatóság)</div>
+        <div style="font-family:var(--mono);font-size:12.5px;margin-top:6px;color:var(--dim)">
+          14:02 · kis · 0,0001 kWh<br>
+          14:05 · közepes · 0,001 kWh<br>
+          14:09 · nagy · 0,02 kWh
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ 5. DASHBOARD ============ -->
+  <h2>5 · Tudatossági dashboard (profil alatt)</h2>
+  <div class="grid g2">
+    <div class="card">
+      <b>Saját lábnyomod (30 nap)</b>
+      <div class="track" style="margin-top:12px"><i class="seg-a" style="width:54%"></i><i class="seg-b" style="width:31%"></i><i class="seg-c" style="width:15%"></i></div>
+      <div class="legend"><span><i class="seg-a"></i>54% kis</span><span><i class="seg-b"></i>31% közepes</span><span><i class="seg-c"></i>15% nagy</span></div>
+      <div style="margin-top:12px;font-family:var(--mono);font-size:13px">≈ 0,41 kWh · ≈ 170 g CO₂</div>
+    </div>
+    <div class="card">
+      <b>Javaslatok</b>
+      <ul>
+        <li>A <b>42 kérésedből 30</b> kis modellel is jó lett volna → <b>−38% energia</b></li>
+        <li>Használd a <b>prompt-cache</b>-t: 7 alkalmazott, 31 alkalommal kihasználatlan</li>
+        <li>Állítsd be a <b>zöld módot</b> alapértelmezésnek</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  function pick(el, key, label, dotCls){
+    document.querySelectorAll('.m').forEach(m=>m.classList.remove('sel'));
+    el.classList.add('sel');
+    document.getElementById('mpLabel').innerHTML = label;
+    const d = document.getElementById('mpDot');
+    d.className = 'dot ' + (dotCls==='small'?'':dotCls);
+    document.getElementById('mp').classList.remove('open');
+
+    const est = {
+      small: ['~1 mp','≈ $0,0001','≈ 0,0001 kWh'],
+      mid:   ['~3 mp','≈ $0,0004','≈ 0,001 kWh'],
+      big:   ['~18 mp','≈ $0,06','≈ 0,02 kWh'],
+    }[dotCls];
+    document.getElementById('estTime').textContent = est[0];
+    document.getElementById('estCost').textContent = est[1];
+    document.getElementById('estEnergy').textContent = est[2];
+  }
+  document.addEventListener('click', e=>{
+    if(!e.target.closest('#mp')) document.getElementById('mp').classList.remove('open');
+  });
+</script>
+</body>
+</html>
