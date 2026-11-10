@@ -57,9 +57,9 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   .tpl .ico{font-size:24px;width:44px;height:44px;border-radius:12px;background:var(--soft);display:grid;place-items:center;flex:0 0 auto}
   .tpl .sub{font-size:14.5px;color:var(--dim);line-height:1.45}
   .tpl label{display:block;padding:8px 16px 0;font-size:14px;font-weight:600;color:#3b4148}
-  .tpl input{display:block;width:100%;margin-top:4px;font:15px/1.4 var(--display);padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
-  .tpl input:focus{outline:2px solid var(--acc);outline-offset:1px;background:#fff}
-  .tpl input::placeholder{color:#8a9099}
+  .tpl textarea{display:block;width:100%;resize:vertical;min-height:62px;margin-top:4px;font:15px/1.4 var(--display);padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+  .tpl textarea:focus{outline:2px solid var(--acc);outline-offset:1px;background:#fff}
+  .tpl textarea::placeholder{color:#8a9099}
   .tpl .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:14px 16px 16px}
   .copy{font:700 15px var(--display);background:var(--green);color:#fff;border:0;border-radius:10px;padding:10px 16px;cursor:pointer}
   .copy:hover{background:var(--green-d)}
@@ -152,7 +152,7 @@ function text(i,l){var t=T[i],d=t.d[l];d[7]=STY[l];
 function render(){var l=lang(),c=document.getElementById("cards");
  c.innerHTML=T.map(function(t,i){var d=t.d[l];d[7]=STY[l];
   return '<details class="tpl"'+(i===0?" open":"")+'><summary><span class="ico">'+t.ico+'</span><span><b>'+t[l][0]+'</b><br><span class="sub">'+t[l][1]+'</span></span></summary>'+
-  Q[l].map(function(q,k){return '<label><span>'+(k+1)+". "+q+'</span><input data-i="'+i+'" data-k="'+k+'" value="'+esc(vals[i][k])+'" placeholder="'+(l==="hu"?"Ajánlott: ":"Recommended: ")+esc(d[k])+'"></label>';}).join("")+
+  Q[l].map(function(q,k){return '<label><span>'+(k+1)+". "+q+'</span><textarea rows="2" data-i="'+i+'" data-k="'+k+'" placeholder="'+(l==="hu"?"Ajánlott: ":"Recommended: ")+esc(d[k])+'">'+esc(vals[i][k])+'</textarea></label>';}).join("")+
   '<div class="row"><button type="button" class="copy" data-i="'+i+'">'+(l==="hu"?"📋 Másolás":"📋 Copy")+'</button><span class="ok" aria-live="polite"></span></div></details>';}).join("");}
 document.addEventListener("input",function(e){var x=e.target;if(x.dataset&&x.dataset.k)vals[+x.dataset.i][+x.dataset.k]=x.value;});
 document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".copy");if(!b)return;

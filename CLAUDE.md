@@ -36,6 +36,7 @@ Megnézéshez: `python3 -m http.server`, majd böngésző.
 - `the-weight-of-a-click.html`, `powering-intelligence.html`: átvett oldalak,
   Google Fonts / Tailwind CDN-nel; csak angolul vannak.
 - `one-pager/`, `social-graphic/`: dizájn-export (`*.dc.html` + vendor React), csak referencia.
+- `powering-intelligence.html` a `nav.js` egy inline másolatát tartalmazza: ha a `MAP` vagy a menü változik, ott is frissítsd.
 - `app/`: külön PWA (`sw.js`). Ha a shell fájljai változnak, emeld a `CACHE` verziót (`ecoai-vN`).
 
 ## Skill
