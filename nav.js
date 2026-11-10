@@ -18,6 +18,7 @@
     "hu.html": ["index-en.html", "hu.html"],
     "mobile-app.html": ["mobile-app.html", "mobile-app-hu.html"],
     "mobile-app-hu.html": ["mobile-app.html", "mobile-app-hu.html"],
+    "models.html": ["models.html", "models.html"],
     "eco-feedback.html": ["eco-feedback.html", "eco-feedback-hu.html"],
     "eco-feedback-hu.html": ["eco-feedback.html", "eco-feedback-hu.html"],
     "petition.html": ["petition.html", "petition-hu.html"],
@@ -53,6 +54,7 @@
       ["home", l === "hu" ? "Főoldal" : "Home", "index.html"],
       ["desktop", "🖥️ " + (l === "hu" ? "Asztali" : "Desktop"), l === "hu" ? "hu.html" : "index-en.html"],
       ["mobile", "📱 " + (l === "hu" ? "Mobil app" : "Mobile app"), l === "hu" ? "mobile-app-hu.html" : "mobile-app.html"],
+      ["models", "🧠 " + (l === "hu" ? "Modellek" : "Models"), "models.html"],
       ["eco", "✨ " + (l === "hu" ? "Eco-feedback" : "Eco-feedback"), l === "hu" ? "eco-feedback-hu.html" : "eco-feedback.html"],
       ["petition", "✍️ " + (l === "hu" ? "Petíció" : "Petition"), l === "hu" ? "petition-hu.html" : "petition.html"]
     ];

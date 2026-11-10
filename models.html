@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Melyik modellt használd? – model loader / Which model should you use?</title>
+<meta name="description" content="Gyors döntéstámogató: mire jó egy-egy AI modell, példákkel, összehasonlítással és 5 egyszerű szabállyal. / Quick decision guide: what each AI model is good for, with examples.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="🧠 Melyik modellt használd? – AI model választási útmutató">
+<meta property="og:description" content="Mire jó egy-egy AI modell: feladat-alapú javaslatok, példa-promptok, összehasonlítás és 5 egyszerű szabály.">
+<meta property="og:url" content="https://madcsaba.github.io/ai-awareness-wireframe/models.html">
+<meta property="og:image" content="https://madcsaba.github.io/ai-awareness-wireframe/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary">
+<script src="nav.js" defer></script>
+<script>
+(function(){var l;try{l=localStorage.getItem("ecoai-lang")}catch(e){}
+if(l!=="hu"&&l!=="en")l=(navigator.language||"").toLowerCase().indexOf("hu")===0?"hu":"en";
+document.documentElement.setAttribute("data-lang",l);document.documentElement.lang=l;})();
+</script>
+<style>
+  :root{--bg:#f6f7f9;--panel:#fff;--line:#e3e6ea;--ink:#1a1d21;--dim:#6b7280;
+    --acc:#2563eb;--green:#16a34a;--amber:#d97706;--red:#dc2626;
+    --anthropic:#d97757;--openai:#10a37f;--google:#4285f4;--local:#16a34a;
+    --display:ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial;
+    --mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--display);padding:44px 18px 70px}
+  .wrap{max-width:960px;margin:0 auto}
+  h1{font-size:28px;margin:0 0 6px;letter-spacing:-.02em}
+  .sub{color:var(--dim);margin:0 0 26px;max-width:680px}
+  h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:38px 0 14px}
+  html[data-lang="hu"] .en{display:none}
+  html[data-lang="en"] .hu{display:none}
+  .logo{width:18px;height:18px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;
+    color:#fff;font-size:11px;font-weight:800;flex:0 0 auto;vertical-align:-3px}
+  .logo.anthropic{background:var(--anthropic)}.logo.openai{background:var(--openai)}
+  .logo.google{background:var(--google)}.logo.local{background:var(--local)}
+
+  /* 1 · chips */
+  .chips{display:flex;gap:8px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:#fff;border-radius:99px;padding:9px 15px;
+    font:inherit;font-size:14px;cursor:pointer;transition:.12s}
+  .chip:hover{border-color:#c9ced6;transform:translateY(-1px)}
+  .chip.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+
+  /* 2 · task cards */
+  .task{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:14px}
+  .task.hide{display:none}
+  .task h3{margin:0 0 4px;font-size:17px}
+  .task .why{color:var(--dim);font-size:13.5px;margin:0 0 14px}
+  .picks{display:grid;gap:10px}
+  @media(min-width:700px){.picks{grid-template-columns:1fr 1fr 1fr}}
+  .pick{border:1.5px solid var(--line);border-radius:13px;padding:12px 13px;background:#fbfcfd;position:relative}
+  .pick.best{border-color:var(--green);background:#f2fbf5}
+  .pick .rank{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+  .pick.best .rank{color:var(--green)}
+  .pick b{display:block;font-size:14.5px;margin-top:3px}
+  .pick .vend{font-size:11.5px;color:var(--dim)}
+  .pick .meta{font:11.5px var(--mono);color:var(--dim);margin-top:7px;display:flex;gap:9px;flex-wrap:wrap}
+  .prompt{margin-top:14px;background:#f1f4f8;border-left:3px solid var(--acc);border-radius:0 10px 10px 0;
+    padding:11px 13px;font:13px/1.55 var(--mono);color:#334155}
+  .prompt .lbl{display:block;font:600 10.5px var(--display);letter-spacing:.07em;text-transform:uppercase;
+    color:var(--acc);margin-bottom:5px}
+  .avoid{margin-top:10px;font-size:13px;color:var(--amber);background:#fdf8ee;border:1px solid #f3ddb6;
+    border-radius:10px;padding:9px 12px}
+  .avoid b{color:#9a5b12}
+
+  /* 3 · model cards */
+  details.model{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+  details.model summary{cursor:pointer;padding:15px 18px;font-weight:700;font-size:15px;list-style:none;
+    display:flex;align-items:center;gap:9px}
+  details.model summary::-webkit-details-marker{display:none}
+  details.model summary::after{content:"+";margin-left:auto;color:var(--dim);font-weight:400;font-size:19px}
+  details.model[open] summary::after{content:"–"}
+  details.model .body{padding:0 18px 17px;font-size:13.5px;color:var(--dim)}
+  details.model .body b{color:var(--ink)}
+  .cols{display:grid;gap:12px;margin-top:10px}
+  @media(min-width:700px){.cols{grid-template-columns:1fr 1fr}}
+  .col{background:#fbfcfd;border:1px solid var(--line);border-radius:11px;padding:11px 13px}
+  .col h4{margin:0 0 6px;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim)}
+  .col ul{margin:0;padding-left:17px}
+  .col li{margin:3px 0}
+  .bar{height:7px;border-radius:99px;background:#eceff3;overflow:hidden;margin-top:9px;display:flex}
+  .bar i{display:block;height:100%}
+
+  /* 4 · table */
+  .tbl-wrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:640px}
+  th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);background:#fbfcfd}
+  tr:last-child td{border-bottom:0}
+  td.num{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
+  .pill{font-size:11px;border-radius:99px;padding:2px 9px;background:#eef1f5;color:var(--dim);white-space:nowrap}
+  .pill.g{background:#e7f7ed;color:var(--green)}.pill.a{background:#fdf3e3;color:var(--amber)}
+
+  /* 5 · rules */
+  .rules{display:grid;gap:11px}
+  @media(min-width:700px){.rules{grid-template-columns:1fr 1fr}}
+  .rule{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--green);
+    border-radius:0 13px 13px 0;padding:14px 16px;font-size:14px}
+  .rule b{display:block;margin-bottom:3px}
+  .rule span{color:var(--dim);font-size:13px}
+
+  /* 6 · warnings */
+  .warn{background:#fdf8ee;border:1px solid #f3ddb6;border-radius:14px;padding:18px 20px}
+  .warn li{margin:9px 0;font-size:14px}
+  .warn b{color:#9a5b12}
+  .foot{margin-top:34px;font-size:12.5px;color:var(--dim);border-top:1px solid var(--line);padding-top:16px}
+  .foot a{color:var(--acc);text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>
+    <span class="hu">🧠 Melyik modellt használd?</span>
+    <span class="en">🧠 Which model should you use?</span>
+  </h1>
+  <p class="sub">
+    <span class="hu">Gyors döntéstámogató: mire jó egy-egy modell, konkrét példákkal. Válaszd ki, mit szeretnél
+      csinálni — a javaslatok alul megjelennek. A színek és márkák megegyeznek a többi oldallal.</span>
+    <span class="en">Quick decision guide: what each model is good for, with concrete examples. Pick what you
+      want to do — the recommendations appear below. Colors and brands match the rest of the site.</span>
+  </p>
+
+  <!-- 1 · CHIPS -->
+  <h2><span class="hu">1 · Mit szeretnél csinálni?</span><span class="en">1 · What do you want to do?</span></h2>
+  <div class="chips" id="chips">
+    <button class="chip on" data-f="all"><span class="hu">Mind</span><span class="en">All</span></button>
+    <button class="chip" data-f="sum"><span class="hu">📝 Összefoglaló</span><span class="en">📝 Summary</span></button>
+    <button class="chip" data-f="code"><span class="hu">💻 Kód</span><span class="en">💻 Code</span></button>
+    <button class="chip" data-f="ana"><span class="hu">🔬 Elemzés</span><span class="en">🔬 Analysis</span></button>
+    <button class="chip" data-f="wri"><span class="hu">✍️ Kreatív szöveg</span><span class="en">✍️ Creative writing</span></button>
+    <button class="chip" data-f="chat"><span class="hu">💬 Beszélgetés</span><span class="en">💬 Chat</span></button>
+    <button class="chip" data-f="priv"><span class="hu">🔒 Privát / fájlok</span><span class="en">🔒 Private / files</span></button>
+  </div>
+
+  <!-- 2 · TASK CARDS -->
+  <h2><span class="hu">2 · Erre a célra ezt</span><span class="en">2 · Best pick for the job</span></h2>
+
+  <div class="task" data-cat="sum">
+    <h3><span class="hu">📝 Egy hosszú dokumentum összefoglalása</span><span class="en">📝 Summarizing a long document</span></h3>
+    <p class="why"><span class="hu">Strukturált kivonat, kulcspontok, bullet-point átirat — a tartalom közvetlen átadása a cél, nem az éleslátás.</span>
+      <span class="en">Structured extract, key points, bullet rewrite — the job is faithful compression, not deep insight.</span></p>
+    <div class="picks">
+      <div class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
+        <b><span class="logo openai">O</span> GPT-5 mini</b><span class="vend">OpenAI</span>
+        <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
+      <div class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
+        <b><span class="logo anthropic">A</span> Claude Haiku</b><span class="vend">Anthropic</span>
+        <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
+      <div class="pick"><span class="rank"><span class="hu">3. hosszú szöveghez</span><span class="en">3rd, for long text</span></span>
+        <b><span class="logo google">G</span> Gemini Flash</b><span class="vend">Google</span>
+        <div class="meta"><span>⚡ 0,0002 kWh</span><span>⏱ ~1 s</span></div></div>
+    </div>
+    <div class="prompt"><span class="lbl"><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></span>
+      <span class="hu">„Foglald össze ezt a 40 oldalas tanulmányt 5 pontba. Pontonként 1 mondat + a forrás oldalszáma. Ne véleményt írj, csak tényeket."</span>
+      <span class="en">“Summarize this 40-page study into 5 bullets. One sentence per point + the source page number. Facts only, no opinion.”</span></div>
+    <div class="avoid"><b><span class="hu">⚠ Mikor ne:</span><span class="en">⚠ When not to:</span></b>
+      <span class="hu"> ha pontos idézeteket vagy számokat kell kinyerned — a kis modellek olykor „kiszépítik" a tartalmat; ellenőrizd a forrással.</span>
+      <span class="en"> if you need exact quotes or numbers — small models sometimes smooth over the content; verify against the source.</span></div>
+  </div>
+
+  <div class="task" data-cat="code">
+    <h3><span class="hu">💻 Kódolás, hibakeresés, refaktorálás</span><span class="en">💻 Coding, debugging, refactoring</span></h3>
+    <p class="why"><span class="hu">Itt a pontosság a tét: egy rossz sor többe kerül, mint a gyors válasz. Közepes a minimum.</span>
+      <span class="en">Accuracy is the stakes here: a wrong line costs more than a slow reply. Mid-tier is the minimum.</span></p>
+    <div class="picks">
+      <div class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
+        <b><span class="logo anthropic">A</span> Claude Sonnet</b><span class="vend">Anthropic</span>
+        <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
+      <div class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
+        <b><span class="logo openai">O</span> GPT-5</b><span class="vend">OpenAI</span>
+        <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
+      <div class="pick"><span class="rank"><span class="hu">3. nagy átalakításhoz</span><span class="en">3rd, big rewrites</span></span>
+        <b><span class="logo anthropic">A</span> Claude Opus</b><span class="vend">Anthropic</span>
+        <div class="meta"><span>⚡ 0,03 kWh</span><span>⏱ ~25 s</span></div></div>
+    </div>
+    <div class="prompt"><span class="lbl"><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></span>
+      <span class="hu">„Ebben a fájlban a 42. sor hibát dob. Magyarázd meg, miért, és adj 3 soros javítást — csak a javított kódot, komment nélkül."</span>
+      <span class="en">“Line 42 in this file throws an error. Explain why and give a 3-line fix — just the corrected code, no comments.”</span></div>
+    <div class="avoid"><b><span class="hu">⚠ Mikor ne:</span><span class="en">⚠ When not to:</span></b>
+      <span class="hu"> egyszerű formázásra, log-vágásra vagy tesztnév-rename-re: felesleges a közepes modell, elég a mini.</span>
+      <span class="en"> for simple formatting, log trimming or test renames: mid-tier is overkill, the mini is enough.</span></div>
+  </div>
+
+  <div class="task" data-cat="ana">
+    <h3><span class="hu">🔬 Összetett elemzés, kutatás, vita</span><span class="en">🔬 Complex analysis, research, debate</span></h3>
+    <p class="why"><span class="hu">Több lépcsős következtetés, hosszú kontextus, bizonyíték-mérlegelés — itt a nehéz modell a helyén van.</span>
+      <span class="en">Multi-step reasoning, long context, weighing evidence — this is where the heavy model earns its cost.</span></p>
+    <div class="picks">
+      <div class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
+        <b><span class="logo anthropic">A</span> Claude Opus</b><span class="vend">Anthropic</span>
+        <div class="meta"><span>⚡ 0,03 kWh</span><span>⏱ ~25 s</span></div></div>
+      <div class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
+        <b><span class="logo openai">O</span> GPT-5 Pro</b><span class="vend">OpenAI</span>
+        <div class="meta"><span>⚡ 0,04 kWh</span><span>⏱ ~30 s</span></div></div>
+      <div class="pick"><span class="rank"><span class="hu">3. nyitott kérdésekre</span><span class="en">3rd, open questions</span></span>
+        <b><span class="logo google">G</span> Gemini Deep Think</b><span class="vend">Google</span>
+        <div class="meta"><span>⚡ 0,05 kWh</span><span>⏱ ~35 s</span></div></div>
+    </div>
+    <div class="prompt"><span class="lbl"><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></span>
+      <span class="hu">„Vetess össze két megoldást erre a problémára: mérlegeld az érveket pro és kontra, jelezd, hol gyenge a bizonyíték, és adj ajánlást a bizonytalanság jelzésével."</span>
+      <span class="en">“Compare two approaches to this problem: weigh pro and con arguments, flag where the evidence is weak, and give a recommendation with your confidence level.”</span></div>
+    <div class="avoid"><b><span class="hu">⚠ Mikor ne:</span><span class="en">⚠ When not to:</span></b>
+      <span class="hu"> ne kezdd itt: előbb a közepes modellen futtasd át — ha az elakad, csak akkor lépj feljebb (a legtöbb „nehéz" feladat 80%-a nem igényli).</span>
+      <span class="en"> don't start here: run it on the mid-tier first — only move up if it struggles (most “hard” tasks don't need it).</span></div>
+  </div>
+
+  <div class="task" data-cat="wri">
+    <h3><span class="hu">✍️ Kreatív szöveg, marketing, e-mail</span><span class="en">✍️ Creative copy, marketing, email</span></h3>
+    <p class="why"><span class="hu">Stílus és hangvétel számít, de a tények egyszerűek — a közepes modell itt a legjobb ár/érzés arány.</span>
+      <span class="en">Tone matters but the facts are simple — mid-tier gives the best style-per-watt ratio.</span></p>
+    <div class="picks">
+      <div class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
+        <b><span class="logo anthropic">A</span> Claude Sonnet</b><span class="vend">Anthropic</span>
+        <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
+      <div class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
+        <b><span class="logo openai">O</span> GPT-5</b><span class="vend">OpenAI</span>
+        <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
+      <div class="pick"><span class="rank"><span class="hu">3. gyors vázlat</span><span class="en">3rd, quick draft</span></span>
+        <b><span class="logo openai">O</span> GPT-5 mini</b><span class="vend">OpenAI</span>
+        <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
+    </div>
+    <div class="prompt"><span class="lbl"><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></span>
+      <span class="hu">„Írj 3 változatot ennek az e-mailnek: (1) udvarias és hivatalos, (2) barátságos és rövid, (3) egy mondatban. Ugyanaz a tartalom mindháromban."</span>
+      <span class="en">“Write 3 versions of this email: (1) formal and polite, (2) friendly and short, (3) one sentence. Same content in all three.”</span></div>
+    <div class="avoid"><b><span class="hu">⚠ Mikor ne:</span><span class="en">⚠ When not to:</span></b>
+      <span class="hu"> tényigényes szövegnél (jogi, orvosi, pénzügyi) — a stílus nem pótolja a pontosságot; ellenőrizd vagy nagy modellt használj.</span>
+      <span class="en"> for fact-heavy copy (legal, medical, financial) — style doesn't substitute for accuracy; verify or go bigger.</span></div>
+  </div>
+
+  <div class="task" data-cat="chat">
+    <h3><span class="hu">💬 Napi beszélgetés, kérdés-felelet</span><span class="en">💬 Everyday chat, Q&amp;A</span></h3>
+    <p class="why"><span class="hu">A legtöbb kérdésre a gyors, olcsó modell is jól válaszol — a nagy modell itt pazarlás.</span>
+      <span class="en">For most questions a fast, cheap model answers fine — the large model is waste here.</span></p>
+    <div class="picks">
+      <div class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
+        <b><span class="logo openai">O</span> GPT-5 mini</b><span class="vend">OpenAI</span>
+        <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
+      <div class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
+        <b><span class="logo anthropic">A</span> Claude Haiku</b><span class="vend">Anthropic</span>
+        <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
+      <div class="pick"><span class="rank"><span class="hu">3. „okosabb" válasz kell</span><span class="en">3rd, needs more depth</span></span>
+        <b><span class="logo openai">O</span> GPT-5</b><span class="vend">OpenAI</span>
+        <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
+    </div>
+    <div class="prompt"><span class="lbl"><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></span>
+      <span class="hu">„Magyarázd el a kamatlábat úgy, mintha 12 évesnek mondanád — 3 mondat, példával a zsebpénzből."</span>
+      <span class="en">“Explain interest rates like I'm 12 — 3 sentences, with an allowance example.”</span></div>
+    <div class="avoid"><b><span class="hu">⚠ Mikor ne:</span><span class="en">⚠ When not to:</span></b>
+      <span class="hu"> ha a válasz döntést vagy pénzt érint — ilyenkor duplázd meg: kérdezz rá, vagy lépj közepes szintre.</span>
+      <span class="en"> when the answer informs a decision or money — double-check it, or step up to mid-tier.</span></div>
+  </div>
+
+  <div class="task" data-cat="priv">
+    <h3><span class="hu">🔒 Privát adatok, offline munka, érzékeny fájlok</span><span class="en">🔒 Private data, offline work, sensitive files</span></h3>
+    <p class="why"><span class="hu">Ha nem mehet felhőbe, a helyi modell az egyetlen jó válasz — és nulla felhőenergiával fut.</span>
+      <span class="en">If it can't go to the cloud, a local model is the only right answer — and it runs on zero cloud energy.</span></p>
+    <div class="picks">
+      <div class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
+        <b><span class="logo local">L</span> Llama / Mistral</b><span class="vend"><span class="hu">helyben fut</span><span class="en">on-device</span></span>
+        <div class="meta"><span>⚡ 0 kWh cloud</span><span>⏱ ~3 s</span></div></div>
+      <div class="pick"><span class="rank"><span class="hu">2. felhővel is jó</span><span class="en">2nd, cloud OK</span></span>
+        <b><span class="logo anthropic">A</span> Claude Haiku</b><span class="vend">Anthropic</span>
+        <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
+      <div class="pick"><span class="rank"><span class="hu">3. hosszú fájlok</span><span class="en">3rd, long files</span></span>
+        <b><span class="logo google">G</span> Gemini Flash</b><span class="vend">Google</span>
+        <div class="meta"><span>⚡ 0,0002 kWh</span><span>⏱ ~1 s</span></div></div>
+    </div>
+    <div class="prompt"><span class="lbl"><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></span>
+      <span class="hu">„Olvasd el ezt a szerződést, és sorold fel a 3 legvállalkozásunkra nézve kockázatos záradékot — a szövegből idézve."</span>
+      <span class="en">“Read this contract and list the 3 clauses most risky for our company — quoting the text.”</span></div>
+    <div class="avoid"><b><span class="hu">⚠ Mikor ne:</span><span class="en">⚠ When not to:</span></b>
+      <span class="hu"> a helyi kis modellek gyengébbek összetett magyar nyelvű szövegen — érzékeny + bonyolult? inkább anonimizálj, aztán küldd felhőbe.</span>
+      <span class="en"> local small models are weaker on complex text — sensitive + complex? anonymize first, then consider the cloud.</span></div>
+  </div>
+
+  <!-- 3 · MODEL CARDS -->
+  <h2><span class="hu">3 · Modell-kártyák részletesen</span><span class="en">3 · Model cards in detail</span></h2>
+
+  <details class="model" open>
+    <summary><span class="logo openai">O</span> GPT-5 mini <span class="vend" style="color:var(--dim);font-weight:400;font-size:12px">OpenAI</span></summary>
+    <div class="body">
+      <div class="cols">
+        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
+          <ul><li><span class="hu">a leggyorsabb, legtakarékosabb mindennapi válasz</span><span class="en">fastest, cheapest everyday answers</span></li>
+              <li><span class="hu">összefoglaló, fordítás, formázás</span><span class="en">summaries, translation, formatting</span></li>
+              <li><span class="hu">magabiztos magyar nyelv</span><span class="en">confident Hungarian</span></li></ul></div>
+        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
+          <ul><li><span class="hu">hosszú, többlépcsős következtetésben elbizonytalanodik</span><span class="en">falters on long multi-step reasoning</span></li>
+              <li><span class="hu">kreatív szövegben sablonosabb</span><span class="en">more formulaic in creative copy</span></li></ul></div>
+      </div>
+      <div class="bar"><i style="width:95%;background:var(--green)"></i><i style="width:20%;background:var(--amber)"></i></div>
+      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: 1× (alap) · minőség: ★★★☆☆</div>
+    </div>
+  </details>
+
+  <details class="model">
+    <summary><span class="logo anthropic">A</span> Claude Haiku <span style="color:var(--dim);font-weight:400;font-size:12px">Anthropic</span></summary>
+    <div class="body">
+      <div class="cols">
+        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
+          <ul><li><span class="hu">gyors Q&amp;A, strukturált adatkinyerés</span><span class="en">quick Q&amp;A, structured extraction</span></li>
+              <li><span class="hu">udvarias, következetes hangnem</span><span class="en">consistent, courteous tone</span></li></ul></div>
+        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
+          <ul><li><span class="hu">kevésbé jó hosszú dokumentumok feldolgozásában</span><span class="en">weaker on very long documents</span></li></ul></div>
+      </div>
+      <div class="bar"><i style="width:95%;background:var(--green)"></i><i style="width:25%;background:var(--amber)"></i></div>
+      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: 1× (alap) · minőség: ★★★☆☆</div>
+    </div>
+  </details>
+
+  <details class="model">
+    <summary><span class="logo google">G</span> Gemini Flash <span style="color:var(--dim);font-weight:400;font-size:12px">Google</span></summary>
+    <div class="body">
+      <div class="cols">
+        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
+          <ul><li><span class="hu">nagyon hosszú szöveg + multimodal (kép, videó)</span><span class="en">very long context + multimodal (image, video)</span></li>
+              <li><span class="hu">sebesség ár/energia arányban kiváló</span><span class="en">excellent speed per watt</span></li></ul></div>
+        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
+          <ul><li><span class="hu">néha túl tömör, kihagy részleteket</span><span class="en">sometimes terse, drops details</span></li></ul></div>
+      </div>
+      <div class="bar"><i style="width:92%;background:var(--green)"></i><i style="width:35%;background:var(--amber)"></i></div>
+      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: 2× · minőség: ★★★☆☆</div>
+    </div>
+  </details>
+
+  <details class="model">
+    <summary><span class="logo anthropic">A</span> Claude Sonnet <span style="color:var(--dim);font-weight:400;font-size:12px">Anthropic</span></summary>
+    <div class="body">
+      <div class="cols">
+        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
+          <ul><li><span class="hu">kód, elemzés, hosszú dokumentum — a „lovas közép"</span><span class="en">code, analysis, long docs — the workhorse</span></li>
+              <li><span class="hu">jó stílusérzék, kevesebb kitaláció</span><span class="en">good style, fewer hallucinations</span></li></ul></div>
+        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
+          <ul><li><span class="hu">10× energia a minihez képest — felesleges egyszerű kérdésre</span><span class="en">10× the energy of a mini — overkill for simple asks</span></li></ul></div>
+      </div>
+      <div class="bar"><i style="width:60%;background:var(--green)"></i><i style="width:70%;background:var(--amber)"></i></div>
+      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: 10× · minőség: ★★★★☆</div>
+    </div>
+  </details>
+
+  <details class="model">
+    <summary><span class="logo openai">O</span> GPT-5 <span style="color:var(--dim);font-weight:400;font-size:12px">OpenAI</span></summary>
+    <div class="body">
+      <div class="cols">
+        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
+          <ul><li><span class="hu">napi chat + könnyű gondolkodás, kiegyensúlyozott</span><span class="en">daily chat + light reasoning, well balanced</span></li>
+              <li><span class="hu">széles eszköz- és nyelvtámogatás</span><span class="en">broad tooling and language support</span></li></ul></div>
+        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
+          <ul><li><span class="hu">nehéz elemzésben a Pro verzió a jobb</span><span class="en">for heavy analysis the Pro tier is better</span></li></ul></div>
+      </div>
+      <div class="bar"><i style="width:62%;background:var(--green)"></i><i style="width:70%;background:var(--amber)"></i></div>
+      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: 10× · minőség: ★★★★☆</div>
+    </div>
+  </details>
+
+  <details class="model">
+    <summary><span class="logo anthropic">A</span> Claude Opus <span style="color:var(--dim);font-weight:400;font-size:12px">Anthropic</span></summary>
+    <div class="body">
+      <div class="cols">
+        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
+          <ul><li><span class="hu">összetett kutatás, többlépcsős tervezés</span><span class="en">complex research, multi-step planning</span></li>
+              <li><span class="hu">a legjobb „gondolkodás" hosszú feladatokon</span><span class="en">best reasoning on long tasks</span></li></ul></div>
+        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
+          <ul><li><span class="hu">~300× energia, ~25 mp — egyszerű kérésre pazarlás</span><span class="en">~300× energy, ~25 s — waste on simple asks</span></li></ul></div>
+      </div>
+      <div class="bar"><i style="width:15%;background:var(--red)"></i><i style="width:95%;background:var(--green)"></i></div>
+      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: 300× · minőség: ★★★★★</div>
+    </div>
+  </details>
+
+  <details class="model">
+    <summary><span class="logo local">L</span> Llama / Mistral / Qwen <span style="color:var(--dim);font-weight:400;font-size:12px">open source · local</span></summary>
+    <div class="body">
+      <div class="cols">
+        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
+          <ul><li><span class="hu">nulla felhőenergia, teljes adatvédelem, offline</span><span class="en">zero cloud energy, full privacy, offline</span></li>
+              <li><span class="hu">osztályozás, összefoglaló, egyszerű kimenet tökéletes</span><span class="en">great for classification, summaries, simple output</span></li></ul></div>
+        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
+          <ul><li><span class="hu">gyengébb összetett magyar szövegen, kisebb tudásbázis</span><span class="en">weaker on complex text, smaller knowledge base</span></li>
+              <li><span class="hu">telepítést és gépet igényel</span><span class="en">needs setup and hardware</span></li></ul></div>
+      </div>
+      <div class="bar"><i style="width:100%;background:var(--green)"></i><i style="width:45%;background:var(--amber)"></i></div>
+      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: 0 cloud · minőség: ★★★☆☆</div>
+    </div>
+  </details>
+
+  <!-- 4 · TABLE -->
+  <h2><span class="hu">4 · Összehasonlítás egy lapon</span><span class="en">4 · Side-by-side comparison</span></h2>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr>
+        <th><span class="hu">Modell</span><span class="en">Model</span></th>
+        <th><span class="hu">Legjobb</span><span class="en">Best for</span></th>
+        <th><span class="hu">Példa</span><span class="en">Example</span></th>
+        <th><span class="hu">Energia</span><span class="en">Energy</span></th>
+        <th><span class="hu">Sebesség</span><span class="en">Speed</span></th>
+      </tr></thead>
+      <tbody>
+        <tr><td><span class="logo openai">O</span> GPT-5 mini</td>
+          <td><span class="hu">napi kérés, összefoglaló</span><span class="en">everyday asks, summaries</span></td>
+          <td><span class="hu">„5 pontban"</span><span class="en">“in 5 bullets”</span></td>
+          <td class="num"><span class="pill g">0,0001 kWh</span></td><td class="num">~1 s</td></tr>
+        <tr><td><span class="logo anthropic">A</span> Claude Haiku</td>
+          <td><span class="hu">gyors Q&amp;A, kinyerés</span><span class="en">quick Q&amp;A, extraction</span></td>
+          <td><span class="hu">„melyik záradék kockázatos?"</span><span class="en">“which clause is risky?”</span></td>
+          <td class="num"><span class="pill g">0,0001 kWh</span></td><td class="num">~1 s</td></tr>
+        <tr><td><span class="logo google">G</span> Gemini Flash</td>
+          <td><span class="hu">hosszú dokumentum, kép</span><span class="en">long docs, images</span></td>
+          <td><span class="hu">„200 oldal → kivonat"</span><span class="en">“200 pages → digest”</span></td>
+          <td class="num"><span class="pill g">0,0002 kWh</span></td><td class="num">~1 s</td></tr>
+        <tr><td><span class="logo anthropic">A</span> Claude Sonnet</td>
+          <td><span class="hu">kód, elemzés, szöveg</span><span class="en">code, analysis, copy</span></td>
+          <td><span class="hu">„hibás sor + javítás"</span><span class="en">“buggy line + fix”</span></td>
+          <td class="num"><span class="pill a">0,001 kWh</span></td><td class="num">~3 s</td></tr>
+        <tr><td><span class="logo openai">O</span> GPT-5</td>
+          <td><span class="hu">chat + könnyű okoskodás</span><span class="en">chat + light reasoning</span></td>
+          <td><span class="hu">„magyarázd el egyszerűen"</span><span class="en">“explain simply”</span></td>
+          <td class="num"><span class="pill a">0,001 kWh</span></td><td class="num">~3 s</td></tr>
+        <tr><td><span class="logo anthropic">A</span> Claude Opus</td>
+          <td><span class="hu">összetett kutatás</span><span class="en">complex research</span></td>
+          <td><span class="hu">„mérlegeld az érveket"</span><span class="en">“weigh the arguments”</span></td>
+          <td class="num"><span class="pill a">0,03 kWh</span></td><td class="num">~25 s</td></tr>
+        <tr><td><span class="logo openai">O</span> GPT-5 Pro</td>
+          <td><span class="hu">nehéz logika, tudomány</span><span class="en">hard logic, science</span></td>
+          <td><span class="hu">„bizonyítsd be, hogy…"</span><span class="en">“prove that…”</span></td>
+          <td class="num"><span class="pill a">0,04 kWh</span></td><td class="num">~30 s</td></tr>
+        <tr><td><span class="logo local">L</span> Llama / Mistral</td>
+          <td><span class="hu">privát, offline</span><span class="en">private, offline</span></td>
+          <td><span class="hu">„fájl helyben feldolgozva"</span><span class="en">“file processed locally”</span></td>
+          <td class="num"><span class="pill g">0 cloud</span></td><td class="num">~3 s</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 5 · RULES -->
+  <h2><span class="hu">5 · Öt szabály, ami 90%-ban elég</span><span class="en">5 · Five rules that cover 90% of cases</span></h2>
+  <div class="rules">
+    <div class="rule"><b><span class="hu">1 · Ha 3 mondatnál rövidebb a válasz, elég a kis modell.</span><span class="en">1 · If the answer fits in 3 sentences, use the small model.</span></b>
+      <span><span class="hu">A legtöbb napi kérdés ide tartozik.</span><span class="en">Most everyday questions land here.</span></span></div>
+    <div class="rule"><b><span class="hu">2 · Kódnál a közepes a minimum, a nagy csak átalakításhoz.</span><span class="en">2 · For code, mid-tier is the floor; big only for rewrites.</span></b>
+      <span><span class="hu">Egy hibás sor többe kerül, mint a várakozás.</span><span class="en">A wrong line costs more than waiting.</span></span></div>
+    <div class="rule"><b><span class="hu">3 · Kategorizálni, címkézni, válogatni soha a nagy modellel.</span><span class="en">3 · Never use the large model to classify or tag.</span></b>
+      <span><span class="hu">Itt a kis modell ugyanolyan jó, 100× takarékosabb.</span><span class="en">The small model is just as good, 100× cheaper.</span></span></div>
+    <div class="rule"><b><span class="hu">4 · Előbb közepes, csak ha elakad, lépj feljebb.</span><span class="en">4 · Start mid-tier; step up only when it struggles.</span></b>
+      <span><span class="hu">A „nehéz" feladatok ~80%-a nem igényli a nagy modellt.</span><span class="en">About 80% of “hard” tasks don't need the big model.</span></span></div>
+    <div class="rule"><b><span class="hu">5 · Érzékeny adat: helyi modell, vagy anonimizálás előbb.</span><span class="en">5 · Sensitive data: local model, or anonymize first.</span></b>
+      <span><span class="hu">A kényelem nem éri meg az adatszivárgást.</span><span class="en">Convenience isn't worth a data leak.</span></span></div>
+  </div>
+
+  <!-- 6 · WARNINGS -->
+  <h2><span class="hu">6 · Gyakori tévhitek</span><span class="en">6 · Common myths</span></h2>
+  <div class="warn">
+    <ul>
+      <li><b><span class="hu">„A nagy modell mindig pontosabb."</span><span class="en">“The big model is always more accurate.”</span></b>
+        <span class="hu"> Egyszerű feladaton a kis modell ugyanolyan jó — a különbség összetett következtetésnél jön elő.</span>
+        <span class="en"> On simple tasks the small model matches it — the gap appears only in complex reasoning.</span></li>
+      <li><b><span class="hu">„A gondolkodó mód mindig jobb."</span><span class="en">“Reasoning mode is always better.”</span></b>
+        <span class="hu"> Sokszor csak lassabb és drágább, miközben ugyanazt a választ adná.</span>
+        <span class="en"> Often just slower and pricier while giving the same answer.</span></li>
+      <li><b><span class="hu">„A gyors válasz = rossz válasz."</span><span class="en">“Fast answer = bad answer.”</span></b>
+        <span class="hu"> A sebesség a modell méretétől függ, nem a minőségtől — a mini 1 másodperce ugyanolyan pontos lehet.</span>
+        <span class="en"> Speed tracks model size, not quality — a mini's 1-second answer can be just as accurate.</span></li>
+      <li><b><span class="hu">„Az energia úgyis elhanyagolható."</span><span class="en">“Energy is negligible anyway.”</span></b>
+        <span class="hu"> Egyetlen kérés valóban kevés — de napi szinten a modellválasztás a legnagyobb fogható különbség.</span>
+        <span class="en"> A single request is tiny — but at daily scale, model choice is the biggest lever you control.</span></li>
+    </ul>
+  </div>
+
+  <div class="foot">
+    <span class="hu">Kapcsolódó oldalak:
+      <a href="index-en.html">🖥️ desktop wireframe</a> ·
+      <a href="mobile-app.html">📱 mobil app</a> ·
+      <a href="eco-feedback.html">✨ eco-feedback</a> ·
+      <a href="petition.html">✍️ petíció</a> —
+      az ajánlott modellek ugyanazokat a márkákat és színeket használják.</span>
+    <span class="en">Related pages:
+      <a href="index-en.html">🖥️ desktop wireframe</a> ·
+      <a href="mobile-app.html">📱 mobile app</a> ·
+      <a href="eco-feedback.html">✨ eco-feedback</a> ·
+      <a href="petition.html">✍️ petition</a> —
+      recommended models share the same brands and colors.</span>
+  </div>
+
+</div>
+
+<script>
+  /* chip-szűrő: a feladat-kártyák szűrése + visszagörgetés */
+  document.getElementById("chips").addEventListener("click", function (e) {
+    var b = e.target.closest(".chip"); if (!b) return;
+    document.querySelectorAll("#chips .chip").forEach(function (c) { c.classList.remove("on"); });
+    b.classList.add("on");
+    var f = b.dataset.f;
+    document.querySelectorAll(".task").forEach(function (t) {
+      t.classList.toggle("hide", f !== "all" && t.dataset.cat !== f);
+    });
+    var first = document.querySelector(".task:not(.hide)");
+    if (first && f !== "all") first.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
+</script>
+</body>
+</html>
