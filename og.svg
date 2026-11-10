@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="ui-sans-serif,system-ui,'Segoe UI',Helvetica,Arial">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f6f7f9"/>
+      <stop offset="1" stop-color="#e9edf3"/>
+    </linearGradient>
+    <linearGradient id="strip" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#16a34a"/>
+      <stop offset="1" stop-color="#4ade80"/>
+    </linearGradient>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="6" stdDeviation="12" flood-color="#0f172a" flood-opacity="0.14"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="8" fill="url(#strip)"/>
+
+  <!-- brand chip -->
+  <g transform="translate(72,64)">
+    <rect width="46" height="46" rx="14" fill="#16a34a"/>
+    <text x="23" y="32" font-size="26" font-weight="800" fill="#fff" text-anchor="middle">E</text>
+    <text x="60" y="22" font-size="24" font-weight="800" fill="#1a1d21">EcoAI · AI tudatosság</text>
+    <text x="60" y="44" font-size="17" fill="#6b7280">UI / UX wireframe csomag — interaktív, megosztható</text>
+  </g>
+
+  <!-- headline -->
+  <text x="72" y="205" font-size="54" font-weight="800" fill="#1a1d21" letter-spacing="-1">Kevesebb energia,</text>
+  <text x="72" y="268" font-size="54" font-weight="800" fill="#1a1d21" letter-spacing="-1">okosabb modellválasztás</text>
+  <text x="72" y="314" font-size="22" fill="#6b7280">Milyen modellt milyen célra · energia- és CO₂-visszajelzés a felületen</text>
+
+  <!-- four cards -->
+  <g filter="url(#sh)">
+    <!-- desktop -->
+    <g transform="translate(72,368)">
+      <rect width="250" height="150" rx="16" fill="#fff" stroke="#e3e6ea"/>
+      <rect x="18" y="18" width="44" height="44" rx="12" fill="#eef4ff"/>
+      <text x="40" y="48" font-size="24" text-anchor="middle">🖥️</text>
+      <text x="18" y="92" font-size="19" font-weight="700" fill="#1a1d21">Desktop</text>
+      <text x="18" y="116" font-size="14" fill="#6b7280">Márkás modellválasztó</text>
+      <text x="18" y="136" font-size="14" fill="#6b7280">+ élő energia-becslés</text>
+    </g>
+    <!-- mobile -->
+    <g transform="translate(342,368)">
+      <rect width="250" height="150" rx="16" fill="#fff" stroke="#e3e6ea"/>
+      <rect x="18" y="18" width="44" height="44" rx="12" fill="#f2fbf5"/>
+      <text x="40" y="48" font-size="24" text-anchor="middle">📱</text>
+      <text x="18" y="92" font-size="19" font-weight="700" fill="#1a1d21">Mobil app</text>
+      <text x="18" y="116" font-size="14" fill="#6b7280">Chat · Footprint</text>
+      <text x="18" y="136" font-size="14" fill="#6b7280">Models · Streak</text>
+    </g>
+    <!-- eco feedback -->
+    <g transform="translate(612,368)">
+      <rect width="250" height="150" rx="16" fill="#fff" stroke="#e3e6ea"/>
+      <rect x="18" y="18" width="44" height="44" rx="12" fill="#e7f7ed"/>
+      <text x="40" y="48" font-size="24" text-anchor="middle">✨</text>
+      <text x="18" y="92" font-size="19" font-weight="700" fill="#1a1d21">Eco-feedback</text>
+      <text x="18" y="116" font-size="14" fill="#6b7280">Ring gauge · kWh számláló</text>
+      <text x="18" y="136" font-size="14" fill="#6b7280">levél-robbanás · streak</text>
+    </g>
+    <!-- hu -->
+    <g transform="translate(882,368)">
+      <rect width="250" height="150" rx="16" fill="#fff" stroke="#e3e6ea"/>
+      <rect x="18" y="18" width="44" height="44" rx="12" fill="#eef1f5"/>
+      <text x="40" y="48" font-size="24" text-anchor="middle">🇭🇺</text>
+      <text x="18" y="92" font-size="19" font-weight="700" fill="#1a1d21">Magyar verzió</text>
+      <text x="18" y="116" font-size="14" fill="#6b7280">Teljes vázlat</text>
+      <text x="18" y="136" font-size="14" fill="#6b7280">magyarnyelvű leírással</text>
+    </g>
+  </g>
+
+  <!-- eco toast mini -->
+  <g transform="translate(720,96)" filter="url(#sh)">
+    <rect width="408" height="150" rx="18" fill="#fff" stroke="#e3e6ea"/>
+    <rect width="408" height="5" rx="2.5" fill="url(#strip)"/>
+    <g transform="translate(20,30)">
+      <circle cx="30" cy="30" r="24" fill="none" stroke="#eceff3" stroke-width="6"/>
+      <circle cx="30" cy="30" r="24" fill="none" stroke="#16a34a" stroke-width="6"
+              stroke-linecap="round" stroke-dasharray="150.8" stroke-dashoffset="149"
+              transform="rotate(-90 30 30)"/>
+      <text x="30" y="35" font-size="13" font-weight="700" fill="#0f7a37" text-anchor="middle">1%</text>
+    </g>
+    <text x="98" y="52" font-size="18" font-weight="800" fill="#1a1d21">Greenest choice
+      <tspan font-size="11" font-weight="800" fill="#0f7a37" dx="8" letter-spacing="0.5">ECO</tspan></text>
+    <text x="98" y="76" font-size="13.5" fill="#6b7280">GPT-5 mini uses ~100× less energy than</text>
+    <text x="98" y="96" font-size="13.5" fill="#6b7280">Claude Opus — same answer for this task.</text>
+    <text x="98" y="122" font-size="13" font-family="ui-monospace,Menlo,monospace" fill="#0f7a37">saves 0,0299 kWh ≈ 12 g CO₂</text>
+    <text x="330" y="122" font-size="16">🌿🍃🌱</text>
+  </g>
+
+  <!-- url bar -->
+  <text x="72" y="592" font-size="19" font-weight="600" fill="#2563eb" font-family="ui-monospace,Menlo,monospace">madcsaba.github.io/ai-awareness-wireframe</text>
+</svg>
