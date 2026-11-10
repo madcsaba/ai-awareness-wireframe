@@ -26,8 +26,10 @@
     "eco-feedback-hu.html": ["eco-feedback.html", "eco-feedback-hu.html"],
     "petition.html": ["petition.html", "petition-hu.html"],
     "petition-hu.html": ["petition.html", "petition-hu.html"],
-    "the-weight-of-a-click.html": ["the-weight-of-a-click.html", null],
-    "powering-intelligence.html": ["powering-intelligence.html", null],
+    "the-weight-of-a-click.html": ["the-weight-of-a-click.html", "the-weight-of-a-click-hu.html"],
+    "the-weight-of-a-click-hu.html": ["the-weight-of-a-click.html", "the-weight-of-a-click-hu.html"],
+    "powering-intelligence.html": ["powering-intelligence.html", "powering-intelligence-hu.html"],
+    "powering-intelligence-hu.html": ["powering-intelligence.html", "powering-intelligence-hu.html"],
     "social-graphic": ["social-graphic", null],
     "one-pager": ["one-pager", null]
   };
@@ -75,8 +77,8 @@
         ["📖", "A projekt története", "The story", "story.html", "story.html", "HU/EN"]]],
       [hu ? "Vegyél részt" : "Take part", [
         ["✍️", "Petíció", "Petition", "petition.html", "petition-hu.html", "HU/EN"],
-        ["🖱️", "The Weight of a Click", "The Weight of a Click", "the-weight-of-a-click.html", "the-weight-of-a-click.html", "EN"],
-        ["⚡", "Prezentáció", "Presentation", "powering-intelligence.html", "powering-intelligence.html", "EN"]]],
+        ["🖱️", "The Weight of a Click", "The Weight of a Click", "the-weight-of-a-click.html", "the-weight-of-a-click-hu.html", "HU/EN"],
+        ["⚡", "Prezentáció", "Presentation", "powering-intelligence.html", "powering-intelligence-hu.html", "HU/EN"]]],
       [hu ? "Design referenciák" : "Design references", [
         ["📊", "Social graphic", "Social graphic", "social-graphic/Social.dc.html", "social-graphic/Social.dc.html", "EN"],
         ["📄", "One-pager", "One-pager", "one-pager/Main.dc.html", "one-pager/Main.dc.html", "EN"]]]
@@ -148,7 +150,7 @@
       "#ecoai-nav .elang{display:flex;background:#eef1f5;border-radius:10px;padding:3px;flex:0 0 auto}" +
       "#ecoai-nav .elang button{border:0;background:transparent;font:inherit;font-size:12.5px;font-weight:700;" +
       "color:#6b7280;padding:5px 9px;border-radius:8px;cursor:pointer}" +
-      "#ecoai-nav .elang button.on{background:#fff;color:#1a1d21;box-shadow:0 1px 2px rgba(0,0,0,.12)}" +
+      "#ecoai-nav .elang button.on{background:#fff;color:#0f7a37;box-shadow:0 1px 2px rgba(0,0,0,.12)}" +
       "body{padding-top:50px !important}";
     document.head.appendChild(st);
 
