@@ -54,8 +54,8 @@
       ["home", l === "hu" ? "Főoldal" : "Home", "index.html"],
       ["desktop", "🖥️ " + (l === "hu" ? "Asztali" : "Desktop"), l === "hu" ? "hu.html" : "index-en.html"],
       ["mobile", "📱 " + (l === "hu" ? "Mobil app" : "Mobile app"), l === "hu" ? "mobile-app-hu.html" : "mobile-app.html"],
-      ["models", "🧠 " + (l === "hu" ? "Modellek" : "Models"), "models.html"],
       ["eco", "✨ " + (l === "hu" ? "Eco-feedback" : "Eco-feedback"), l === "hu" ? "eco-feedback-hu.html" : "eco-feedback.html"],
+      ["models", "🧠 " + (l === "hu" ? "Modellek" : "Models"), "models.html"],
       ["petition", "✍️ " + (l === "hu" ? "Petíció" : "Petition"), l === "hu" ? "petition-hu.html" : "petition.html"]
     ];
     var more = [
