@@ -19,6 +19,7 @@
     "mobile-app.html": ["mobile-app.html", "mobile-app-hu.html"],
     "mobile-app-hu.html": ["mobile-app.html", "mobile-app-hu.html"],
     "models.html": ["models.html", "models.html"],
+    "story.html": ["story.html", "story.html"],
     "eco-feedback.html": ["eco-feedback.html", "eco-feedback-hu.html"],
     "eco-feedback-hu.html": ["eco-feedback.html", "eco-feedback-hu.html"],
     "petition.html": ["petition.html", "petition-hu.html"],
@@ -59,6 +60,7 @@
       ["petition", "✍️ " + (l === "hu" ? "Petíció" : "Petition"), l === "hu" ? "petition-hu.html" : "petition.html"]
     ];
     var more = [
+      ["📖 " + (l === "hu" ? "A projekt története" : "The story"), "story.html", "HU/EN"],
       ["🖱️ The Weight of a Click", "the-weight-of-a-click.html"],
       ["⚡ Powering Intelligence", "powering-intelligence.html"],
       ["📊 Social Graphic", "social-graphic/Social.dc.html"],
@@ -76,7 +78,7 @@
       '<span class="emore"><button type="button" class="ecaret">' +
       (l === "hu" ? "Továbbiak ▾" : "More ▾") + '</button><span class="edrop">' +
       more.map(function (m) {
-        return '<a href="' + u(m[1]) + '">' + m[0] + ' <i>EN</i></a>';
+        return '<a href="' + u(m[1]) + '">' + m[0] + ' <i>' + (m[2] || "EN") + '</i></a>';
       }).join("") + "</span></span>" +
       "</nav>" +
       '<span class="elang"><button type="button" data-l="hu" class="' + (l === "hu" ? "on" : "") + '">HU</button>' +
