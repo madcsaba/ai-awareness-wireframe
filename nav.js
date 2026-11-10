@@ -20,6 +20,7 @@
     "mobile-app-hu.html": ["mobile-app.html", "mobile-app-hu.html"],
     "models.html": ["models.html", "models.html"],
     "story.html": ["story.html", "story.html"],
+    "beyond-the-chatbox.html": ["beyond-the-chatbox.html", "beyond-the-chatbox.html"],
     "start.html": ["start.html", "start.html"],
     "eco-feedback.html": ["eco-feedback.html", "eco-feedback-hu.html"],
     "eco-feedback-hu.html": ["eco-feedback.html", "eco-feedback-hu.html"],
@@ -61,6 +62,7 @@
       ["petition", "✍️ " + (l === "hu" ? "Petíció" : "Petition"), l === "hu" ? "petition-hu.html" : "petition.html"]
     ];
     var more = [
+      ["💬 " + (l === "hu" ? "Túl a chatablakon" : "Beyond the chatbox"), "beyond-the-chatbox.html", "HU/EN"],
       ["🚀 " + (l === "hu" ? "Hogyan kezdj bele" : "How to get started"), "start.html", "HU/EN"],
       ["📖 " + (l === "hu" ? "A projekt története" : "The story"), "story.html", "HU/EN"],
       ["🖱️ The Weight of a Click", "the-weight-of-a-click.html"],
