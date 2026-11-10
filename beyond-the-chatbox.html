@@ -99,13 +99,13 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
       <p>Szövegformázás, JSON-generálás, alapvető kódolás. Töredéknyi energia, szinte azonnali válasz.</p>
       <span class="pick">Kis lokális modell (SLM) vagy gyors felhős API – pl. Haiku, Flash, mini</span></div>
     <div class="cell"><span class="ico">📚</span><h3>Hatalmas dokumentumok</h3>
-      <p>Több száz oldal vagy egy teljes kódbázis: nagy kontextusú modell + <b>kontextus-cache</b>, hogy ne olvassa újra ugyanazt – akár ~80% tokenmegtakarítás.</p>
-      <span class="pick">Nagy kontextus + cache-elés</span></div>
+      <p>Először vizsgáljuk meg, elég-e a releváns részek célzott keresése. Teljes áttekintéshez nagy kontextus is kellhet; ismétlődő bemenetnél a <b>kontextus-cache</b> csökkentheti az újrafeldolgozást.</p>
+      <span class="pick">Célzott keresés, szükség esetén nagy kontextus és cache</span></div>
     <div class="cell light"><span class="ico">🔒</span><h3>Adatvédelmi fókusz</h3>
-      <p>Érzékeny, belső adat: saját hardveren futó lokális modell – nulla hálózati terhelés, nulla tokenköltség, teljes adatszuverenitás.</p>
+      <p>Érzékeny, belső adat: megfelelően beállított lokális feldolgozásnál az adat a saját gépen maradhat. Nincs szolgáltatói tokendíj, de van áramfogyasztás és hardverköltség; a helyi futtatás nem automatikusan takarékosabb.</p>
       <span class="pick">Lokális modell (pl. Apple Silicon)</span></div>
     <div class="cell heavy"><span class="ico">🧠</span><h3>Mély logikai elemzés</h3>
-      <p>Komplex architektúra, összetett kódolás, ahol az „elsőre hibátlan” eredmény számít. Ide – és csak ide – a nehézsúlyúakat.</p>
+      <p>Komplex architektúra, összetett kódolás: erősebb modell indokolt lehet, ha csökkenti a sikertelen próbálkozásokat. A nagyobb modell sem helyettesíti az eredmény ellenőrzését.</p>
       <span class="pick">Frontier modell</span></div>
   </div>
   <p class="note">Részletes, naprakész ajánlás modellenként: <a href="models.html">Modellek útmutató</a>.</p>
@@ -131,20 +131,54 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     <div class="box"><div>
       <div class="warn">⚠️ Nagy dokumentum (120 000 token)</div>
       <div class="dimtxt">Úgy tűnik, egy teljes kézikönyvet töltöttél fel. Hogyan dolgozzuk fel?</div>
-      <div class="opt rec"><b>⚡ Kontextus-cache (ajánlott)</b><span>1 órán át a memóriában tartjuk – a további kérdések kb. 75%-kal kevesebb tokenbe és energiába kerülnek.</span></div>
+      <div class="opt rec"><b>⚡ Kontextus-cache (ismételt kérdésekhez)</b><span>Ha a szolgáltató támogatja, újrahasználjuk a már feldolgozott bemenetet. Ez csökkentheti a feldolgozást és a díjat; az energiamegtakarítás mértéke ebből közvetlenül nem következik.</span></div>
       <div class="opt"><b>📄 Csak a releváns oldalak</b><span>Vektoros kereséssel csak a kérdésedhez kapcsolódó részeket olvassuk be.</span></div>
       <div class="opt"><b>🚀 Teljes feldolgozás (egyszeri)</b><span>Normál ár és energiafogyasztás.</span></div>
     </div></div></div>
 
   <div class="principle"><span class="n">3</span><h3>Auto-routing – láthatatlan hatékonyság</h3>
-    <p>A legjobb UX, ha nem is kell modellt választani: az „Auto-Eco” mód a prompt alapján dönti el, elég-e egy olcsó, gyors modell, vagy tényleg kell a frontier. A válasz végén egy kis panel megmutatja, mennyit spórolt – így a felhasználó tanul is belőle.</p></div>
+    <p>A felhasználónak ne kelljen modellneveket ismernie: az „Auto-Eco” a feladat és a minőségi elvárás alapján választ eszközt vagy modellt, szükség esetén erősebbre vált. Egyszerű, szabályalapú művelethez generatív modell sem feltétlenül kell. A válasz végén rövid magyarázat segíti a tanulást.</p></div>
   <div class="wf"><div class="cap">Vázlat 3 · Hatékonysági visszajelzés a válasz végén</div>
     <div class="box">
       <div class="dimtxt">1. A bevétel 15%-kal nőtt… 2. Csökkentek a működési költségek… 3. Likviditási tartalék…</div>
       <div>💡 <b>Hatékonysági info:</b> ezt a feladatot az <span class="eco">Auto-Eco</span> mód egy kis, gyors modellel oldotta meg 0,8 másodperc alatt.
-        <div class="save">A nagy modellhez képest: <span>🔋 −85% energia</span><span>🪙 −92% tokenköltség</span></div></div>
+        <div class="save"><span>A releváns dokumentumrészeket dolgoztuk fel.</span></div></div>
     </div></div>
-  <p class="note">Élőben kipróbálható: <a href="eco-feedback-hu.html">Eco-feedback bemutató</a> · <a href="app/">EcoAI app</a>. A százalékok szemléltető becslések.</p>
+  <p class="note">Szemléltető felületi példa, nem mérési eredmény. Kipróbálható prototípusok: <a href="eco-feedback-hu.html">Eco-feedback bemutató</a> · <a href="app/">EcoAI app</a>.</p>
+
+  <span class="chapter">4 · A teljes feladat számít</span>
+  <h2>A takarékos agent kevesebb felesleges munkát végez</h2>
+  <p>Ne az egyes válaszok, hanem a <b>sikeresen elvégzett teljes feladat</b> energiaigényét optimalizáljuk. Egy kisebb modell öt sikertelen próbálkozása többe kerülhet, mint egy erősebb modell egyetlen megfelelő válasza. A keresések, eszközhívások, háttérfolyamatok és ellenőrzések is a folyamat részei.</p>
+
+  <div class="principle"><span class="n">4</span><h3>Segítség a feladat meghatározásához</h3>
+    <p>A felület ne tökéletes promptot várjon, hanem kínáljon opcionális kapaszkodókat: <b>mi legyen az eredmény, milyen részletességgel, és mi számít késznek?</b> Az agent csak akkor kérdezzen vissza, ha a válasz érdemben megváltoztatja a munkát. Egy célzott kérdés elkerülhet egy hibás végrehajtást; a rutinszerű kérdéssor maga is pazarló lehet.</p></div>
+  <div class="wf"><div class="cap">Példa · Világos cél</div><div class="box"><div>Eredmény: három javaslat · Részletesség: rövid · Kész, ha: minden javaslathoz van ellenőrizhető forrás.</div></div></div>
+
+  <div class="principle"><span class="n">5</span><h3>Látható munkakeret</h3>
+    <p>A modellnevek helyett érthető munkamódok segítsenek: <b>Gyors áttekintés · Kidolgozott eredmény · Alapos vizsgálat.</b> Legyen világos, melyik milyen munkát jelent. Összetettebb feladatnál idő-, költség- vagy eszközhívási keret is megadható; energiaérték csak megbízható mérés vagy becslés alapján.</p></div>
+  <div class="wf"><div class="cap">Példa · Indulás előtt</div><div class="box"><div>A megadott fájlokra támaszkodom, külső keresés nélkül. Először rövid vázlatot készítek.</div></div></div>
+
+  <div class="principle"><span class="n">6</span><h3>Érthető kontextuskezelés</h3>
+    <p>A felület mutassa, mit használ az agent: például <b>projektösszefoglaló · 2 fájl · legutóbbi döntések</b>. Lehessen a felesleges mellékleteket kivenni, a fontos döntéseket rögzíteni, új témát rövid átadó összefoglalóval külön munkamenetbe vinni. Nem mindig az új beszélgetés a takarékosabb: a szükséges háttér elvesztése hibákhoz és ismétléshez vezethet. A kiválasztást és cache-elést elsősorban a rendszer intézze.</p></div>
+
+  <div class="principle"><span class="n">7</span><h3>Részleges javítás teljes újragenerálás helyett</h3>
+    <p>Bekezdés, kódrészlet vagy egyetlen dia kijelölésével lehessen módosítást kérni. A rendszer őrizze meg a már elfogadott részeket: így kevesebb tartalmat kell újra előállítani, és kisebb az új hibák esélye.</p></div>
+  <div class="wf"><div class="cap">Példa · Célzott módosítás</div><div class="box"><div>Ezt a bekezdést rövidítsd · Csak a számokat ellenőrizd · A többi maradjon.</div></div></div>
+
+  <div class="principle"><span class="n">8</span><h3>Az agent tudjon megállni</h3>
+    <p>Ismerje fel az eredménytelen kereséseket, az ismétlődő hibákat és a már teljesült feladatot. Ne indítson indokolatlan párhuzamos agenteket vagy újabb változatokat. A <b>Leállítás</b> és az <b>Irány módosítása</b> vezérlők a tényleges háttérmunkát is szakítsák meg, ne csak annak megjelenítését.</p></div>
+  <div class="wf"><div class="cap">Példa · Eredménytelen körök helyett</div><div class="box"><div>Két próbálkozás nem hozott előrelépést. A folytatáshoz ez az egy adat hiányzik.</div></div></div>
+
+  <div class="principle"><span class="n">9</span><h3>Tanító visszajelzés, bűntudatkeltés nélkül</h3>
+    <p>Rövid, konkrét magyarázatból tanulunk: „Ehhez a formázáshoz nem kellett generatív modell”, vagy „Az összetett ellenőrzéshez erősebb modellre váltottam”. A visszajelzés legyen visszafogott és kikapcsolható. Ne jutalmazzon több AI-használatot napi sorozatokkal vagy pontgyűjtéssel.</p></div>
+
+  <span class="chapter">5 · Hiteles mérés</span>
+  <h2>A tokenszám nem energiamérő</h2>
+  <p>Az <b>energia, a szén-dioxid-kibocsátás, az ár és a válaszidő</b> külön mutatók. A tokenszám hasznos jelző, de a fogyasztást a modell, a hardver, a terhelés, a cache és a végrehajtás is alakítja. Kevesebb token vagy alacsonyabb díj nem jelent automatikusan arányosan kevesebb energiát.</p>
+  <p>Százalékos megtakarítást csak megnevezett összehasonlítási alappal és módszertannal mutassunk. Különüljön el a mért adat, a becslés és a szemléltető példa; a becslés bizonytalansága is legyen látható. Megbízható energiaadat hiányában a ténylegesen ismert műveletekről adjunk visszajelzést, ne kitalált kWh-értékről.</p>
+  <p>A siker mércéje az elfogadott eredményhez vezető teljes folyamat erőforrásigénye, a javításokkal és ellenőrzésekkel együtt. Érdemes figyelni az eredmény minőségét, az újrapróbálkozásokat és az összes felhasználást is: az olcsóbb egyedi kérés nem garantál kisebb teljes fogyasztást.</p>
+  <div class="take"><p><b>A felhasználónak nem infrastruktúra-szakértővé kell válnia.</b> Érthető döntési lehetőségekre és őszinte visszajelzésekre van szüksége. A takarékos agent tisztázza a célt, csak a szükséges hátteret dolgozza fel, újrahasználja a kész munkát, és megáll, amikor a feladat kész.</p>
+    <p>Elsőként a <b>részleges javítást, a világos készültségi feltételt és az ismétlődő agentkörök megállítását</b> érdemes beépíteni: közvetlenül javítják a használhatóságot, és csökkenthetik a felesleges számítást.</p></div>
 
   <div class="take"><p><b>Az AI hatékonysága nem csupán spórolás</b> – hanem fenntartható, rendszerszintű megközelítés. A felületeknek alapértelmezésben a tudatos, erőforrás-optimalizált használat felé kell terelniük a társadalmat.</p>
     <p>Ha egyetértesz: <a href="petition-hu.html">írd alá a petíciót</a>.</p></div>
@@ -168,13 +202,13 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
       <p>Text formatting, JSON extraction, basic code completion. A fraction of the energy, near-instant replies.</p>
       <span class="pick">Small local model (SLM) or fast cloud API – e.g. Haiku, Flash, mini</span></div>
     <div class="cell"><span class="ico">📚</span><h3>Massive documents</h3>
-      <p>Hundreds of pages or a whole codebase: a large-context model plus <b>context caching</b>, so the same data isn't re-read – up to ~80% fewer tokens.</p>
-      <span class="pick">Large context + caching</span></div>
+      <p>First check whether targeted retrieval of relevant sections is enough. A complete review may need a large context; for repeated input, <b>context caching</b> can reduce reprocessing.</p>
+      <span class="pick">Targeted retrieval; large context and caching when needed</span></div>
     <div class="cell light"><span class="ico">🔒</span><h3>Privacy first</h3>
-      <p>Sensitive organisational data: a local model on your own hardware – zero network overhead, zero token cost, full data sovereignty.</p>
+      <p>With properly configured local processing, sensitive data can stay on your hardware. There is no provider token fee, but electricity and hardware still cost resources. Local execution is not automatically more energy-efficient.</p>
       <span class="pick">Local model (e.g. Apple Silicon)</span></div>
     <div class="cell heavy"><span class="ico">🧠</span><h3>Deep reasoning</h3>
-      <p>Complex architecture, intricate coding, high-stakes writing where “first-try success” matters. Reserve the heavyweights for this – and only this.</p>
+      <p>Complex architecture and intricate coding may justify a stronger model if it reduces failed attempts. A larger model still does not replace verification.</p>
       <span class="pick">Frontier model</span></div>
   </div>
   <p class="note">Detailed, up-to-date advice per model: <a href="models.html">Models guide</a>.</p>
@@ -200,20 +234,54 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     <div class="box"><div>
       <div class="warn">⚠️ Large document detected (120,000 tokens)</div>
       <div class="dimtxt">It looks like you uploaded a full manual. How should we handle it?</div>
-      <div class="opt rec"><b>⚡ Context caching (recommended)</b><span>Kept in memory for 1 hour – follow-up questions cost about 75% fewer tokens and energy.</span></div>
+      <div class="opt rec"><b>⚡ Context caching (for repeated questions)</b><span>Where supported, reuse already processed input. This can reduce processing and fees; the amount of energy saved cannot be inferred directly from that.</span></div>
       <div class="opt"><b>📄 Relevant pages only</b><span>Vector search reads only the sections related to your prompt.</span></div>
       <div class="opt"><b>🚀 Full processing (one-time)</b><span>Standard pricing and energy use.</span></div>
     </div></div></div>
 
   <div class="principle"><span class="n">3</span><h3>Auto-routing – invisible efficiency</h3>
-    <p>The best UX is when you don't have to pick a model at all: “Auto-Eco” analyses the prompt and decides whether a cheap, fast model can solve it, or a frontier model is genuinely needed. A small panel after the reply shows what was saved – so users learn as they go.</p></div>
+    <p>Users should not need to know model names: “Auto-Eco” selects a tool or model based on the task and quality requirements, escalating when needed. Simple rule-based operations may not need a generative model at all. A short explanation after the reply helps users learn.</p></div>
   <div class="wf"><div class="cap">Sketch 3 · Efficiency feedback after the reply</div>
     <div class="box">
       <div class="dimtxt">1. Revenue grew 15%… 2. Operating costs fell… 3. Liquidity reserves…</div>
       <div>💡 <b>Efficiency info:</b> this task was solved by <span class="eco">Auto-Eco</span> mode with a small, fast model in 0.8 seconds.
-        <div class="save">Compared with a large model: <span>🔋 −85% energy</span><span>🪙 −92% token cost</span></div></div>
+        <div class="save"><span>Only the relevant document sections were processed.</span></div></div>
     </div></div>
-  <p class="note">Try it live: <a href="eco-feedback.html">Eco-feedback demo</a> · <a href="app/">EcoAI app</a>. Percentages are illustrative estimates.</p>
+  <p class="note">Illustrative interface example, not a measurement. Try the prototypes: <a href="eco-feedback.html">Eco-feedback demo</a> · <a href="app/">EcoAI app</a>.</p>
+
+  <span class="chapter">4 · The whole task matters</span>
+  <h2>An efficient agent does less unnecessary work</h2>
+  <p>Optimise energy use for the <b>entire successfully completed task</b>, not each individual reply. Five failed attempts by a smaller model may cost more than one adequate response from a stronger model. Searches, tool calls, background processes and verification are all part of the workflow.</p>
+
+  <div class="principle"><span class="n">4</span><h3>Help users define the task</h3>
+    <p>Instead of expecting a perfect prompt, offer optional guidance: <b>what should the result be, how detailed should it be, and what counts as done?</b> Ask a clarifying question only when its answer would materially change the work. One focused question can prevent a mistaken execution; a routine questionnaire can itself be wasteful.</p></div>
+  <div class="wf"><div class="cap">Example · A clear goal</div><div class="box"><div>Result: three recommendations · Detail: brief · Done when: each recommendation has a verifiable source.</div></div></div>
+
+  <div class="principle"><span class="n">5</span><h3>Make the work budget visible</h3>
+    <p>Offer understandable modes instead of model names: <b>Quick overview · Developed result · Thorough investigation.</b> Explain the work each involves. Complex tasks can have time, cost or tool-call budgets; show energy values only with reliable measurement or estimation.</p></div>
+  <div class="wf"><div class="cap">Example · Before starting</div><div class="box"><div>I will use the provided files without external search, and start with a short outline.</div></div></div>
+
+  <div class="principle"><span class="n">6</span><h3>Understandable context management</h3>
+    <p>Show what the agent uses: for example, <b>project summary · 2 files · recent decisions</b>. Let users remove unnecessary attachments, pin important decisions and move a new topic into a separate session with a short handover summary. A new conversation is not always more efficient: losing necessary context can cause errors and repetition. Selection and caching should primarily be handled by the system.</p></div>
+
+  <div class="principle"><span class="n">7</span><h3>Partial edits instead of full regeneration</h3>
+    <p>Let users request changes to a selected paragraph, code fragment or single slide. Preserve already accepted parts: less content needs regenerating, and there is less opportunity to introduce new errors.</p></div>
+  <div class="wf"><div class="cap">Example · A targeted edit</div><div class="box"><div>Shorten this paragraph · Check only the numbers · Keep everything else.</div></div></div>
+
+  <div class="principle"><span class="n">8</span><h3>Agents must know when to stop</h3>
+    <p>Detect unproductive searches, repeated failures and tasks that are already complete. Avoid unnecessary parallel agents or extra variations. Visible <b>Stop</b> and <b>Change direction</b> controls should cancel actual background work, not merely hide its output.</p></div>
+  <div class="wf"><div class="cap">Example · Instead of an unproductive loop</div><div class="box"><div>Two attempts have made no progress. This one missing detail is needed to continue.</div></div></div>
+
+  <div class="principle"><span class="n">9</span><h3>Teach without inducing guilt</h3>
+    <p>Short, specific explanations teach useful habits: “This formatting task did not need a generative model”, or “I switched to a stronger model for the complex verification”. Feedback should be discreet and optional. Do not reward increased AI usage with daily streaks or points.</p></div>
+
+  <span class="chapter">5 · Credible measurement</span>
+  <h2>Token counts are not energy meters</h2>
+  <p><b>Energy, carbon emissions, price and response time</b> are distinct metrics. Token counts are a useful indicator, but consumption also depends on the model, hardware, load, cache and execution. Fewer tokens or lower fees do not automatically mean proportionally less energy.</p>
+  <p>Show percentage savings only with a stated baseline and methodology. Distinguish measured data, estimates and illustrative examples, and make uncertainty visible. Without reliable energy data, explain the operations actually performed rather than inventing kWh values.</p>
+  <p>Success means the resource use of the whole workflow leading to an accepted result, including revisions and verification. Track result quality, retries and aggregate usage too: cheaper individual requests do not guarantee lower total consumption.</p>
+  <div class="take"><p><b>Users should not have to become infrastructure experts.</b> They need understandable choices and honest feedback. An efficient agent clarifies the goal, processes only necessary context, reuses completed work and stops when the task is done.</p>
+    <p>Prioritise <b>partial edits, clear completion criteria and stopping repetitive agent loops</b>: these directly improve usability and can reduce unnecessary computation.</p></div>
 
   <div class="take"><p><b>Efficiency in AI isn't just about saving money</b> – it's a sustainable, systems-thinking approach. Interfaces should guide society towards conscious, resource-optimised use by default.</p>
     <p>If you agree: <a href="petition.html">sign the petition</a>.</p></div>
