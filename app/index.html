@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>EcoAI – low-energy AI assistant</title>
+<meta name="description" content="EcoAI: an AI assistant app that shows the energy cost of every request and rewards the least-energy model choice.">
+<meta name="theme-color" content="#0f7a37">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="EcoAI">
+<meta property="og:title" content="🌿 EcoAI – low-energy AI assistant (app)">
+<meta property="og:description" content="Installable app: model picker sorted by energy, per-request kWh/CO₂, footprint, streaks and badges.">
+<meta property="og:image" content="https://madcsaba.github.io/ai-awareness-wireframe/og.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<script>
+(function(){var l;try{l=localStorage.getItem("ecoai-lang")}catch(e){}
+if(l!=="hu"&&l!=="en")l=(navigator.language||"").toLowerCase().indexOf("hu")===0?"hu":"en";
+document.documentElement.lang=l;
+var t;try{t=localStorage.getItem("ecoai-theme")}catch(e){}
+if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);})();
+</script>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="app" id="app">
+
+  <header class="apphead">
+    <div class="row">
+      <img class="applogo" src="icons/icon.svg" alt="" width="30" height="30">
+      <div class="titles">
+        <h1>EcoAI</h1>
+        <div class="sub" data-i="tagline"></div>
+      </div>
+      <span class="eco-pill" id="ecoPill" hidden>🌿 <span data-i="ecoOn"></span></span>
+      <button class="iconbtn" id="settingsBtn" type="button" data-i-aria="settings">⚙️</button>
+    </div>
+  </header>
+
+  <main class="views">
+    <!-- CHAT -->
+    <section class="view on" id="v-chat" aria-live="polite">
+      <div id="chatEmpty" class="empty">
+        <div class="empty-ico">🌿</div>
+        <h2 data-i="emptyTitle"></h2>
+        <p data-i="emptyText"></p>
+        <div class="starters" id="starters"></div>
+      </div>
+      <div id="msgs"></div>
+    </section>
+
+    <!-- FOOTPRINT -->
+    <section class="view" id="v-footprint"></section>
+
+    <!-- MODELS -->
+    <section class="view" id="v-models"></section>
+
+    <!-- STREAK -->
+    <section class="view" id="v-streak"></section>
+  </main>
+
+  <div class="composer" id="composer">
+    <div class="nudge" id="nudge" hidden></div>
+    <div class="comp-top">
+      <button class="mpick" id="mpick" type="button">
+        <span class="logo" id="mpLogo"></span><span id="mpName"></span><span class="dot" id="mpDot"></span><span class="caret">▾</span>
+      </button>
+      <div class="est" id="est"></div>
+    </div>
+    <form class="comp-row" id="form" autocomplete="off">
+      <input id="inp" type="text" enterkeyhint="send" data-i-ph="placeholder">
+      <button class="send" type="submit" data-i-aria="send">↑</button>
+    </form>
+  </div>
+
+  <nav class="tabs" role="tablist">
+    <button class="on" data-v="chat" type="button" role="tab"><span class="ico">💬</span><span data-i="tabChat"></span></button>
+    <button data-v="footprint" type="button" role="tab"><span class="ico">🌱</span><span data-i="tabFootprint"></span></button>
+    <button data-v="models" type="button" role="tab"><span class="ico">🧩</span><span data-i="tabModels"></span></button>
+    <button data-v="streak" type="button" role="tab"><span class="ico">🔥</span><span data-i="tabStreak"></span></button>
+  </nav>
+
+  <!-- model picker sheet -->
+  <div class="sheet" id="sheet" aria-hidden="true">
+    <div class="pane" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+      <div class="grab"></div>
+      <h3 id="sheetTitle" data-i="chooseModel"></h3>
+      <p class="hint" data-i="chooseHint"></p>
+      <div id="sheetList"></div>
+    </div>
+  </div>
+
+  <!-- settings sheet -->
+  <div class="sheet" id="settings" aria-hidden="true">
+    <div class="pane" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+      <div class="grab"></div>
+      <h3 id="setTitle" data-i="settings"></h3>
+      <div class="setrow"><span data-i="language"></span>
+        <span class="seg" id="langSeg"><button type="button" data-l="hu">HU</button><button type="button" data-l="en">EN</button></span></div>
+      <div class="setrow"><span data-i="theme"></span>
+        <span class="seg" id="themeSeg"><button type="button" data-t="auto" data-i="auto"></button><button type="button" data-t="light">☀️</button><button type="button" data-t="dark">🌙</button></span></div>
+      <div class="setrow"><span data-i="nudges"></span>
+        <label class="switch"><input type="checkbox" id="nudgeSw"><span></span></label></div>
+      <div class="setrow col">
+        <button class="btn" type="button" id="installBtn" hidden data-i="install"></button>
+        <button class="btn" type="button" id="demoBtn" data-i="loadDemo"></button>
+        <button class="btn danger" type="button" id="resetBtn" data-i="reset"></button>
+      </div>
+      <p class="fine" data-i="disclaimer"></p>
+      <p class="fine"><a href="../" data-i="backToPack"></a></p>
+    </div>
+  </div>
+
+  <!-- eco toast -->
+  <div class="toast" id="toast" role="status">
+    <div class="ring"><svg width="46" height="46" viewBox="0 0 46 46"><circle class="bg" cx="23" cy="23" r="19"/><circle class="fg" id="ringFg" cx="23" cy="23" r="19"/></svg><span class="pct" id="ringPct"></span></div>
+    <div class="tbody">
+      <div class="ttl"><span id="ttlTxt"></span><span class="badge" id="badge"></span></div>
+      <div class="msg2" id="tmsg"></div>
+      <div class="save" id="tsave"></div>
+      <div class="streak" id="tstreak"></div>
+    </div>
+  </div>
+  <div class="glow" id="glow"></div>
+  <div class="burst" id="burst"></div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
