@@ -3,7 +3,7 @@
  * BASE: a nav.js helye → aloldalakról (social-graphic/, one-pager/) is működik.
  */
 (function () {
-  var BASE = new URL(".", document.currentScript.src);
+  var BASE = new URL(".", (document.currentScript && document.currentScript.src) || location.href);
   var path = decodeURIComponent(location.pathname);
   var seg = path.split("/").filter(Boolean);
   var key = "index.html";
@@ -76,13 +76,12 @@
       items.map(function (it) {
         var active = it[2] === cur || (it[0] === "home" && key === "index.html");
         return '<a class="' + (active ? "on" : "") + '" href="' + u(it[2]) + '">' + it[1] + "</a>";
-      }).join("") +
+      }).join("") + "</nav>" +
       '<span class="emore"><button type="button" class="ecaret">' +
       (l === "hu" ? "Továbbiak ▾" : "More ▾") + '</button><span class="edrop">' +
       more.map(function (m) {
         return '<a href="' + u(m[1]) + '">' + m[0] + ' <i>' + (m[2] || "EN") + '</i></a>';
       }).join("") + "</span></span>" +
-      "</nav>" +
       '<span class="elang"><button type="button" data-l="hu" class="' + (l === "hu" ? "on" : "") + '">HU</button>' +
       '<button type="button" data-l="en" class="' + (l === "en" ? "on" : "") + '"' +
       (noHu && l === "en" ? ' title="Ez az oldal még csak angolul elérhető"' : "") + ">EN</button></span>";
@@ -113,7 +112,7 @@
       "#ecoai-nav .enav a{padding:7px 10px;border-radius:9px;font-size:13.5px}" +
       "#ecoai-nav .enav a:hover{background:#f1f4f8}" +
       "#ecoai-nav .enav a.on{background:#eef4ff;color:#2563eb;font-weight:700}" +
-      "#ecoai-nav .emore{position:relative}" +
+      "#ecoai-nav .emore{position:relative;flex:0 0 auto}" +
       "#ecoai-nav .ecaret{border:1px solid #e3e6ea;background:#fff;border-radius:9px;padding:7px 10px;" +
       "font:inherit;font-size:13.5px;color:#334155;cursor:pointer;white-space:nowrap}" +
       "#ecoai-nav .edrop{display:none;position:absolute;top:calc(100% + 8px);right:0;background:#fff;" +
