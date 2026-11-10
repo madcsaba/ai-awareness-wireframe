@@ -1,0 +1,1453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Weight of a Click — Mindful AI & Our Environmental Footprint</title>
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Weight of a Click — Mindful AI &amp; Our Environmental Footprint">
+<meta property="og:description" content="Mindful AI Campaign – 60s intro: a kattintás súlya, a nagy AI modellek környezeti lábnyoma.">
+<meta property="og:url" content="https://madcsaba.github.io/ai-awareness-wireframe/the-weight-of-a-click.html">
+<meta property="og:image" content="https://madcsaba.github.io/ai-awareness-wireframe/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Newsreader (Editorial Serif), Plus Jakarta Sans (Clean UI), JetBrains Mono (Metrics) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,500;0,6..72,600;1,6..72,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['Newsreader', 'Georgia', 'serif'],
+            sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            paper: {
+              50: '#FFFFFF',
+              100: '#F8F7F4',
+              200: '#F1EFEA',
+              300: '#E2E0D8',
+              400: '#C8C4B8'
+            },
+            ink: {
+              900: '#1E293B',
+              700: '#334155',
+              500: '#475569',
+              400: '#64748B'
+            },
+            sage: {
+              50: '#E8F3EE',
+              100: '#D1E7DD',
+              500: '#3B7A57',
+              700: '#2D6A4F'
+            },
+            slateBlue: {
+              50: '#EBF3F9',
+              100: '#D6E6F2',
+              600: '#2B5B84',
+              700: '#1E4464'
+            },
+            terracotta: {
+              50: '#FDF0EC',
+              100: '#F9DDD4',
+              600: '#B85435',
+              700: '#9A4226'
+            },
+            ochre: {
+              50: '#FBF5E9',
+              100: '#F5E6C8',
+              600: '#B47B2B'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #F8F7F4;
+      color: #1E293B;
+      overflow-x: hidden;
+      user-select: none;
+    }
+
+    /* Subtle editorial dot-grid pattern on the stage */
+    .editorial-grid {
+      background-color: #FFFFFF;
+      background-image: radial-gradient(#E2E0D8 1px, transparent 1px);
+      background-size: 24px 24px;
+    }
+
+    /* Smooth transitions */
+    .smooth-ease {
+      transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Gentle cooling fan rotation */
+    @keyframes spinCalm {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .fan-calm {
+      transform-origin: center;
+      animation: spinCalm 3.2s linear infinite;
+    }
+    .fan-active {
+      transform-origin: center;
+      animation: spinCalm 0.9s linear infinite;
+    }
+
+    /* Soft rising water vapor */
+    @keyframes vaporRise {
+      0% { transform: translateY(0) scale(0.85); opacity: 0.7; }
+      50% { opacity: 0.45; }
+      100% { transform: translateY(-42px) scale(1.25); opacity: 0; }
+    }
+    .vapor-1 { animation: vaporRise 3.6s ease-out infinite; }
+    .vapor-2 { animation: vaporRise 3.6s ease-out 1.2s infinite; }
+    .vapor-3 { animation: vaporRise 3.6s ease-out 2.4s infinite; }
+
+    /* Delicate fiber optic data flow */
+    @keyframes fiberFlow {
+      0% { stroke-dashoffset: 160; }
+      100% { stroke-dashoffset: 0; }
+    }
+    .fiber-stream {
+      stroke-dasharray: 10 14;
+      animation: fiberFlow 2.2s linear infinite;
+    }
+    .fiber-stream-fast {
+      stroke-dasharray: 12 10;
+      animation: fiberFlow 0.7s linear infinite;
+    }
+
+    /* Subtle vehicle motion */
+    @keyframes gentleRoll {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-2px); }
+    }
+    .vehicle-roll {
+      animation: gentleRoll 1.8s ease-in-out infinite;
+    }
+
+    @keyframes breezeLine {
+      0% { transform: translateX(80px); opacity: 0; }
+      40% { opacity: 0.6; }
+      100% { transform: translateX(-110px); opacity: 0; }
+    }
+    .breeze-1 { animation: breezeLine 1.8s linear infinite; }
+    .breeze-2 { animation: breezeLine 1.8s linear 0.6s infinite; }
+    .breeze-3 { animation: breezeLine 1.8s linear 1.2s infinite; }
+
+    /* Gentle block drop animation for Scene 4 */
+    @keyframes blockSettle {
+      0% { transform: translateY(-28px); opacity: 0; }
+      75% { transform: translateY(2px); opacity: 1; }
+      100% { transform: translateY(0); opacity: 1; }
+    }
+    .block-drop {
+      animation: blockSettle 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #F8F7F4; }
+    ::-webkit-scrollbar-thumb { background: #C8C4B8; border-radius: 9999px; }
+    ::-webkit-scrollbar-thumb:hover { background: #64748B; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-2 sm:p-4 lg:p-6 font-sans antialiased">
+
+  <!-- OUTER EDITORIAL CONTAINER -->
+  <div class="w-full max-w-6xl mx-auto flex flex-col gap-3">
+
+    <!-- ===================================================================== -->
+    <!-- TOP NAVIGATION & LIVE TELEMETRY BAR                                   -->
+    <!-- ===================================================================== -->
+    <header class="flex flex-wrap items-center justify-between gap-3 px-4 py-2.5 rounded-2xl bg-white border border-paper-300 shadow-sm">
+      
+      <!-- Brand / Campaign Title -->
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold tracking-wide uppercase bg-sage-50 text-sage-700 border border-sage-100">
+          <span class="w-1.5 h-1.5 rounded-full bg-sage-700"></span>
+          Mindful AI Campaign · 60s Intro
+        </span>
+        <h1 class="font-serif font-semibold text-base sm:text-lg md:text-xl text-ink-900 tracking-tight">
+          The Weight of a Click <span class="text-ink-400 font-sans font-normal text-xs sm:text-sm hidden md:inline">— Our Digital Footprint</span>
+        </h1>
+      </div>
+
+      <!-- Live Telemetry & Utility Actions -->
+      <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+        
+        <!-- Live Resource Meter Pill -->
+        <div class="flex items-center gap-3 bg-paper-100 border border-paper-300 px-3 py-1.5 rounded-xl">
+          <!-- Energy (Wh) with subtle bar -->
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-medium text-ink-400">Energy</span>
+            <div class="flex flex-col gap-0.5">
+              <span id="meterWh" class="font-mono font-semibold text-xs text-ink-900 leading-none">0.20 Wh</span>
+              <div class="w-16 h-1 bg-paper-300 rounded-full overflow-hidden">
+                <div id="meterWhBar" class="h-full bg-sage-700 smooth-ease" style="width: 8%"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="h-4 w-px bg-paper-300"></div>
+
+          <!-- Water (ml) -->
+          <div class="flex items-center gap-1.5">
+            <span class="text-xs font-medium text-ink-400">Water</span>
+            <span id="meterWater" class="font-mono font-semibold text-xs text-slateBlue-600">5 ml</span>
+          </div>
+
+          <div class="h-4 w-px bg-paper-300 hidden sm:block"></div>
+
+          <!-- Real-World Scale Pill -->
+          <span id="meterEquiv" class="hidden sm:inline-block px-2 py-0.5 rounded-md text-[11px] font-semibold bg-sage-50 text-sage-700 border border-sage-100 smooth-ease">
+            1 LED blink
+          </span>
+        </div>
+
+        <!-- Soft Audio Toggle -->
+        <button id="btnAudioToggle" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-medium bg-paper-100 hover:bg-paper-200 text-ink-700 border border-paper-300 transition-colors cursor-pointer" title="Toggle gentle acoustic UI sounds">
+          <span id="audioIcon" class="text-slateBlue-600">♪</span>
+          <span id="audioLabel" class="hidden sm:inline">Sound: Soft</span>
+        </button>
+
+        <!-- Full Script & Storyboard Modal Trigger -->
+        <button id="btnOpenScript" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold bg-ink-900 hover:bg-ink-700 text-white transition-colors cursor-pointer shadow-sm">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+          <span>Full Script & Storyboard</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- ===================================================================== -->
+    <!-- MAIN 16:9 HORIZONTAL EDITORIAL STAGE                                  -->
+    <!-- ===================================================================== -->
+    <main id="stageContainer" class="relative w-full aspect-video min-h-[480px] sm:min-h-[540px] rounded-3xl editorial-grid border border-paper-300 shadow-[0_12px_40px_-12px_rgba(30,41,59,0.08)] overflow-hidden flex flex-col justify-between">
+
+      <!-- 1. STAGE HEADER: Chapter Indicator & Editorial Headline -->
+      <div class="relative z-20 flex flex-wrap items-center justify-between gap-2 px-6 pt-5 pb-2 border-b border-paper-200 bg-white/90 backdrop-blur-sm">
+        <div class="flex items-center gap-3">
+          <span id="hudStepBadge" class="px-2.5 py-0.5 rounded-md font-mono font-semibold text-xs bg-paper-200 text-ink-700">
+            SCENE 01 / 05
+          </span>
+          <h2 id="hudSceneTitle" class="font-serif font-semibold text-lg sm:text-xl md:text-2xl text-ink-900">
+            The Cloud is Made of Steel, Water & Power
+          </h2>
+        </div>
+        <span id="hudTimecode" class="font-mono text-xs text-ink-400 hidden sm:inline">
+          0:00 – 0:08 · Physical Infrastructure
+        </span>
+      </div>
+
+      <!-- 2. STAGE CENTER: 5 INTERACTIVE EDITORIAL SCENES -->
+      <div class="relative z-10 flex-1 w-full flex items-center justify-center px-5 sm:px-8 py-3 overflow-hidden">
+
+        <!-- =============================================================== -->
+        <!-- SCENE 1: THE CLOUD IS MADE OF STEEL, WATER & POWER              -->
+        <!-- =============================================================== -->
+        <section id="scene-0" class="scene-panel w-full h-full flex flex-col lg:flex-row items-center justify-between gap-6">
+          
+          <!-- Left: Minimalist Prompt Card -->
+          <div class="w-full lg:w-5/12 bg-paper-100 border border-paper-300 rounded-2xl p-5 shadow-sm flex flex-col gap-3.5">
+            <div class="flex items-center justify-between border-b border-paper-300 pb-2.5">
+              <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-paper-400"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-paper-400"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-paper-400"></span>
+                <span class="ml-2 text-xs font-mono text-ink-400">assistant.chat</span>
+              </div>
+              <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-white text-ink-500 border border-paper-300">Your Device</span>
+            </div>
+
+            <div class="bg-white rounded-xl p-3.5 border border-paper-300 text-xs sm:text-sm text-ink-900 font-medium flex items-center justify-between gap-2 shadow-inner">
+              <span id="scene1PromptText">“Draft a short birthday note for a colleague.”</span>
+              <span class="w-0.5 h-4 bg-sage-700 animate-pulse"></span>
+            </div>
+
+            <p class="text-xs text-ink-500 leading-relaxed">
+              Every prompt travels through subsea and terrestrial fiber cables to physical server halls that draw electricity and evaporate cooling water.
+            </p>
+
+            <div class="flex items-center justify-between gap-3 pt-1">
+              <span id="scene1ClickStatus" class="text-[11px] font-mono text-ink-500">
+                1 prompt sent · Normal cooling load
+              </span>
+              <button id="btnScene1Enter" class="px-4 py-2 rounded-xl font-sans font-semibold text-xs bg-sage-700 hover:bg-sage-500 text-white shadow-sm transition-all cursor-pointer flex items-center gap-1.5 shrink-0">
+                <span>Send Prompt</span>
+                <span class="font-mono">↵</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right: Clean Architectural Data Center & Cooling Tower SVG -->
+          <div class="w-full lg:w-7/12 h-56 sm:h-64 md:h-72 flex items-center justify-center">
+            <svg viewBox="0 0 640 300" class="w-full h-full">
+              <!-- Fiber Optic Connection Line -->
+              <path d="M 10 165 C 85 165, 110 210, 195 190" fill="none" stroke="#E2E0D8" stroke-width="8" stroke-linecap="round"/>
+              <path id="scene1FiberPath" d="M 10 165 C 85 165, 110 210, 195 190" fill="none" stroke="#2D6A4F" stroke-width="3.5" stroke-linecap="round" class="fiber-stream"/>
+
+              <!-- Ground Baseline -->
+              <line x1="150" y1="255" x2="610" y2="255" stroke="#C8C4B8" stroke-width="2"/>
+
+              <!-- Evaporative Cooling Towers (Right) -->
+              <g transform="translate(445, 50)">
+                <!-- Soft Vapor Clouds -->
+                <circle cx="42" cy="18" r="14" fill="#D6E6F2" class="vapor-1" />
+                <circle cx="64" cy="12" r="18" fill="#EBF3F9" class="vapor-2" />
+                <circle cx="115" cy="20" r="15" fill="#D6E6F2" class="vapor-3" />
+
+                <!-- Tower 1 Structure -->
+                <path d="M 15 205 L 28 45 L 74 45 L 87 205 Z" fill="#F1EFEA" stroke="#94A3B8" stroke-width="2"/>
+                <ellipse cx="51" cy="45" rx="23" ry="5" fill="#E2E0D8" stroke="#94A3B8" stroke-width="1.5"/>
+                <!-- Water Icon Badge -->
+                <circle cx="51" cy="125" r="18" fill="#EBF3F9" stroke="#2B5B84" stroke-width="1.5"/>
+                <path d="M 51 114 C 51 114, 43 124, 43 130 A 8 8 0 0 0 59 130 C 59 124, 51 114, 51 114 Z" fill="#2B5B84"/>
+
+                <!-- Tower 2 Structure -->
+                <path d="M 92 205 L 103 62 L 143 62 L 154 205 Z" fill="#F8F7F4" stroke="#94A3B8" stroke-width="2"/>
+                <ellipse cx="123" cy="62" rx="20" ry="4.5" fill="#E2E0D8" stroke="#94A3B8" stroke-width="1.5"/>
+                <text x="85" y="226" text-anchor="middle" fill="#64748B" font-family="JetBrains Mono" font-size="10">COOLING TOWERS (H₂O)</text>
+              </g>
+
+              <!-- Architectural Server Hall (Center) -->
+              <g transform="translate(185, 55)">
+                <rect x="0" y="15" width="255" height="185" rx="14" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2.5"/>
+                <rect x="0" y="15" width="255" height="32" rx="14" fill="#F1EFEA"/>
+                <line x1="0" y1="47" x2="255" y2="47" stroke="#CBD5E1" stroke-width="1.5"/>
+                
+                <circle cx="22" cy="31" r="4.5" fill="#2D6A4F"/>
+                <text x="36" y="35" fill="#1E293B" font-family="JetBrains Mono" font-size="11" font-weight="600">DATA CENTER HALL · GPU RACKS</text>
+
+                <!-- Server Racks (Left side of building) -->
+                <g transform="translate(20, 62)">
+                  <rect x="0" y="0" width="110" height="22" rx="4" fill="#F8F7F4" stroke="#CBD5E1" stroke-width="1.5"/>
+                  <circle cx="13" cy="11" r="3" fill="#2D6A4F"/><circle cx="24" cy="11" r="3" fill="#2B5B84"/>
+                  <line x1="40" y1="11" x2="96" y2="11" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+
+                  <rect x="0" y="30" width="110" height="22" rx="4" fill="#F8F7F4" stroke="#CBD5E1" stroke-width="1.5"/>
+                  <circle cx="13" cy="41" r="3" fill="#2D6A4F"/><circle cx="24" cy="41" r="3" fill="#2D6A4F"/>
+                  <line x1="40" y1="41" x2="96" y2="41" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+
+                  <rect x="0" y="60" width="110" height="22" rx="4" fill="#F8F7F4" stroke="#CBD5E1" stroke-width="1.5"/>
+                  <circle cx="13" cy="71" r="3" fill="#B47B2B"/><circle cx="24" cy="71" r="3" fill="#2D6A4F"/>
+                  <line x1="40" y1="71" x2="96" y2="71" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+
+                  <rect x="0" y="90" width="110" height="22" rx="4" fill="#F8F7F4" stroke="#CBD5E1" stroke-width="1.5"/>
+                  <circle cx="13" cy="101" r="3" fill="#2D6A4F"/><circle cx="24" cy="101" r="3" fill="#2B5B84"/>
+                  <line x1="40" y1="101" x2="96" y2="101" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+                </g>
+
+                <!-- Twin Thermal Fans (Right side of building) -->
+                <g transform="translate(185, 95)">
+                  <circle cx="0" cy="0" r="28" fill="#F8F7F4" stroke="#94A3B8" stroke-width="2"/>
+                  <g class="fan-calm" id="scene1Fan1">
+                    <ellipse cx="0" cy="-13" rx="5" ry="11" fill="#64748B"/>
+                    <ellipse cx="0" cy="13" rx="5" ry="11" fill="#64748B"/>
+                    <ellipse cx="-13" cy="0" rx="11" ry="5" fill="#64748B"/>
+                    <ellipse cx="13" cy="0" rx="11" ry="5" fill="#64748B"/>
+                    <circle cx="0" cy="0" r="5" fill="#1E293B"/>
+                  </g>
+                </g>
+
+                <g transform="translate(185, 158)">
+                  <circle cx="0" cy="0" r="24" fill="#F8F7F4" stroke="#94A3B8" stroke-width="2"/>
+                  <g class="fan-calm" id="scene1Fan2">
+                    <ellipse cx="0" cy="-11" rx="4.5" ry="9" fill="#94A3B8"/>
+                    <ellipse cx="0" cy="11" rx="4.5" ry="9" fill="#94A3B8"/>
+                    <ellipse cx="-11" cy="0" rx="9" ry="4.5" fill="#94A3B8"/>
+                    <ellipse cx="11" cy="0" rx="9" ry="4.5" fill="#94A3B8"/>
+                    <circle cx="0" cy="0" r="4.5" fill="#1E293B"/>
+                  </g>
+                </g>
+
+                <text x="127" y="221" text-anchor="middle" fill="#64748B" font-family="JetBrains Mono" font-size="10">ELECTRICAL COMPUTE (Wh)</text>
+              </g>
+            </svg>
+          </div>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- SCENE 2: A MINING TRUCK FOR A CROISSANT? (MODEL SIZING)         -->
+        <!-- =============================================================== -->
+        <section id="scene-1" class="scene-panel hidden w-full h-full flex flex-col justify-between gap-3">
+          
+          <!-- Top Task & Comparison Switcher Bar -->
+          <div class="flex flex-wrap items-center justify-between gap-3 bg-paper-100 border border-paper-300 rounded-2xl px-4 py-2.5">
+            <div class="flex items-center gap-3">
+              <span class="w-9 h-9 rounded-xl bg-ochre-50 border border-ochre-100 flex items-center justify-center text-lg">🥐</span>
+              <div>
+                <div class="text-[10px] font-mono uppercase tracking-wider text-ink-400">Everyday Routine Task (A single croissant from the bakery)</div>
+                <div class="text-xs sm:text-sm font-semibold text-ink-900">“Rewrite this 3-sentence email so it sounds polite and clear.”</div>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <span class="text-xs text-ink-400 hidden md:inline">Compare vehicle:</span>
+              <button id="btnSelectTruck" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-terracotta-50 text-terracotta-700 border border-terracotta-100 hover:bg-terracotta-100 transition-all cursor-pointer">
+                40t Mining Truck (Frontier Model)
+              </button>
+              <button id="btnSelectBike" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-sage-700 text-white shadow-sm hover:bg-sage-500 transition-all cursor-pointer">
+                Electric Bicycle (Small / Local Model)
+              </button>
+            </div>
+          </div>
+
+          <!-- Side-by-Side Comparison Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 flex-1 items-stretch">
+            
+            <!-- Left Card: 40-Ton Mining Dump Truck -->
+            <div id="cardTruck" class="rounded-2xl bg-white border-2 border-paper-300 p-4 flex flex-col justify-between smooth-ease">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase bg-terracotta-50 text-terracotta-700 border border-terracotta-100">
+                    Overkill for Routine Tasks
+                  </span>
+                  <h3 class="font-serif font-semibold text-base sm:text-lg text-ink-900 mt-1">
+                    Frontier Reasoning Model
+                  </h3>
+                </div>
+                <div class="text-right font-mono">
+                  <div class="text-base font-semibold text-terracotta-600">~5.0 Wh</div>
+                  <div class="text-[11px] text-ink-400">~45 ml water</div>
+                </div>
+              </div>
+
+              <!-- Clean Architectural SVG Dump Truck -->
+              <div class="h-32 sm:h-36 flex items-center justify-center">
+                <svg viewBox="0 0 360 145" class="w-full h-full">
+                  <line x1="15" y1="128" x2="345" y2="128" stroke="#CBD5E1" stroke-width="2"/>
+                  <g class="vehicle-roll">
+                    <!-- Exhaust plume -->
+                    <circle cx="42" cy="42" r="11" fill="#E2E0D8" class="vapor-1"/>
+                    <circle cx="26" cy="32" r="15" fill="#F1EFEA" class="vapor-2"/>
+                    <!-- Massive Dump Bed -->
+                    <polygon points="55,32 230,18 230,92 75,92" fill="#FDF0EC" stroke="#B85435" stroke-width="2.5"/>
+                    <line x1="105" y1="30" x2="105" y2="88" stroke="#EAC2B5" stroke-width="3"/>
+                    <line x1="150" y1="27" x2="150" y2="88" stroke="#EAC2B5" stroke-width="3"/>
+                    <line x1="195" y1="23" x2="195" y2="88" stroke="#EAC2B5" stroke-width="3"/>
+                    <!-- Tiny Croissant inside huge dump bed -->
+                    <g transform="translate(138, 6)">
+                      <ellipse cx="12" cy="10" rx="10" ry="6" fill="#B47B2B"/>
+                      <text x="12" y="-2" text-anchor="middle" fill="#64748B" font-family="JetBrains Mono" font-size="9">1 croissant</text>
+                    </g>
+                    <!-- Truck Cab -->
+                    <rect x="230" y="45" width="54" height="47" rx="6" fill="#F9DDD4" stroke="#B85435" stroke-width="2.5"/>
+                    <rect x="248" y="53" width="28" height="18" rx="3" fill="#FFFFFF" stroke="#B85435" stroke-width="1.5"/>
+                    <!-- Giant Wheels -->
+                    <circle cx="115" cy="104" r="23" fill="#334155" stroke="#94A3B8" stroke-width="3"/>
+                    <circle cx="115" cy="104" r="8" fill="#F8F7F4"/>
+                    <circle cx="242" cy="104" r="23" fill="#334155" stroke="#94A3B8" stroke-width="3"/>
+                    <circle cx="242" cy="104" r="8" fill="#F8F7F4"/>
+                  </g>
+                </svg>
+              </div>
+
+              <p class="text-xs text-ink-500 bg-paper-100 rounded-xl px-3 py-2 border border-paper-200">
+                Using a massive reasoning model for a simple rewrite is like driving a <strong class="text-ink-900">40-ton mining truck</strong> to the corner bakery for a single croissant.
+              </p>
+            </div>
+
+            <!-- Right Card: Nimble Electric Bicycle -->
+            <div id="cardBike" class="rounded-2xl bg-white border-2 border-sage-700 p-4 flex flex-col justify-between shadow-sm smooth-ease">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase bg-sage-50 text-sage-700 border border-sage-100">
+                    30× Lower Energy Footprint
+                  </span>
+                  <h3 class="font-serif font-semibold text-base sm:text-lg text-ink-900 mt-1">
+                    Right-Sized or Local Model
+                  </h3>
+                </div>
+                <div class="text-right font-mono">
+                  <div class="text-base font-semibold text-sage-700">~0.15 Wh</div>
+                  <div class="text-[11px] text-ink-400">0–2 ml water</div>
+                </div>
+              </div>
+
+              <!-- Clean Architectural SVG Electric Bicycle -->
+              <div class="h-32 sm:h-36 flex items-center justify-center">
+                <svg viewBox="0 0 360 145" class="w-full h-full">
+                  <line x1="15" y1="128" x2="345" y2="128" stroke="#CBD5E1" stroke-width="2"/>
+                  <g class="vehicle-roll">
+                    <!-- Wheels -->
+                    <circle cx="125" cy="105" r="21" fill="#FFFFFF" stroke="#2D6A4F" stroke-width="3"/>
+                    <circle cx="125" cy="105" r="4" fill="#2D6A4F"/>
+                    <circle cx="230" cy="105" r="21" fill="#FFFFFF" stroke="#2D6A4F" stroke-width="3"/>
+                    <circle cx="230" cy="105" r="4" fill="#2D6A4F"/>
+                    <!-- Minimalist Frame -->
+                    <path d="M 125 105 L 162 68 L 214 68 L 176 105 Z" fill="none" stroke="#2D6A4F" stroke-width="4" stroke-linejoin="round"/>
+                    <line x1="162" y1="68" x2="153" y2="52" stroke="#1E293B" stroke-width="3.5" stroke-linecap="round"/>
+                    <line x1="230" y1="105" x2="210" y2="48" stroke="#2D6A4F" stroke-width="3.5" stroke-linecap="round"/>
+                    <line x1="202" y1="48" x2="218" y2="48" stroke="#1E293B" stroke-width="3.5" stroke-linecap="round"/>
+                    <!-- Front Basket with Croissant -->
+                    <rect x="218" y="52" width="26" height="17" rx="3" fill="#FBF5E9" stroke="#B47B2B" stroke-width="2"/>
+                    <ellipse cx="231" cy="50" rx="8" ry="5" fill="#B47B2B"/>
+                  </g>
+                </svg>
+              </div>
+
+              <p class="text-xs text-ink-500 bg-sage-50/60 rounded-xl px-3 py-2 border border-sage-100">
+                A compact cloud model or on-device model completes the exact same task using <strong class="text-sage-700">up to 30 times less electricity</strong>.
+              </p>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- SCENE 3: THE MODALITY ESCALATOR (TEXT VS. IMAGE VS. VIDEO)      -->
+        <!-- =============================================================== -->
+        <section id="scene-2" class="scene-panel hidden w-full h-full flex flex-col justify-between gap-2">
+          
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-medium text-ink-500">Select an output format below to inspect its real-world resource cost:</span>
+            <span class="text-[11px] font-mono text-ink-400">1× → 15× → 425× scale</span>
+          </div>
+
+          <!-- 3 Editorial Podium Cards -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end flex-1 pb-1">
+            
+            <!-- STEP 1: SHORT TEXT -->
+            <div onclick="selectModalityStep(0)" id="modStep-0" class="cursor-pointer rounded-2xl bg-white border-2 border-paper-300 p-4 flex flex-col justify-between h-[76%] hover:border-sage-700 smooth-ease shadow-sm">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase bg-sage-50 text-sage-700 border border-sage-100">
+                  01 · Short Text
+                </span>
+                <span class="font-mono font-semibold text-sm text-sage-700">~0.2 Wh</span>
+              </div>
+
+              <div class="my-auto flex flex-col items-center text-center gap-2 py-1">
+                <!-- Clean SVG LED Bulb -->
+                <svg viewBox="0 0 80 80" class="w-14 h-14">
+                  <circle cx="40" cy="36" r="24" fill="#E8F3EE"/>
+                  <path d="M 28 36 A 12 12 0 1 1 52 36 C 52 43, 46 47, 46 53 L 34 53 C 34 47, 28 43, 28 36 Z" fill="#FFFFFF" stroke="#2D6A4F" stroke-width="2.5"/>
+                  <line x1="35" y1="58" x2="45" y2="58" stroke="#2D6A4F" stroke-width="2.5" stroke-linecap="round"/>
+                  <line x1="37" y1="63" x2="43" y2="63" stroke="#2D6A4F" stroke-width="2.5" stroke-linecap="round"/>
+                </svg>
+                <h3 class="font-serif font-semibold text-base text-ink-900">A Few Seconds of Light</h3>
+                <p class="text-xs text-ink-500 leading-relaxed">
+                  A concise text reply consumes roughly the same energy as an <strong class="text-ink-900">LED bulb shining for a few seconds</strong>.
+                </p>
+              </div>
+
+              <div class="text-[11px] font-mono text-center py-1 rounded-lg bg-paper-100 text-ink-500 border border-paper-200">
+                ~5 ml cooling water
+              </div>
+            </div>
+
+            <!-- STEP 2: 1 GENERATED IMAGE -->
+            <div onclick="selectModalityStep(1)" id="modStep-1" class="cursor-pointer rounded-2xl bg-white border-2 border-paper-300 p-4 flex flex-col justify-between h-[88%] hover:border-slateBlue-600 smooth-ease shadow-sm">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase bg-slateBlue-50 text-slateBlue-600 border border-slateBlue-100">
+                  02 · Single AI Image
+                </span>
+                <span class="font-mono font-semibold text-sm text-slateBlue-600">~3.0 Wh</span>
+              </div>
+
+              <div class="my-auto flex flex-col items-center text-center gap-2 py-1">
+                <!-- Clean SVG Smartphone + Water Glass -->
+                <svg viewBox="0 0 130 80" class="w-24 h-14">
+                  <!-- Phone -->
+                  <rect x="22" y="14" width="30" height="52" rx="5" fill="#F8F7F4" stroke="#2B5B84" stroke-width="2.2"/>
+                  <rect x="27" y="46" width="20" height="14" rx="2" fill="#D6E6F2"/>
+                  <text x="37" y="36" text-anchor="middle" fill="#2B5B84" font-family="JetBrains Mono" font-size="9" font-weight="600">25%</text>
+                  <!-- Plus -->
+                  <text x="66" y="44" text-anchor="middle" fill="#64748B" font-family="Plus Jakarta Sans" font-size="14" font-weight="600">+</text>
+                  <!-- Glass of water -->
+                  <polygon points="82,22 108,22 104,64 86,64" fill="#EBF3F9" stroke="#2B5B84" stroke-width="2"/>
+                  <line x1="84" y1="34" x2="106" y2="34" stroke="#2B5B84" stroke-width="1.5"/>
+                </svg>
+                <h3 class="font-serif font-semibold text-base text-ink-900">Phone Charge & Cooling Water</h3>
+                <p class="text-xs text-ink-500 leading-relaxed">
+                  Generating one image equals <strong class="text-ink-900">charging a phone by 25%</strong> plus a small glass of evaporated water.
+                </p>
+              </div>
+
+              <div class="text-[11px] font-mono text-center py-1 rounded-lg bg-slateBlue-50/70 text-slateBlue-700 border border-slateBlue-100">
+                ~35 ml water · 15× text energy
+              </div>
+            </div>
+
+            <!-- STEP 3: 5-SECOND AI VIDEO -->
+            <div onclick="selectModalityStep(2)" id="modStep-2" class="cursor-pointer rounded-2xl bg-white border-2 border-terracotta-600 p-4 flex flex-col justify-between h-full smooth-ease shadow-md">
+              <div class="flex items-center justify-between">
+                <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase bg-terracotta-50 text-terracotta-700 border border-terracotta-100">
+                  03 · 5-Second AI Video
+                </span>
+                <span class="font-mono font-semibold text-base text-terracotta-600">~85.0 Wh</span>
+              </div>
+
+              <!-- Clean SVG Electric Scooter -->
+              <div class="my-auto flex flex-col items-center text-center gap-1.5">
+                <svg viewBox="0 0 240 85" class="w-full h-20">
+                  <line x1="25" y1="24" x2="75" y2="24" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" class="breeze-1"/>
+                  <line x1="15" y1="45" x2="65" y2="45" stroke="#CBD5E1" stroke-width="2" stroke-linecap="round" class="breeze-2"/>
+                  <line x1="10" y1="76" x2="230" y2="76" stroke="#CBD5E1" stroke-width="2"/>
+                  <g class="vehicle-roll" transform="translate(75, 10)">
+                    <circle cx="18" cy="55" r="10" fill="#FFFFFF" stroke="#B85435" stroke-width="3"/>
+                    <circle cx="78" cy="55" r="10" fill="#FFFFFF" stroke="#B85435" stroke-width="3"/>
+                    <rect x="18" y="50" width="60" height="5" rx="2.5" fill="#B85435"/>
+                    <line x1="75" y1="52" x2="66" y2="10" stroke="#1E293B" stroke-width="3.5" stroke-linecap="round"/>
+                    <line x1="59" y1="10" x2="74" y2="10" stroke="#B85435" stroke-width="3.5" stroke-linecap="round"/>
+                    <rect x="24" y="25" width="38" height="16" rx="4" fill="#FDF0EC" stroke="#EAC2B5" stroke-width="1"/>
+                    <text x="43" y="36" text-anchor="middle" font-family="JetBrains Mono" font-size="9" font-weight="600" fill="#B85435">4.2 km</text>
+                  </g>
+                </svg>
+                <h3 class="font-serif font-semibold text-base text-ink-900">4.2 km on an E-Scooter</h3>
+                <p class="text-xs text-ink-500 leading-relaxed">
+                  A single 5-second AI video clip draws enough electricity to ride an <strong class="text-terracotta-700">electric scooter for over 4 kilometers</strong>.
+                </p>
+              </div>
+
+              <div class="text-[11px] font-mono text-center py-1 rounded-lg bg-terracotta-50 text-terracotta-700 border border-terracotta-100 font-semibold">
+                ~300 ml water · 425× text energy
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- SCENE 4: THE BACKPACK TRAP & THE COST OF "THANKS!"              -->
+        <!-- =============================================================== -->
+        <section id="scene-3" class="scene-panel hidden w-full h-full flex flex-col lg:flex-row items-center justify-between gap-6">
+          
+          <!-- Left: Editorial Explanation & Interactive Triggers -->
+          <div class="w-full lg:w-5/12 bg-paper-100 border border-paper-300 rounded-2xl p-5 flex flex-col gap-3 shadow-sm">
+            <span class="inline-block w-fit px-2.5 py-0.5 rounded text-[10px] font-mono font-semibold uppercase bg-ochre-50 text-ochre-600 border border-ochre-100">
+              Context Window Mechanics
+            </span>
+            <h3 class="font-serif font-semibold text-base sm:text-lg text-ink-900 leading-snug">
+              AI has no persistent memory—it re-reads the entire conversation on every turn.
+            </h3>
+            <p class="text-xs text-ink-500 leading-relaxed">
+              Each new reply forces the server to re-process every prior message from scratch. Sending a standalone <em>“Thanks!”</em> at the end of a long thread recalculates thousands of tokens for a two-word reply.
+            </p>
+
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <button id="btnAddContext" class="px-3 py-2 rounded-xl font-sans font-semibold text-xs bg-white hover:bg-paper-200 text-ink-700 border border-paper-300 transition-colors cursor-pointer">
+                + Add Context Turn
+              </button>
+              <button id="btnAddThanks" class="flex-1 px-3.5 py-2 rounded-xl font-sans font-semibold text-xs bg-terracotta-600 hover:bg-terracotta-700 text-white shadow-sm transition-colors cursor-pointer">
+                Send Separate “Thanks!”
+              </button>
+              <button id="btnResetBackpack" class="px-3 py-2 rounded-xl font-sans font-medium text-xs bg-sage-50 hover:bg-sage-100 text-sage-700 border border-sage-100 transition-colors cursor-pointer" title="Start a fresh chat or combine prompts">
+                Start Fresh
+              </button>
+            </div>
+
+            <div id="backpackStatusText" class="text-[11px] font-mono text-ink-500 bg-white rounded-xl px-3 py-2 border border-paper-300">
+              Active context: 3 turns (~1,800 tokens) · Load: 1.1 Wh
+            </div>
+          </div>
+
+          <!-- Right: Courier Carrying Stacked Context Blocks SVG -->
+          <div class="w-full lg:w-7/12 h-56 sm:h-64 md:h-72 flex items-center justify-center">
+            <svg viewBox="0 0 560 280" class="w-full h-full">
+              <!-- Stepped Hill Path -->
+              <path d="M 30 250 L 170 250 L 170 210 L 320 210 L 320 170 L 470 170 L 470 130 L 540 130" fill="none" stroke="#CBD5E1" stroke-width="4" stroke-linejoin="round"/>
+
+              <!-- Courier + Stacked Context Backpack -->
+              <g transform="translate(205, 65)">
+                
+                <!-- Base Stack of Context Blocks -->
+                <g id="baseBoulders">
+                  <rect x="-75" y="72" width="135" height="24" rx="6" fill="#FFFFFF" stroke="#94A3B8" stroke-width="2"/>
+                  <text x="-7" y="88" text-anchor="middle" fill="#334155" font-family="JetBrains Mono" font-size="10">Turn 1: Initial Prompt</text>
+
+                  <rect x="-82" y="44" width="148" height="24" rx="6" fill="#FFFFFF" stroke="#2D6A4F" stroke-width="2"/>
+                  <text x="-8" y="60" text-anchor="middle" fill="#2D6A4F" font-family="JetBrains Mono" font-size="10">Turn 2: Pasted Article</text>
+
+                  <rect x="-90" y="16" width="164" height="24" rx="6" fill="#F8F7F4" stroke="#2B5B84" stroke-width="2"/>
+                  <text x="-8" y="32" text-anchor="middle" fill="#2B5B84" font-family="JetBrains Mono" font-size="10">Turn 3: Deep Summary</text>
+                </g>
+
+                <!-- Extra Context Block (Added via + Add Context Turn) -->
+                <g id="extraContextBlock" class="hidden">
+                  <rect x="-96" y="-12" width="176" height="24" rx="6" fill="#FBF5E9" stroke="#B47B2B" stroke-width="2"/>
+                  <text x="-8" y="4" text-anchor="middle" fill="#B47B2B" font-family="JetBrains Mono" font-size="10">Turn 4: Follow-up Edit (+1,500 t)</text>
+                </g>
+
+                <!-- Heavy "Thanks!" Block (Dropped on click) -->
+                <g id="thanksBoulder" class="hidden">
+                  <rect x="-110" y="-62" width="205" height="45" rx="8" fill="#FDF0EC" stroke="#B85435" stroke-width="2.5"/>
+                  <text x="-7" y="-42" text-anchor="middle" fill="#9A4226" font-family="Plus Jakarta Sans" font-size="12" font-weight="700">“Thanks!” (+1 word)</text>
+                  <text x="-7" y="-26" text-anchor="middle" fill="#B85435" font-family="JetBrains Mono" font-size="9.5" font-weight="600">RE-PROCESSES ALL 4,000 PRIOR TOKENS</text>
+                </g>
+
+                <!-- Minimalist Courier Bot -->
+                <g id="robotBodyAnim">
+                  <!-- Harness -->
+                  <path d="M 52 68 L 78 72 L 78 108 L 52 104 Z" fill="#CBD5E1"/>
+                  <!-- Chassis -->
+                  <rect x="70" y="56" width="54" height="54" rx="14" fill="#FFFFFF" stroke="#334155" stroke-width="2.5"/>
+                  <!-- Face Visor -->
+                  <rect x="79" y="66" width="36" height="24" rx="6" fill="#1E293B"/>
+                  <circle id="robotEyeL" cx="90" cy="78" r="3.5" fill="#E8F3EE"/>
+                  <circle id="robotEyeR" cx="104" cy="78" r="3.5" fill="#E8F3EE"/>
+                  <!-- Wheels -->
+                  <circle cx="84" cy="122" r="11" fill="#334155" stroke="#CBD5E1" stroke-width="3"/>
+                  <circle cx="112" cy="122" r="11" fill="#334155" stroke="#CBD5E1" stroke-width="3"/>
+                </g>
+              </g>
+            </svg>
+          </div>
+        </section>
+
+        <!-- =============================================================== -->
+        <!-- SCENE 5: DAILY IMPACT SIMULATOR & CAMPAIGN PLEDGE               -->
+        <!-- =============================================================== -->
+        <section id="scene-4" class="scene-panel hidden w-full h-full flex flex-col lg:flex-row items-stretch justify-between gap-5">
+          
+          <!-- Left Column: Interactive Habit Calculator -->
+          <div class="w-full lg:w-6/12 bg-paper-100 border border-paper-300 rounded-2xl p-4 flex flex-col justify-between gap-2.5 shadow-sm">
+            <div class="flex items-center justify-between border-b border-paper-300 pb-2">
+              <span class="font-serif font-semibold text-base text-ink-900">Personal AI Footprint Simulator</span>
+              <span class="text-[11px] font-mono text-ink-400">Assumes 15 prompts / day</span>
+            </div>
+
+            <!-- Control 1: Typical Task -->
+            <div>
+              <label class="block text-[10px] font-mono uppercase tracking-wider text-ink-400 mb-1">1. Typical Output Format</label>
+              <div class="grid grid-cols-3 gap-1.5">
+                <button onclick="updateSim('task', 'text')" id="simTask-text" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-sage-700 text-white cursor-pointer transition-all">Text Summary</button>
+                <button onclick="updateSim('task', 'image')" id="simTask-image" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white text-ink-700 border border-paper-300 cursor-pointer transition-all">Image Gen</button>
+                <button onclick="updateSim('task', 'video')" id="simTask-video" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white text-ink-700 border border-paper-300 cursor-pointer transition-all">Short Video</button>
+              </div>
+            </div>
+
+            <!-- Control 2: Model Choice -->
+            <div>
+              <label class="block text-[10px] font-mono uppercase tracking-wider text-ink-400 mb-1">2. Model Selection</label>
+              <div class="grid grid-cols-3 gap-1.5">
+                <button onclick="updateSim('model', 'local')" id="simModel-local" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-sage-700 text-white cursor-pointer transition-all">Local On-Device</button>
+                <button onclick="updateSim('model', 'compact')" id="simModel-compact" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white text-ink-700 border border-paper-300 cursor-pointer transition-all">Compact Cloud</button>
+                <button onclick="updateSim('model', 'giant')" id="simModel-giant" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white text-ink-700 border border-paper-300 cursor-pointer transition-all">Frontier Giant</button>
+              </div>
+            </div>
+
+            <!-- Control 3: Prompting Style -->
+            <div>
+              <label class="block text-[10px] font-mono uppercase tracking-wider text-ink-400 mb-1">3. Prompting Habit</label>
+              <div class="grid grid-cols-2 gap-1.5">
+                <button onclick="updateSim('habit', 'precise')" id="simHabit-precise" class="px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-sage-700 text-white cursor-pointer transition-all">One Clear Prompt</button>
+                <button onclick="updateSim('habit', 'chatty')" id="simHabit-chatty" class="px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white text-ink-700 border border-paper-300 cursor-pointer transition-all">Iterative Chat + “Thanks!”</button>
+              </div>
+            </div>
+
+            <!-- Calculated Single + Annual Output -->
+            <div class="bg-white border border-paper-300 rounded-xl p-3 flex items-center justify-between gap-3">
+              <div>
+                <div class="text-[10px] font-mono uppercase text-ink-400">Single Query Cost</div>
+                <div id="simSingleCost" class="font-mono font-semibold text-sm sm:text-base text-sage-700">0.12 Wh · 0 ml H₂O</div>
+                <div id="simAnnualEquiv" class="text-[11px] text-ink-500 mt-0.5">Annual: ~0.66 kWh (33 km e-scooter range)</div>
+              </div>
+              <div class="text-right">
+                <span id="simRatingBadge" class="inline-block px-2.5 py-1 rounded-full text-xs font-semibold bg-sage-50 text-sage-700 border border-sage-100">
+                  Mindful Choice
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right Column: Campaign Discussion & Pledge Poll -->
+          <div class="w-full lg:w-6/12 bg-white border border-paper-300 rounded-2xl p-4 flex flex-col justify-between gap-2.5 shadow-sm">
+            <div>
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase bg-slateBlue-50 text-slateBlue-600 border border-slateBlue-100">
+                Campaign Discussion Starter
+              </span>
+              <h3 class="font-serif font-semibold text-base sm:text-lg text-ink-900 mt-1">
+                Which mindful AI habit will you adopt this week?
+              </h3>
+              <p class="text-xs text-ink-500">
+                Click a pledge below to add your voice and copy our campaign summary:
+              </p>
+            </div>
+
+            <!-- 3 Clickable Pledge Cards -->
+            <div class="flex flex-col gap-2">
+              <button onclick="castCampaignVote(0)" class="w-full text-left p-2.5 rounded-xl bg-paper-100 hover:bg-paper-200 border border-paper-300 transition-all cursor-pointer relative overflow-hidden">
+                <div id="pollBar-0" class="absolute inset-y-0 left-0 bg-sage-100/80 smooth-ease" style="width: 46%"></div>
+                <div class="relative z-10 flex items-center justify-between gap-2 text-xs font-medium text-ink-900">
+                  <span>1. Match model size to the task (use compact/local models for routine work)</span>
+                  <span id="pollPct-0" class="font-mono font-semibold text-sage-700 shrink-0">46%</span>
+                </div>
+              </button>
+
+              <button onclick="castCampaignVote(1)" class="w-full text-left p-2.5 rounded-xl bg-paper-100 hover:bg-paper-200 border border-paper-300 transition-all cursor-pointer relative overflow-hidden">
+                <div id="pollBar-1" class="absolute inset-y-0 left-0 bg-slateBlue-100/80 smooth-ease" style="width: 34%"></div>
+                <div class="relative z-10 flex items-center justify-between gap-2 text-xs font-medium text-ink-900">
+                  <span>2. Write complete prompts upfront & skip the extra “Thank you” turn</span>
+                  <span id="pollPct-1" class="font-mono font-semibold text-slateBlue-600 shrink-0">34%</span>
+                </div>
+              </button>
+
+              <button onclick="castCampaignVote(2)" class="w-full text-left p-2.5 rounded-xl bg-paper-100 hover:bg-paper-200 border border-paper-300 transition-all cursor-pointer relative overflow-hidden">
+                <div id="pollBar-2" class="absolute inset-y-0 left-0 bg-terracotta-100/70 smooth-ease" style="width: 20%"></div>
+                <div class="relative z-10 flex items-center justify-between gap-2 text-xs font-medium text-ink-900">
+                  <span>3. Think twice before generating high-energy AI images and videos</span>
+                  <span id="pollPct-2" class="font-mono font-semibold text-terracotta-600 shrink-0">20%</span>
+                </div>
+              </button>
+            </div>
+
+            <!-- Footer CTA -->
+            <div class="flex items-center justify-between gap-2 pt-1.5 border-t border-paper-200">
+              <span id="voteFeedback" class="text-[11px] text-ink-500">
+                Select an option above to record your pledge.
+              </span>
+              <button id="btnCopyCampaign" class="px-3 py-1.5 rounded-xl font-sans font-semibold text-xs bg-ink-900 hover:bg-ink-700 text-white transition-colors cursor-pointer shrink-0">
+                Copy Key Takeaways
+              </button>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+
+      <!-- 3. STAGE FOOTER: SYNCHRONIZED VOICEOVER SUBTITLE & TIMELINE BAR -->
+      <div class="relative z-20 px-6 pb-4 pt-2.5 border-t border-paper-200 bg-paper-100/95 flex flex-col gap-2.5">
+        
+        <!-- Editorial Voiceover Caption Box -->
+        <div class="w-full max-w-4xl mx-auto bg-white border border-paper-300 rounded-xl px-4 py-2.5 shadow-sm flex items-center gap-3">
+          <span class="px-2 py-0.5 rounded bg-paper-200 text-ink-700 font-mono font-semibold text-[10px] shrink-0 uppercase tracking-wider">
+            Voiceover
+          </span>
+          <p id="subtitleText" class="font-serif italic text-xs sm:text-sm md:text-base text-ink-900 leading-snug">
+            “When you press Enter, your question doesn’t vanish into thin air. A single message on your screen spins up cooling fans and water towers inside physical data centers.”
+          </p>
+        </div>
+
+        <!-- Transport Controls, Progress Scrubber & 5 Scene Pills -->
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          
+          <!-- Play/Pause + Prev/Next + Timer -->
+          <div class="flex items-center gap-1.5">
+            <button id="btnPlayPause" class="px-3 py-1.5 rounded-xl font-sans font-semibold text-xs bg-sage-700 hover:bg-sage-500 text-white shadow-sm transition-colors cursor-pointer flex items-center gap-1.5">
+              <span id="playIcon">⏸</span>
+              <span id="playLabel">Pause Tour</span>
+            </button>
+            <button id="btnPrevScene" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-paper-200 text-ink-700 border border-paper-300 text-xs font-medium cursor-pointer" title="Previous Scene">
+              ← Prev
+            </button>
+            <button id="btnNextScene" class="px-2.5 py-1.5 rounded-xl bg-white hover:bg-paper-200 text-ink-700 border border-paper-300 text-xs font-medium cursor-pointer" title="Next Scene">
+              Next →
+            </button>
+            <span id="timerDisplay" class="font-mono text-xs text-ink-400 pl-1.5">0:00 / 1:00</span>
+          </div>
+
+          <!-- Scrubber Bar -->
+          <div class="flex-1 mx-3 hidden md:flex items-center">
+            <div id="timelineTrack" class="w-full h-2 bg-paper-300 rounded-full overflow-hidden cursor-pointer relative">
+              <div id="timelineFill" class="h-full bg-sage-700 transition-all duration-150" style="width: 4%"></div>
+            </div>
+          </div>
+
+          <!-- 5 Numbered Scene Switcher Pills -->
+          <div class="flex items-center gap-1 overflow-x-auto max-w-full">
+            <button onclick="jumpToScene(0)" id="pill-0" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-ink-900 text-white cursor-pointer transition-all">01 · The Cloud</button>
+            <button onclick="jumpToScene(1)" id="pill-1" class="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-white text-ink-500 border border-paper-300 hover:bg-paper-200 cursor-pointer transition-all">02 · Model Size</button>
+            <button onclick="jumpToScene(2)" id="pill-2" class="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-white text-ink-500 border border-paper-300 hover:bg-paper-200 cursor-pointer transition-all">03 · Modality</button>
+            <button onclick="jumpToScene(3)" id="pill-3" class="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-white text-ink-500 border border-paper-300 hover:bg-paper-200 cursor-pointer transition-all">04 · Context Trap</button>
+            <button onclick="jumpToScene(4)" id="pill-4" class="px-2.5 py-1 rounded-lg text-[11px] font-medium bg-white text-ink-500 border border-paper-300 hover:bg-paper-200 cursor-pointer transition-all">05 · Simulator</button>
+          </div>
+
+        </div>
+      </div>
+
+    </main>
+
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- FULL 60-SECOND PRODUCTION SCRIPT & STORYBOARD MODAL                   -->
+  <!-- ===================================================================== -->
+  <div id="scriptModal" class="fixed inset-0 z-50 hidden bg-ink-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white border border-paper-300 rounded-3xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-paper-200 bg-paper-100">
+        <div>
+          <h3 class="font-serif font-semibold text-lg text-ink-900">Production Script & Storyboard (60 Seconds · 16:9)</h3>
+          <p class="text-xs text-ink-500">“The Weight of a Click — Mindful AI & Our Environmental Footprint”</p>
+        </div>
+        <button id="btnCloseScript" class="px-3 py-1.5 rounded-xl bg-white hover:bg-paper-200 text-ink-700 border border-paper-300 text-xs font-semibold transition-colors cursor-pointer">
+          ✕ Close
+        </button>
+      </div>
+
+      <div id="scriptModalContent" class="p-6 overflow-y-auto space-y-4 text-xs sm:text-sm text-ink-700 leading-relaxed select-text">
+        <div class="p-4 rounded-2xl bg-paper-100 border border-paper-200">
+          <div class="font-mono font-semibold text-xs text-sage-700 uppercase mb-1">Scene 01 (0:00 – 0:08) · The Cloud is Made of Steel, Water & Power</div>
+          <p class="text-ink-900"><strong>Voiceover:</strong> “When you press Enter, your question doesn’t vanish into thin air. A single message on your screen spins up cooling fans and water towers inside physical data centers.”</p>
+          <p class="text-xs text-ink-400 mt-1"><strong>Visual & Audio:</strong> Minimalist prompt window connected via fiber line to an architectural server hall. Soft acoustic keystroke followed by a gentle airflow hum.</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-paper-100 border border-paper-200">
+          <div class="font-mono font-semibold text-xs text-terracotta-600 uppercase mb-1">Scene 02 (0:08 – 0:22) · A Mining Truck for a Croissant? (Model Sizing)</div>
+          <p class="text-ink-900"><strong>Voiceover:</strong> “How much energy it uses depends on your choices. Using a massive frontier reasoning model to rewrite a three-sentence email is like driving a forty-ton mining truck to the bakery for a single croissant. A compact or local model gets the same job done using thirty times less power.”</p>
+          <p class="text-xs text-ink-400 mt-1"><strong>Visual & Audio:</strong> Split 16:9 comparison: 40-ton terracotta dump truck (~5.0 Wh) vs. sage-green electric bicycle (~0.15 Wh).</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-paper-100 border border-paper-200">
+          <div class="font-mono font-semibold text-xs text-slateBlue-600 uppercase mb-1">Scene 03 (0:22 – 0:36) · The Modality Escalator (Text vs. Image vs. Video)</div>
+          <p class="text-ink-900"><strong>Voiceover:</strong> “Output format matters even more. A short text reply barely equals a few seconds of an LED bulb. Generating a single image takes a quarter of a phone charge and a small glass of cooling water. And a five-second AI video uses enough electricity to ride an e-scooter for over four kilometers.”</p>
+          <p class="text-xs text-ink-400 mt-1"><strong>Visual & Audio:</strong> Three rising editorial podiums: 0.2 Wh (LED) → 3.0 Wh (Phone + Water Glass) → 85 Wh (4.2 km E-Scooter).</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-paper-100 border border-paper-200">
+          <div class="font-mono font-semibold text-xs text-ochre-600 uppercase mb-1">Scene 04 (0:36 – 0:48) · The Backpack Trap & The Cost of “Thanks!”</div>
+          <p class="text-ink-900"><strong>Voiceover:</strong> “Then there is the hidden context trap. AI has no memory—on every turn, it re-reads the entire conversation from the beginning. Sending a separate ‘Thank you!’ at the end of a long thread forces the server to recalculate the whole mountain of text all over again.”</p>
+          <p class="text-xs text-ink-400 mt-1"><strong>Visual & Audio:</strong> Courier climbing steps with stacked conversation blocks; adding a standalone “Thanks!” block spikes energy draw.</p>
+        </div>
+
+        <div class="p-4 rounded-2xl bg-paper-100 border border-paper-200">
+          <div class="font-mono font-semibold text-xs text-sage-700 uppercase mb-1">Scene 05 (0:48 – 1:00) · Mindful AI Campaign Call to Action</div>
+          <p class="text-ink-900"><strong>Voiceover:</strong> “Mindful AI isn’t about giving up technology—it’s about proportion. Right-size your model for routine work, write complete prompts upfront, and generate video only when it truly counts. The greenest computation is the one we don’t trigger unnecessarily.”</p>
+          <p class="text-xs text-ink-400 mt-1"><strong>Visual & Audio:</strong> Interactive Habit Calculator and 3-point Campaign Pledge Poll. Warm harmonic marimba chord.</p>
+        </div>
+      </div>
+
+      <div class="px-6 py-3.5 bg-paper-100 border-t border-paper-200 flex items-center justify-between">
+        <span class="text-xs text-ink-500">Ready for workshop presentations, voiceover recording, or storyboard export.</span>
+        <button id="btnCopyFullScript" class="px-4 py-2 rounded-xl font-sans font-semibold text-xs bg-sage-700 text-white hover:bg-sage-500 transition-colors cursor-pointer">
+          Copy Complete Script
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- INTERACTIVE TIMELINE, TELEMETRY & SOFT ACOUSTIC AUDIO ENGINE          -->
+  <!-- ===================================================================== -->
+  <script>
+    // -------------------------------------------------------------------------
+    // 1. SCENE DATA & TELEMETRY PRESETS
+    // -------------------------------------------------------------------------
+    const SCENES = [
+      {
+        id: 0,
+        startTime: 0,
+        endTime: 8,
+        stepLabel: 'SCENE 01 / 05',
+        timecode: '0:00 – 0:08 · Physical Infrastructure',
+        title: 'The Cloud is Made of Steel, Water & Power',
+        subtitle: '“When you press Enter, your question doesn’t vanish into thin air. A single message on your screen spins up cooling fans and water towers inside physical data centers.”',
+        wh: '0.20 Wh',
+        whPct: 8,
+        water: '5 ml',
+        equiv: '1 LED blink',
+        tone: 'sage'
+      },
+      {
+        id: 1,
+        startTime: 8,
+        endTime: 22,
+        stepLabel: 'SCENE 02 / 05',
+        timecode: '0:08 – 0:22 · Right-Sizing Models',
+        title: 'A Mining Truck for a Croissant?',
+        subtitle: '“Using a massive frontier reasoning model to rewrite a three-sentence email is like driving a forty-ton mining truck to the bakery for a single croissant. A compact or local model uses thirty times less power.”',
+        wh: '0.15 vs 5.0 Wh',
+        whPct: 22,
+        water: '0 vs 45 ml',
+        equiv: '30× energy saving',
+        tone: 'sage'
+      },
+      {
+        id: 2,
+        startTime: 22,
+        endTime: 36,
+        stepLabel: 'SCENE 03 / 05',
+        timecode: '0:22 – 0:36 · Output Modality',
+        title: 'The Modality Escalator: Text vs. Image vs. Video',
+        subtitle: '“A short text reply barely equals a few seconds of an LED bulb. One generated image takes a quarter of a phone charge and a glass of cooling water. A five-second AI video could power an e-scooter for over four kilometers.”',
+        wh: '85.0 Wh',
+        whPct: 95,
+        water: '300 ml',
+        equiv: '4.2 km on e-scooter',
+        tone: 'terracotta'
+      },
+      {
+        id: 3,
+        startTime: 36,
+        endTime: 48,
+        stepLabel: 'SCENE 04 / 05',
+        timecode: '0:36 – 0:48 · Context Length',
+        title: 'The Backpack Trap & The Cost of “Thanks!”',
+        subtitle: '“AI has no memory—on every turn, it re-reads the entire conversation from the beginning. Sending a separate ‘Thank you!’ at the end of a long thread forces the server to recalculate the whole mountain of text.”',
+        wh: '1.1 → 4.8 Wh',
+        whPct: 48,
+        water: '55 ml',
+        equiv: 'Full context re-read',
+        tone: 'slate'
+      },
+      {
+        id: 4,
+        startTime: 48,
+        endTime: 60,
+        stepLabel: 'SCENE 05 / 05',
+        timecode: '0:48 – 1:00 · Campaign Call to Action',
+        title: 'Your Daily Impact Simulator & Campaign Pledge',
+        subtitle: '“Mindful AI isn’t about giving up technology—it’s about proportion. Right-size your model for routine work, write complete prompts upfront, and generate video only when it truly counts.”',
+        wh: '0.12 Wh',
+        whPct: 6,
+        water: '0 ml',
+        equiv: 'Mindful AI Habit',
+        tone: 'sage'
+      }
+    ];
+
+    let currentSceneIndex = 0;
+    let elapsedSeconds = 0;
+    const TOTAL_DURATION = 60;
+    let isPlaying = true;
+    let lastTimestamp = null;
+    let sfxEnabled = true;
+    let audioCtx = null;
+
+    // -------------------------------------------------------------------------
+    // 2. GENTLE ACOUSTIC / MARIMBA SOUND ENGINE (Web Audio API)
+    // -------------------------------------------------------------------------
+    function getAudioContext() {
+      if (!audioCtx) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        if (AudioContextClass) audioCtx = new AudioContextClass();
+      }
+      if (audioCtx && audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+      return audioCtx;
+    }
+
+    function playGentleSound(type) {
+      if (!sfxEnabled) return;
+      try {
+        const ctx = getAudioContext();
+        if (!ctx) return;
+        const now = ctx.currentTime;
+
+        const playNote = (freq, startTime, duration, maxGain = 0.045) => {
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(freq, startTime);
+          gain.gain.setValueAtTime(0.001, startTime);
+          gain.gain.linearRampToValueAtTime(maxGain, startTime + 0.015);
+          gain.gain.exponentialRampToValueAtTime(0.0008, startTime + duration);
+          osc.connect(gain);
+          gain.connect(ctx.destination);
+          osc.start(startTime);
+          osc.stop(startTime + duration + 0.02);
+        };
+
+        if (type === 'click') {
+          playNote(440, now, 0.12, 0.035);
+        } else if (type === 'chime') {
+          playNote(523.25, now, 0.18, 0.04);       // C5
+          playNote(659.25, now + 0.07, 0.24, 0.04); // E5
+        } else if (type === 'low') {
+          playNote(220, now, 0.25, 0.05);          // A3 warm low tone
+        }
+      } catch (e) {}
+    }
+
+    // -------------------------------------------------------------------------
+    // 3. TELEMETRY BAR & SCENE RENDERING
+    // -------------------------------------------------------------------------
+    function updateTelemetry(whText, whPct, waterText, equivText, tone = 'sage') {
+      document.getElementById('meterWh').textContent = whText;
+      document.getElementById('meterWater').textContent = waterText;
+      const bar = document.getElementById('meterWhBar');
+      const equiv = document.getElementById('meterEquiv');
+
+      bar.style.width = `${Math.min(100, Math.max(5, whPct))}%`;
+
+      if (tone === 'terracotta') {
+        bar.className = 'h-full bg-terracotta-600 smooth-ease';
+        equiv.className = 'hidden sm:inline-block px-2 py-0.5 rounded-md text-[11px] font-semibold bg-terracotta-50 text-terracotta-700 border border-terracotta-100 smooth-ease';
+      } else if (tone === 'slate') {
+        bar.className = 'h-full bg-slateBlue-600 smooth-ease';
+        equiv.className = 'hidden sm:inline-block px-2 py-0.5 rounded-md text-[11px] font-semibold bg-slateBlue-50 text-slateBlue-700 border border-slateBlue-100 smooth-ease';
+      } else {
+        bar.className = 'h-full bg-sage-700 smooth-ease';
+        equiv.className = 'hidden sm:inline-block px-2 py-0.5 rounded-md text-[11px] font-semibold bg-sage-50 text-sage-700 border border-sage-100 smooth-ease';
+      }
+      equiv.textContent = equivText;
+    }
+
+    function renderScene(index, triggeredByUser = false) {
+      currentSceneIndex = index;
+      const s = SCENES[index];
+
+      for (let i = 0; i < SCENES.length; i++) {
+        const panel = document.getElementById(`scene-${i}`);
+        const pill = document.getElementById(`pill-${i}`);
+        if (i === index) {
+          panel.classList.remove('hidden');
+          pill.className = 'px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-ink-900 text-white cursor-pointer transition-all';
+        } else {
+          panel.classList.add('hidden');
+          pill.className = 'px-2.5 py-1 rounded-lg text-[11px] font-medium bg-white text-ink-500 border border-paper-300 hover:bg-paper-200 cursor-pointer transition-all';
+        }
+      }
+
+      document.getElementById('hudStepBadge').textContent = s.stepLabel;
+      document.getElementById('hudTimecode').textContent = s.timecode;
+      document.getElementById('hudSceneTitle').textContent = s.title;
+      document.getElementById('subtitleText').textContent = s.subtitle;
+
+      updateTelemetry(s.wh, s.whPct, s.water, s.equiv, s.tone);
+
+      if (triggeredByUser) {
+        playGentleSound('click');
+      }
+    }
+
+    window.jumpToScene = function(index) {
+      elapsedSeconds = SCENES[index].startTime;
+      renderScene(index, true);
+      updateTimelineUI();
+    };
+
+    // -------------------------------------------------------------------------
+    // 4. SCENE-SPECIFIC INTERACTIONS
+    // -------------------------------------------------------------------------
+
+    // SCENE 1: Send Prompt (Enter)
+    let scene1Count = 1;
+    const samplePrompts = [
+      '“Draft a short birthday note for a colleague.”',
+      '“Summarize these three bullet points clearly.”',
+      '“Suggest a quick vegetarian pasta recipe.”',
+      '“Translate this welcome message into Spanish.”'
+    ];
+
+    document.getElementById('btnScene1Enter').addEventListener('click', () => {
+      scene1Count++;
+      playGentleSound('chime');
+      document.getElementById('scene1PromptText').textContent = samplePrompts[scene1Count % samplePrompts.length];
+
+      const fan1 = document.getElementById('scene1Fan1');
+      const fan2 = document.getElementById('scene1Fan2');
+      const fiber = document.getElementById('scene1FiberPath');
+
+      fan1.classList.replace('fan-calm', 'fan-active');
+      fan2.classList.replace('fan-calm', 'fan-active');
+      fiber.classList.replace('fiber-stream', 'fiber-stream-fast');
+
+      const wh = (scene1Count * 0.2).toFixed(2) + ' Wh';
+      const water = (scene1Count * 5) + ' ml';
+      updateTelemetry(wh, Math.min(45, scene1Count * 8), water, `${scene1Count} LED blinks`, 'slate');
+
+      document.getElementById('scene1ClickStatus').textContent =
+        `${scene1Count} prompts sent · Cumulative draw: ${wh}, ${water} water`;
+
+      setTimeout(() => {
+        fan1.classList.replace('fan-active', 'fan-calm');
+        fan2.classList.replace('fan-active', 'fan-calm');
+        fiber.classList.replace('fiber-stream-fast', 'fiber-stream');
+      }, 1400);
+    });
+
+    // SCENE 2: Mining Truck vs. Electric Bicycle
+    document.getElementById('btnSelectTruck').addEventListener('click', () => {
+      playGentleSound('low');
+      document.getElementById('cardTruck').className = 'rounded-2xl bg-white border-2 border-terracotta-600 p-4 flex flex-col justify-between shadow-md smooth-ease';
+      document.getElementById('cardBike').className = 'rounded-2xl bg-white border-2 border-paper-300 p-4 flex flex-col justify-between smooth-ease';
+      updateTelemetry('5.00 Wh', 55, '45 ml', '40t Mining Truck load', 'terracotta');
+    });
+
+    document.getElementById('btnSelectBike').addEventListener('click', () => {
+      playGentleSound('chime');
+      document.getElementById('cardBike').className = 'rounded-2xl bg-white border-2 border-sage-700 p-4 flex flex-col justify-between shadow-md smooth-ease';
+      document.getElementById('cardTruck').className = 'rounded-2xl bg-white border-2 border-paper-300 p-4 flex flex-col justify-between smooth-ease';
+      updateTelemetry('0.15 Wh', 6, '0–2 ml', '30× energy saving', 'sage');
+    });
+
+    // SCENE 3: Modality Podium Selector
+    const MODALITY_STEPS = [
+      { wh: '0.20 Wh', pct: 8, water: '5 ml', equiv: '1 LED blink', tone: 'sage', border: 'border-sage-700' },
+      { wh: '3.00 Wh', pct: 38, water: '35 ml', equiv: '25% phone charge + 1 glass H₂O', tone: 'slate', border: 'border-slateBlue-600' },
+      { wh: '85.0 Wh', pct: 96, water: '300 ml', equiv: '4.2 km on an e-scooter', tone: 'terracotta', border: 'border-terracotta-600' }
+    ];
+
+    window.selectModalityStep = function(idx) {
+      playGentleSound(idx === 2 ? 'low' : 'click');
+      const m = MODALITY_STEPS[idx];
+      updateTelemetry(m.wh, m.pct, m.water, m.equiv, m.tone);
+
+      for (let i = 0; i < 3; i++) {
+        const card = document.getElementById(`modStep-${i}`);
+        const heightClass = i === 0 ? 'h-[76%]' : i === 1 ? 'h-[88%]' : 'h-full';
+        if (i === idx) {
+          card.className = `cursor-pointer rounded-2xl bg-white border-2 ${m.border} p-4 flex flex-col justify-between ${heightClass} smooth-ease shadow-md`;
+        } else {
+          card.className = `cursor-pointer rounded-2xl bg-white border-2 border-paper-300 p-4 flex flex-col justify-between ${heightClass} smooth-ease shadow-sm`;
+        }
+      }
+    };
+
+    // SCENE 4: Context Backpack & Separate "Thanks!"
+    let contextTurns = 3;
+    let thanksAdded = false;
+
+    document.getElementById('btnAddContext').addEventListener('click', () => {
+      playGentleSound('click');
+      contextTurns = 4;
+      const extraBlock = document.getElementById('extraContextBlock');
+      extraBlock.classList.remove('hidden', 'block-drop');
+      void extraBlock.offsetWidth;
+      extraBlock.classList.add('block-drop');
+
+      const wh = thanksAdded ? '5.60 Wh' : '2.10 Wh';
+      updateTelemetry(wh, thanksAdded ? 65 : 28, thanksAdded ? '65 ml' : '24 ml', `${contextTurns} context turns`, 'slate');
+      document.getElementById('backpackStatusText').textContent =
+        `Active context: 4 turns (~3,300 tokens) · Load: ${wh}`;
+    });
+
+    document.getElementById('btnAddThanks').addEventListener('click', () => {
+      playGentleSound('low');
+      thanksAdded = true;
+      const boulder = document.getElementById('thanksBoulder');
+      boulder.classList.remove('hidden', 'block-drop');
+      void boulder.offsetWidth;
+      boulder.classList.add('block-drop');
+
+      document.getElementById('robotEyeL').setAttribute('fill', '#FDF0EC');
+      document.getElementById('robotEyeR').setAttribute('fill', '#FDF0EC');
+
+      updateTelemetry('4.80 Wh', 58, '55 ml', 'Re-reading 4,000 tokens!', 'terracotta');
+      document.getElementById('backpackStatusText').textContent =
+        'Separate “Thanks!” sent: Server re-processed all 4,000 prior tokens (4.80 Wh).';
+    });
+
+    document.getElementById('btnResetBackpack').addEventListener('click', () => {
+      playGentleSound('chime');
+      contextTurns = 3;
+      thanksAdded = false;
+      document.getElementById('extraContextBlock').classList.add('hidden');
+      document.getElementById('thanksBoulder').classList.add('hidden');
+      document.getElementById('robotEyeL').setAttribute('fill', '#E8F3EE');
+      document.getElementById('robotEyeR').setAttribute('fill', '#E8F3EE');
+
+      updateTelemetry('0.35 Wh', 10, '4 ml', 'Fresh, concise context', 'sage');
+      document.getElementById('backpackStatusText').textContent =
+        'Fresh thread started · Combined prompt (~400 tokens) · Load: 0.35 Wh';
+    });
+
+    // SCENE 5: Personal AI Footprint Simulator & Pledge Poll
+    const simState = {
+      task: 'text',      // 'text' | 'image' | 'video'
+      model: 'local',    // 'local' | 'compact' | 'giant'
+      habit: 'precise'   // 'precise' | 'chatty'
+    };
+
+    window.updateSim = function(group, val) {
+      simState[group] = val;
+      playGentleSound('click');
+
+      const options = {
+        task: ['text', 'image', 'video'],
+        model: ['local', 'compact', 'giant'],
+        habit: ['precise', 'chatty']
+      };
+
+      options[group].forEach(opt => {
+        const prefix = group === 'task' ? 'simTask-' : group === 'model' ? 'simModel-' : 'simHabit-';
+        const btn = document.getElementById(prefix + opt);
+        if (opt === val) {
+          btn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-semibold bg-sage-700 text-white cursor-pointer transition-all';
+        } else {
+          btn.className = 'px-2.5 py-1.5 rounded-lg text-xs font-medium bg-white text-ink-700 border border-paper-300 cursor-pointer transition-all';
+        }
+      });
+
+      // Compute single query cost
+      let baseWh = 0.15;
+      if (simState.task === 'text') baseWh = 0.15;
+      if (simState.task === 'image') baseWh = 2.8;
+      if (simState.task === 'video') baseWh = 55.0;
+
+      let modelFactor = 1.0;
+      if (simState.model === 'local') modelFactor = 0.8;
+      if (simState.model === 'compact') modelFactor = 1.4;
+      if (simState.model === 'giant') modelFactor = simState.task === 'video' ? 1.6 : 7.5;
+
+      const habitFactor = simState.habit === 'chatty' ? 2.6 : 1.0;
+
+      const singleWh = baseWh * modelFactor * habitFactor;
+      const singleWater = simState.model === 'local' ? 0 : Math.round(singleWh * 11);
+
+      // Annual (15 queries/day * 365 = 5,475 queries/year)
+      const annualKwh = ((singleWh * 5475) / 1000).toFixed(1);
+      const scooterKm = Math.round((singleWh * 5475) / 20);
+
+      document.getElementById('simSingleCost').textContent =
+        `${singleWh.toFixed(2)} Wh · ${singleWater} ml H₂O`;
+      document.getElementById('simAnnualEquiv').textContent =
+        `Annual (15/day): ~${annualKwh} kWh (=${scooterKm.toLocaleString()} km on an e-scooter)`;
+
+      const badge = document.getElementById('simRatingBadge');
+      if (singleWh <= 0.6) {
+        badge.textContent = 'Mindful Choice';
+        badge.className = 'inline-block px-2.5 py-1 rounded-full text-xs font-semibold bg-sage-50 text-sage-700 border border-sage-100';
+        updateTelemetry(`${singleWh.toFixed(2)} Wh`, 10, `${singleWater} ml`, 'Low-impact habit', 'sage');
+      } else if (singleWh <= 6.0) {
+        badge.textContent = 'Moderate Load';
+        badge.className = 'inline-block px-2.5 py-1 rounded-full text-xs font-semibold bg-slateBlue-50 text-slateBlue-600 border border-slateBlue-100';
+        updateTelemetry(`${singleWh.toFixed(2)} Wh`, 45, `${singleWater} ml`, 'Moderate footprint', 'slate');
+      } else {
+        badge.textContent = 'High Resource Draw';
+        badge.className = 'inline-block px-2.5 py-1 rounded-full text-xs font-semibold bg-terracotta-50 text-terracotta-700 border border-terracotta-100';
+        updateTelemetry(`${singleWh.toFixed(1)} Wh`, 92, `${singleWater} ml`, 'Heavy compute load', 'terracotta');
+      }
+    };
+
+    // Campaign Pledge Poll
+    const pollCounts = [46, 34, 20];
+    window.castCampaignVote = function(idx) {
+      playGentleSound('chime');
+      pollCounts[idx] += 4;
+      const sum = pollCounts.reduce((a, b) => a + b, 0);
+      for (let i = 0; i < 3; i++) {
+        const pct = Math.round((pollCounts[i] / sum) * 100);
+        document.getElementById(`pollBar-${i}`).style.width = `${pct}%`;
+        document.getElementById(`pollPct-${i}`).textContent = `${pct}%`;
+      }
+      document.getElementById('voteFeedback').textContent =
+        'Thank you—your pledge has been added to the campaign tally.';
+    };
+
+    // Clipboard helper
+    function copyToClipboard(text, btn, confirmText) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy');
+        const orig = btn.textContent;
+        btn.textContent = confirmText;
+        setTimeout(() => { btn.textContent = orig; }, 2000);
+      } catch (e) {}
+      document.body.removeChild(ta);
+    }
+
+    document.getElementById('btnCopyCampaign').addEventListener('click', function() {
+      const summary = `The Weight of a Click — 3 Mindful AI Habits:\n1. Match model size to the task (compact/local models use up to 30x less energy than giant reasoning models for routine work).\n2. Write complete prompts upfront and skip the standalone "Thank you!" turn that re-processes thousands of prior tokens.\n3. Be intentional with high-energy AI image and video generation (a 5s AI video equals ~4.2 km on an e-scooter).`;
+      copyToClipboard(summary, this, '✓ Copied to Clipboard');
+    });
+
+    // -------------------------------------------------------------------------
+    // 5. 60-SECOND AUTO-ADVANCING TOUR & CONTROLS
+    // -------------------------------------------------------------------------
+    function formatTime(sec) {
+      const s = Math.min(60, Math.max(0, Math.floor(sec)));
+      const mins = Math.floor(s / 60);
+      const rem = s % 60;
+      return `${mins}:${rem < 10 ? '0' + rem : rem}`;
+    }
+
+    function updateTimelineUI() {
+      const pct = Math.min(100, (elapsedSeconds / TOTAL_DURATION) * 100);
+      document.getElementById('timelineFill').style.width = `${pct}%`;
+      document.getElementById('timerDisplay').textContent = `${formatTime(elapsedSeconds)} / 1:00`;
+    }
+
+    function updatePlayButtonUI() {
+      document.getElementById('playIcon').textContent = isPlaying ? '⏸' : '▶';
+      document.getElementById('playLabel').textContent = isPlaying ? 'Pause Tour' : 'Play 60s Tour';
+    }
+
+    function animationLoop(timestamp) {
+      if (!lastTimestamp) lastTimestamp = timestamp;
+      const delta = (timestamp - lastTimestamp) / 1000;
+      lastTimestamp = timestamp;
+
+      if (isPlaying) {
+        elapsedSeconds += delta;
+        const target = SCENES.findIndex(s => elapsedSeconds >= s.startTime && elapsedSeconds < s.endTime);
+        if (target !== -1 && target !== currentSceneIndex) {
+          renderScene(target, false);
+        }
+        if (elapsedSeconds >= TOTAL_DURATION) {
+          elapsedSeconds = TOTAL_DURATION;
+          isPlaying = false;
+          updatePlayButtonUI();
+        }
+        updateTimelineUI();
+      }
+      requestAnimationFrame(animationLoop);
+    }
+
+    document.getElementById('btnPlayPause').addEventListener('click', () => {
+      if (elapsedSeconds >= TOTAL_DURATION) {
+        elapsedSeconds = 0;
+        renderScene(0, false);
+      }
+      isPlaying = !isPlaying;
+      updatePlayButtonUI();
+    });
+
+    document.getElementById('btnPrevScene').addEventListener('click', () => {
+      const prev = Math.max(0, currentSceneIndex - 1);
+      jumpToScene(prev);
+    });
+
+    document.getElementById('btnNextScene').addEventListener('click', () => {
+      const next = Math.min(SCENES.length - 1, currentSceneIndex + 1);
+      jumpToScene(next);
+    });
+
+    document.getElementById('timelineTrack').addEventListener('click', (e) => {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const ratio = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+      elapsedSeconds = ratio * TOTAL_DURATION;
+      const target = SCENES.findIndex(s => elapsedSeconds >= s.startTime && elapsedSeconds <= s.endTime);
+      if (target !== -1) renderScene(target, true);
+      updateTimelineUI();
+    });
+
+    // Audio toggle
+    document.getElementById('btnAudioToggle').addEventListener('click', () => {
+      sfxEnabled = !sfxEnabled;
+      document.getElementById('audioLabel').textContent = sfxEnabled ? 'Sound: Soft' : 'Sound: Off';
+      if (sfxEnabled) playGentleSound('click');
+    });
+
+    // Script Modal
+    document.getElementById('btnOpenScript').addEventListener('click', () => {
+      isPlaying = false;
+      updatePlayButtonUI();
+      document.getElementById('scriptModal').classList.remove('hidden');
+    });
+
+    document.getElementById('btnCloseScript').addEventListener('click', () => {
+      document.getElementById('scriptModal').classList.add('hidden');
+    });
+
+    document.getElementById('btnCopyFullScript').addEventListener('click', function() {
+      const text = document.getElementById('scriptModalContent').innerText;
+      copyToClipboard(text, this, '✓ Script Copied');
+    });
+
+    window.onload = function() {
+      renderScene(0, false);
+      requestAnimationFrame(animationLoop);
+    };
+  </script>
+</body>
+</html>
