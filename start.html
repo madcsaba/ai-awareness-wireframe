@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hogyan kezdj bele / How to get started – EcoAI</title>
+<meta name="description" content="Kitölthető indító sablonok hozzá nem értőknek: így kérj az AI-tól weboldalt, appot, szöveget vagy grafikont – kevesebb körrel, kevesebb energiával. / Fill-in starter templates for non-experts: ask AI for a site, app, text or charts in fewer rounds, with less energy.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="🌿 EcoAI – Hogyan kezdj bele / How to get started">
+<meta property="og:url" content="https://madcsaba.github.io/ai-awareness-wireframe/start.html">
+<meta property="og:description" content="5 kitölthető sablon és 5 szokás az energiatakarékos AI-használathoz. / 5 fill-in templates and 5 habits for energy-aware AI use.">
+<meta property="og:image" content="https://madcsaba.github.io/ai-awareness-wireframe/og.png">
+<script src="nav.js" defer></script>
+<script>
+(function(){var l;try{l=localStorage.getItem("ecoai-lang")}catch(e){}
+if(l!=="hu"&&l!=="en")l=(navigator.language||"").toLowerCase().indexOf("hu")===0?"hu":"en";
+document.documentElement.setAttribute("data-lang",l);document.documentElement.lang=l;})();
+</script>
+<style>
+  :root{--bg:#f6f7f9;--panel:#fff;--line:#e3e6ea;--ink:#1a1d21;--dim:#6b7280;--acc:#2563eb;
+    --green:#16a34a;--green-d:#0f7a37;--soft:#f2fbf5;--amber:#b45309;--amber-soft:#fdf3e3;
+    --display:ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial;--serif:Georgia,'Times New Roman',serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.7 var(--display);padding:40px 18px 80px}
+  .wrap{max-width:720px;margin:0 auto;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:44px 46px}
+  .kicker{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:700}
+  h1{font:600 34px/1.2 var(--serif);margin:10px 0 8px;letter-spacing:-.01em}
+  h2{font:600 24px/1.3 var(--serif);margin:44px 0 12px}
+  h3{font-size:17px;margin:26px 0 6px}
+  p{margin:0 0 16px} ul,ol{padding-left:22px;margin:0 0 16px} li{margin:0 0 9px}
+  .lead{font-size:19px;color:#2b3036}
+  .chapter{display:inline-block;font-size:12px;font-weight:700;color:var(--green-d);background:var(--soft);
+    border-radius:99px;padding:3px 11px;margin-top:40px}
+  .chapter + h2{margin-top:10px}
+  .quote{border-left:3px solid var(--green);padding:4px 0 4px 16px;margin:20px 0;color:#2b3036;font-style:italic}
+  .ask{background:var(--amber-soft);border-radius:14px;padding:18px 20px;margin:24px 0;font-size:17.5px}
+  .ask b{color:var(--amber)}
+  .lesson{display:grid;grid-template-columns:44px 1fr;gap:4px 14px;padding:16px 0;border-top:1px solid var(--line)}
+  .lesson .n{grid-row:span 2;width:40px;height:40px;border-radius:12px;background:var(--soft);color:var(--green-d);
+    display:grid;place-items:center;font:700 18px var(--serif)}
+  .lesson b{font-size:17px}
+  .lesson p{margin:0;color:#3b4148}
+  .take{background:var(--soft);border-radius:16px;padding:22px 24px;margin:28px 0}
+  .take h3{margin:0 0 10px}
+  .take li{margin-bottom:7px}
+  .note{font-size:14px;color:var(--dim)}
+  .foot{margin-top:36px;font-size:13.5px;color:var(--dim);border-top:1px solid var(--line);padding-top:16px}
+  .foot a,.wrap a{color:var(--acc)}
+  html[data-lang="hu"] .en{display:none}
+  html[data-lang="en"] .hu{display:none}
+  @media(max-width:600px){.wrap{padding:30px 22px}h1{font-size:28px}h2{font-size:21px}}
+  code{font-size:.9em;background:#eef1f5;border-radius:5px;padding:1px 5px}
+  .tpl{border:1px solid var(--line);border-radius:14px;margin:0 0 12px;background:#fff}
+  .tpl summary{display:flex;gap:12px;align-items:center;padding:14px 16px;cursor:pointer;list-style:none}
+  .tpl summary::-webkit-details-marker{display:none}
+  .tpl[open] summary{border-bottom:1px solid var(--line)}
+  .tpl .ico{font-size:24px;width:44px;height:44px;border-radius:12px;background:var(--soft);display:grid;place-items:center;flex:0 0 auto}
+  .tpl .sub{font-size:14.5px;color:var(--dim);line-height:1.45}
+  .tpl label{display:block;padding:8px 16px 0;font-size:14px;font-weight:600;color:#3b4148}
+  .tpl textarea{display:block;width:100%;resize:vertical;min-height:62px;margin-top:4px;font:15px/1.4 var(--display);padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+  .tpl textarea:focus{outline:2px solid var(--acc);outline-offset:1px;background:#fff}
+  .tpl textarea::placeholder{color:#8a9099}
+  .tpl .row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:14px 16px 16px}
+  .copy{font:700 15px var(--display);background:var(--green);color:#fff;border:0;border-radius:10px;padding:10px 16px;cursor:pointer}
+  .copy:hover{background:var(--green-d)}
+  .ok{font-size:14px;color:var(--green-d)}
+</style>
+</head>
+<body>
+<article class="wrap">
+  <div class="kicker"><span class="hu">Útmutató</span><span class="en">Guide</span></div>
+  <h1><span class="hu">Hogyan kezdj bele</span><span class="en">How to get started</span></h1>
+  <p class="lead"><span class="hu">Nem kell programozónak lenned ahhoz, hogy az AI-val weboldalt, appot vagy jelentést készíts. Egy dolog számít igazán: <b>jól kezdeni</b>. Egy jó első üzenet kevesebb kört, kevesebb javítgatást – és kevesebb energiát jelent.</span>
+  <span class="en">You don't need to be a programmer to build a website, an app or a report with AI. One thing really matters: <b>a good start</b>. A good first message means fewer rounds, fewer fixes – and less energy.</span></p>
+
+  <span class="chapter"><span class="hu">1 · Így használd</span><span class="en">1 · How to use it</span></span>
+  <h2><span class="hu">Válassz sablont, töltsd ki, másold be</span><span class="en">Pick a template, fill it in, paste it</span></h2>
+  <ol>
+    <li><span class="hu">Válaszd ki, melyik kártya illik a feladatodhoz.</span><span class="en">Choose the card that fits your task.</span></li>
+    <li><span class="hu">Írd be, amit tudsz. Az üresen hagyott mezőknél az <b>ajánlott</b> érték kerül a szövegbe (szürkével látod).</span><span class="en">Fill in what you know. Empty fields use the <b>recommended</b> value (shown in grey).</span></li>
+    <li><span class="hu">Nyomd meg a <b>Másolás</b> gombot, és illeszd be egy <b>új</b> beszélgetés első üzenetének.</span><span class="en">Press <b>Copy</b> and paste it as the first message of a <b>new</b> conversation.</span></li>
+  </ol>
+  <p class="note"><span class="hu">Az AI ebből egy rövid projektlapot (BRIEF.md) és lépéstervet ír: melyik lépéshez elég kisebb modell, és mikor érdemes új beszélgetést kezdeni. Ha a repóban dolgozol, a <code>projekt-indito</code> skill ugyanezt magától elvégzi.</span>
+  <span class="en">The AI turns this into a short project sheet (BRIEF.md) and a step plan: which step a smaller model can handle, and when to start a new conversation. Working in this repo, the <code>projekt-indito</code> skill does the same automatically.</span></p>
+
+  <span class="chapter"><span class="hu">2 · Sablonok</span><span class="en">2 · Templates</span></span>
+  <h2><span class="hu">Öt gyakori kezdés</span><span class="en">Five common starts</span></h2>
+  <div id="cards"></div>
+
+  <span class="chapter"><span class="hu">3 · Szokások</span><span class="en">3 · Habits</span></span>
+  <h2><span class="hu">Munka közben</span><span class="en">While you work</span></h2>
+<div class="hu">
+  <div class="take">
+    <h3>Vidd magaddal – 5 szokás a tudatosabb AI-használathoz</h3>
+    <ol>
+      <li><b>Új téma, új beszélgetés.</b> A hosszú beszélgetés minden lépése drágább.</li>
+      <li><b>Kis kérdésre kis modell.</b> Fordítás, összefoglaló, átfogalmazás – nem kell hozzá a legnagyobb.</li>
+      <li><b>Egyben kérdezz.</b> Gyűjtsd össze, mit szeretnél, mielőtt elküldöd.</li>
+      <li><b>Kérj rövid választ</b>, ha a lényeg is elég.</li>
+      <li><b>Ne kérj vissza olyat, ami már megvan</b> – hivatkozz rá, ne gépeltesd újra.</li>
+    </ol>
+  </div>
+</div>
+<div class="en">
+  <div class="take">
+    <h3>Take away – 5 habits for more mindful AI use</h3>
+    <ol>
+      <li><b>New topic, new conversation.</b> Every step of a long chat costs more.</li>
+      <li><b>Small question, small model.</b> Translating, summarising, rewording – no need for the biggest.</li>
+      <li><b>Ask in one go.</b> Gather what you want before you send it.</li>
+      <li><b>Ask for a short answer</b> when the gist will do.</li>
+      <li><b>Don't ask for what you already have</b> – point to it, don't have it retyped.</li>
+    </ol>
+  </div>
+</div>
+  <p class="note"><span class="hu">A szokások forrása: <a href="story.html">A projekt története</a>.</span><span class="en">Where these habits come from: <a href="story.html">The story of this project</a>.</span></p>
+
+  <div class="foot">
+    <span class="hu">🌿 <a href="index.html">Vissza a főoldalra</a> · <a href="story.html">A projekt története</a></span>
+    <span class="en">🌿 <a href="index.html">Back to home</a> · <a href="story.html">The story</a></span>
+  </div>
+</article>
+<script>
+(function(){
+var Q={hu:["Cél és közönség","Kimenet formája","Ami már megvan","Hol él / van-e hozzáférés","Mi kell az első változatba","Kötöttségek (nyelv, adatvédelem, szerver)","Mikor kész, hogyan ellenőrizzük","Kommunikációs stílus"],
+en:["Goal and audience","Output format","What you already have","Where it lives / access","What the first version needs","Constraints (language, privacy, server)","When is it done, how we check","Communication style"]};
+var STY={hu:"magyarul, röviden, részletek csak kérésre; döntésnél egy körben kérdezz, ajánlott opcióval",en:"short answers, details only on request; ask decisions in one round with a recommended option"};
+var T=[
+{ico:"📝",hu:["Weboldal meglévő szövegből","Van kész szöveged (Word, PDF, régi oldal), ebből legyen egy egyszerű oldal."],en:["Website from existing text","You have the text (Word, PDF, old site); turn it into a simple page."],
+ d:{hu:["az olvasó értse meg a lényeget, és egy gombbal jelentkezzen","egyetlen statikus HTML-oldal, mobilra is","a szöveg fájlként – illeszd be, ne gépeld újra","GitHub-repó + GitHub Pages, írási joggal","egy oldal: címsor, 3–5 szakasz, kapcsolat","magyar; nincs követőkód, nincs szerver","a szöveg változatlan, minden link él, mobilon olvasható",""],
+ en:["readers get the point and sign up with one button","a single static HTML page, mobile-friendly","the text as a file – paste it in, don't retype it","GitHub repo + GitHub Pages, with write access","one page: heading, 3–5 sections, contact","English; no tracking, no server","text unchanged, all links work, readable on mobile",""]}},
+{ico:"📱",hu:["Webapp / prototípus vázlatból","Egy ötletből vagy rajzból kattintható app vagy kis eszköz."],en:["Web app / prototype from a sketch","A clickable app or small tool from an idea or a drawing."],
+ d:{hu:["egy fő feladat, egy fő felhasználói kör","kattintható prototípus egy HTML-fájlban, mobilra","vázlatfotó vagy rövid funkciólista","GitHub-repó + Pages, írási joggal","a fő útvonal 3–5 képernyője, kitalált mintaadattal","nincs valódi személyes adat, nincs szerver és build","a fő útvonal végigkattintható, nincs konzolhiba",""],
+ en:["one main task, one main user group","clickable prototype in one HTML file, mobile-first","a photo of the sketch or a short feature list","GitHub repo + Pages, with write access","3–5 screens of the main flow, with made-up sample data","no real personal data, no server or build","the main flow is clickable end to end, no console errors",""]}},
+{ico:"🎨",hu:["Meglévő oldal áttervezése","Működik, de ráférne egy új külső vagy jobb szerkezet."],en:["Redesign an existing page","It works, but needs a new look or a better structure."],
+ d:{hu:["3 konkrét probléma, ami most zavar","ugyanaz a technika, csak kinézet és szerkezet változik","az oldal URL-je + 1–2 tetsző minta","új ágon, a régi változat érintetlen marad","a főoldal + egy jellemző aloldal","a szöveg és az URL-ek nem változnak; jó kontraszt","a 3 probléma megoldva, a tartalom változatlan",""],
+ en:["3 concrete problems that bother you now","same technology; only look and structure change","the page URL + 1–2 examples you like","on a new branch; the old version stays untouched","the home page + one typical subpage","text and URLs stay the same; good contrast","the 3 problems are solved, content unchanged",""]}},
+{ico:"📣",hu:["Kampányszöveg / dokumentum","Hírlevél, poszt, felhívás, tájékoztató."],en:["Campaign copy / document","Newsletter, post, appeal, information sheet."],
+ d:{hu:["egy fő cselekvés (pl. aláírás), egy célcsoport","egy dokumentum + 2 cím-/tárgysor-változat","tények és források linkként, hangnem-példa","közös dokumentum vagy .md fájl a repóban","egy fő szöveg; a rövid változatok jóváhagyás után","max. 200 szó; minden számnak forrása van","egy üzenet, keretben a hossz, a tények igazoltak",""],
+ en:["one main action (e.g. signing), one audience","one document + 2 headline/subject options","facts and sources as links, a tone example","a shared doc or an .md file in the repo","one main text; short versions after approval","max 200 words; every number has a source","one message, within length, facts verified",""]}},
+{ico:"📊",hu:["Adatok összesítése, grafikonok","Táblázatból összesítés, néhány grafikon, rövid jelentés."],en:["Summarise data, make charts","From a spreadsheet: totals, a few charts, a short report."],
+ d:{hu:["1–3 konkrét kérdés, amire az adat választ ad","HTML-jelentés 2–4 grafikonnal + összesítő CSV","a fájl; szkript olvassa, nem másolja be a beszélgetésbe","a fájl a projekt mappájában","a legfontosabb kérdés grafikonja + összesítő tábla","személyes adat nem kerül a jelentésbe; nincs CDN","a végösszeg egyezik egy független számolással",""],
+ en:["1–3 concrete questions the data should answer","HTML report with 2–4 charts + a summary CSV","the file; a script reads it, it's not pasted into the chat","the file in the project folder","a chart for the key question + a summary table","no personal data in the report; no CDN","totals match an independent calculation",""]}}
+];
+var H={hu:"Új projektet kezdek – kérlek, ebből írj rövid BRIEF.md projektlapot és lépéstervet (vázlat → első változat → ellenőrzés → közzététel), lépésenként jelöld, hol elég kisebb modell, és mikor kezdjek új beszélgetést. Ha valami hiányzik, egy körben kérdezz, ajánlott opcióval.",
+en:"I'm starting a new project – please turn this into a short BRIEF.md project sheet and a step plan (draft → first version → check → publish), marking for each step where a smaller model is enough and when to start a new conversation. If anything is missing, ask in one round, with a recommended option."};
+var vals=T.map(function(){return["","","","","","","",""];});
+function lang(){return document.documentElement.getAttribute("data-lang")==="en"?"en":"hu";}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/"/g,"&quot;");}
+function text(i,l){var t=T[i],d=t.d[l];d[7]=STY[l];
+ return H[l]+"\n\n"+(l==="hu"?"Sablon: ":"Template: ")+t[l][0]+"\n"+Q[l].map(function(q,k){return(k+1)+". "+q+": "+(vals[i][k].trim()||d[k]);}).join("\n");}
+function render(){var l=lang(),c=document.getElementById("cards");
+ c.innerHTML=T.map(function(t,i){var d=t.d[l];d[7]=STY[l];
+  return '<details class="tpl"'+(i===0?" open":"")+'><summary><span class="ico">'+t.ico+'</span><span><b>'+t[l][0]+'</b><br><span class="sub">'+t[l][1]+'</span></span></summary>'+
+  Q[l].map(function(q,k){return '<label><span>'+(k+1)+". "+q+'</span><textarea rows="2" data-i="'+i+'" data-k="'+k+'" placeholder="'+(l==="hu"?"Ajánlott: ":"Recommended: ")+esc(d[k])+'">'+esc(vals[i][k])+'</textarea></label>';}).join("")+
+  '<div class="row"><button type="button" class="copy" data-i="'+i+'">'+(l==="hu"?"📋 Másolás":"📋 Copy")+'</button><span class="ok" aria-live="polite"></span></div></details>';}).join("");}
+document.addEventListener("input",function(e){var x=e.target;if(x.dataset&&x.dataset.k)vals[+x.dataset.i][+x.dataset.k]=x.value;});
+document.addEventListener("click",function(e){var b=e.target.closest&&e.target.closest(".copy");if(!b)return;
+ var s=text(+b.dataset.i,lang()),ok=b.nextElementSibling,msg=lang()==="hu"?"Kimásolva – illeszd be egy új beszélgetésbe.":"Copied – paste it into a new conversation.";
+ function fb(){var ta=document.createElement("textarea");ta.value=s;document.body.appendChild(ta);ta.select();try{document.execCommand("copy");}catch(_){}ta.remove();ok.textContent=msg;}
+ if(navigator.clipboard)navigator.clipboard.writeText(s).then(function(){ok.textContent=msg;},fb);else fb();});
+window.addEventListener("ecoai:lang",render);
+window.START_TEXT=text;
+render();
+})();
+</script>
+</body>
+</html>

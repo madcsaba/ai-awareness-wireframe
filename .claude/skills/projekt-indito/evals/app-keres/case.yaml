@@ -1,0 +1,4 @@
+schema_version: "1.1"
+name: app-keres
+expected_outcome: |
+  A 2-es sablont választja, egy körben kérdez 8 pontban ajánlott alapértékekkel, nem kezd kódolni.
