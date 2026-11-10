@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>A projekt története / The story of this project – EcoAI</title>
+<meta name="description" content="Honnan indultunk, mi volt az aggály, hogyan lett belőle wireframe és alkalmazás – és hogyan lehetett volna kevesebb energiából megcsinálni. / Where we started, the concern, how it became wireframes and an app – and how it could have used less energy.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="🌿 EcoAI – a projekt története / the story">
+<meta property="og:description" content="Egy aggálytól egy működő alkalmazásig – és őszintén arról, mennyi energiába került. / From a concern to a working app – and an honest look at what it cost.">
+<meta property="og:image" content="https://madcsaba.github.io/ai-awareness-wireframe/og.png">
+<script src="nav.js" defer></script>
+<script>
+(function(){var l;try{l=localStorage.getItem("ecoai-lang")}catch(e){}
+if(l!=="hu"&&l!=="en")l=(navigator.language||"").toLowerCase().indexOf("hu")===0?"hu":"en";
+document.documentElement.setAttribute("data-lang",l);document.documentElement.lang=l;})();
+</script>
+<style>
+  :root{--bg:#f6f7f9;--panel:#fff;--line:#e3e6ea;--ink:#1a1d21;--dim:#6b7280;--acc:#2563eb;
+    --green:#16a34a;--green-d:#0f7a37;--soft:#f2fbf5;--amber:#b45309;--amber-soft:#fdf3e3;
+    --display:ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial;--serif:Georgia,'Times New Roman',serif}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.7 var(--display);padding:40px 18px 80px}
+  .wrap{max-width:720px;margin:0 auto;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:44px 46px}
+  .kicker{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--green);font-weight:700}
+  h1{font:600 34px/1.2 var(--serif);margin:10px 0 8px;letter-spacing:-.01em}
+  h2{font:600 24px/1.3 var(--serif);margin:44px 0 12px}
+  h3{font-size:17px;margin:26px 0 6px}
+  p{margin:0 0 16px} ul,ol{padding-left:22px;margin:0 0 16px} li{margin:0 0 9px}
+  .lead{font-size:19px;color:#2b3036}
+  .chapter{display:inline-block;font-size:12px;font-weight:700;color:var(--green-d);background:var(--soft);
+    border-radius:99px;padding:3px 11px;margin-top:40px}
+  .chapter + h2{margin-top:10px}
+  .quote{border-left:3px solid var(--green);padding:4px 0 4px 16px;margin:20px 0;color:#2b3036;font-style:italic}
+  .ask{background:var(--amber-soft);border-radius:14px;padding:18px 20px;margin:24px 0;font-size:17.5px}
+  .ask b{color:var(--amber)}
+  .lesson{display:grid;grid-template-columns:44px 1fr;gap:4px 14px;padding:16px 0;border-top:1px solid var(--line)}
+  .lesson .n{grid-row:span 2;width:40px;height:40px;border-radius:12px;background:var(--soft);color:var(--green-d);
+    display:grid;place-items:center;font:700 18px var(--serif)}
+  .lesson b{font-size:17px}
+  .lesson p{margin:0;color:#3b4148}
+  .take{background:var(--soft);border-radius:16px;padding:22px 24px;margin:28px 0}
+  .take h3{margin:0 0 10px}
+  .take li{margin-bottom:7px}
+  .note{font-size:14px;color:var(--dim)}
+  .foot{margin-top:36px;font-size:13.5px;color:var(--dim);border-top:1px solid var(--line);padding-top:16px}
+  .foot a,.wrap a{color:var(--acc)}
+  html[data-lang="hu"] .en{display:none}
+  html[data-lang="en"] .hu{display:none}
+  @media(max-width:600px){.wrap{padding:30px 22px}h1{font-size:28px}h2{font-size:21px}}
+</style>
+</head>
+<body>
+<article class="wrap">
+
+<!-- ======================= MAGYAR ======================= -->
+<div class="hu">
+  <div class="kicker">A projekt története</div>
+  <h1>Egy kattintás súlya – és egy beszélgetésé</h1>
+  <p class="lead">Honnan indultunk, hogyan lett egy aggályból vázlat, kampány és működő alkalmazás – és a végén egy őszinte kérdés: mennyi energiába került mindez, és hogyan lehetett volna kevesebből?</p>
+
+  <span class="chapter">1 · Az aggály</span>
+  <h2>Minden kérdésnek ára van – csak nem látjuk</h2>
+  <p>Amikor elküldünk egy kérdést egy AI-nak, valahol egy szerver valódi munkát végez és valódi áramot fogyaszt. Ez önmagában rendben van. Ami nincs rendben: ma nincs egyszerű, összehasonlítható módja annak, hogy megtudjuk, <b>mennyit</b> – és hogy <b>kevesebbet válasszunk</b>, amikor egy kisebb modell ugyanolyan jól elvégezné a feladatot.</p>
+  <p>A legtöbb alkalmazás alapból a legnagyobb modellt futtatja mindenre, egy egysoros e-mailre is. A felhasználó nem kap se számot, se választást.</p>
+
+  <span class="chapter">2 · Kutatás és vázlatok</span>
+  <h2>Mit látna a felhasználó, ha látna valamit?</h2>
+  <p>Erre a kérdésre készültek az első vázlatok (wireframe-ek): egy modellválasztó, amely energia szerint rendez; egy becslés még küldés előtt; egy kis jutalom-animáció, ha a takarékosabb modellt választod; és egy mobilalkalmazás-terv a saját „lábnyomod” követésére.</p>
+  <p>Mellé kampányanyagok készültek (<a href="the-weight-of-a-click.html">The Weight of a Click</a>, <a href="powering-intelligence.html">Powering Intelligence</a>), egy <a href="petition-hu.html">petíció</a> a szabványos energiacímkéért, és egy <a href="models.html">útmutató</a> arról, melyik feladathoz melyik modell elég.</p>
+  <!-- Ide érdemes beírni a saját kutatásod forrásait, a beszélgetéseket, amelyekből az ötlet született. -->
+
+  <span class="chapter">3 · A vázlatból alkalmazás</span>
+  <h2>Kérjük meg az AI-t, hogy építse meg</h2>
+  <p>A mobilvázlatból egy AI-asszisztens (Claude) segítségével működő, telefonra telepíthető <a href="app/">alkalmazás</a> lett. Néhány döntés menet közben:</p>
+  <ul>
+    <li><b>Telepíthető webapp</b>, nem áruházi alkalmazás – ingyen fut, offline is működik.</li>
+    <li><b>Szimulált válaszok</b> – az app a döntést és a visszajelzést mutatja be, nem egy valódi chatbotot. Az energiaadatok szemléltető becslések.</li>
+    <li><b>Minden adat a telefonon marad</b> – nincs szerver, nincs követés.</li>
+    <li><b>Nincs bűntudatkeltés</b> – a nagy modell nem „rossz”, csak nehéz feladatra való. Az összetett kérés és egy napi „szabadjegy” nem szakítja meg a zöld szériát.</li>
+    <li><b>Kevesebb felugró üzenet</b> és egy nyugodtabb, olvashatóbb design.</li>
+  </ul>
+
+  <span class="chapter">4 · A kérdés</span>
+  <h2>És mennyibe került mindez?</h2>
+  <div class="ask">A munka végén megkérdeztem az AI-t: <b>„Nézz rá a beszélgetésünkre, és mondd meg, hogyan lehetett volna sokkal kevesebb energiából megcsinálni, amit csináltunk.”</b></div>
+  <p>A válasz kicsit ironikus volt: az egész munkát a legnagyobb modellel végeztük – éppen azt csinálva, amire az alkalmazás figyelmeztet. Íme a válasz, hétköznapi nyelvre lefordítva.</p>
+
+  <div class="lesson"><span class="n">1</span><b>Egy témához egy beszélgetés.</b>
+    <p>Az AI minden egyes lépésnél újraolvassa az egész addigi beszélgetést. A mi beszélgetésünkben előtte egy teljesen más feladat is volt egy hosszú szöveggel – és ezt az alkalmazás minden apró lépésénél újra „elolvasta”. Olyan ez, mintha minden kérdés előtt újra fel kellene olvasni egy egész könyvet. <i>Új témához új beszélgetés – ez volt a legnagyobb tanulság.</i></p></div>
+  <div class="lesson"><span class="n">2</span><b>Kis feladathoz kis modell.</b>
+    <p>A munka nagy része gépies volt: szövegek másolása, formázás, fordítás. Ehhez elég egy kisebb modell, amely töredék energiát használ. A nagy modell csak a valódi gondolkodást igénylő döntésekhez kellett volna.</p></div>
+  <div class="lesson"><span class="n">3</span><b>Ne gépeltesd újra, ami már megvan.</b>
+    <p>Egy hosszú szöveget az AI szóról szóra újraírt weboldallá, pedig egy egyszerű sablon is megjeleníthette volna. Amit le kell írnia, az a legdrágább rész.</p></div>
+  <div class="lesson"><span class="n">4</span><b>Előbb a hozzáférés, aztán a munka.</b>
+    <p>Mivel az elején nem volt joga feltölteni a kódot, kerülőutakat kellett csinálnia: átmeneti másolatokat, többszöri újracsomagolást. Egy perc beállítás az elején ezt mind megspórolta volna.</p></div>
+  <div class="lesson"><span class="n">5</span><b>Kevesebb kép, több rövid ellenőrzés.</b>
+    <p>Egy képernyőkép „megnézése” az AI-nak annyiba kerül, mint egy hosszabb szöveg elolvasása. A legtöbb ellenőrzéshez (kilóg-e valami, működik-e a gomb) elég egy rövid szöveges teszt – elég a végén egyszer ránézni.</p></div>
+  <div class="lesson"><span class="n">6</span><b>Kérj egyben, ne darabonként.</b>
+    <p>Minden új kör újraolvassa a teljes beszélgetést. Ha a kéréseket összegyűjtöd („ezt, ezt és ezt”), kevesebb kör kell – és egy rövid terv a munka előtt is kevesebb javítgatást jelent.</p></div>
+  <div class="lesson"><span class="n">7</span><b>Rövidebb válaszok.</b>
+    <p>Az AI néha hosszabban válaszolt, mint kellett volna. Ha elég a lényeg, kérd azt – a részleteket csak akkor, ha kellenek.</p></div>
+
+  <p>Az AI becslése szerint ezekkel a lépésekkel ugyanez az eredmény <b>a felhasznált energia töredékéből</b> is elkészülhetett volna. Pontos számot nem tud mondani – és ez is a probléma része: ma még a felhasználó sem látja, mennyibe került egy beszélgetés.</p>
+
+  <div class="take">
+    <h3>Vidd magaddal – 5 szokás a tudatosabb AI-használathoz</h3>
+    <ol>
+      <li><b>Új téma, új beszélgetés.</b> A hosszú beszélgetés minden lépése drágább.</li>
+      <li><b>Kis kérdésre kis modell.</b> Fordítás, összefoglaló, átfogalmazás – nem kell hozzá a legnagyobb.</li>
+      <li><b>Egyben kérdezz.</b> Gyűjtsd össze, mit szeretnél, mielőtt elküldöd.</li>
+      <li><b>Kérj rövid választ</b>, ha a lényeg is elég.</li>
+      <li><b>Ne kérj vissza olyat, ami már megvan</b> – hivatkozz rá, ne gépeltesd újra.</li>
+    </ol>
+  </div>
+  <p class="note">Ez az oldal is ugyanebben a beszélgetésben készült – és már a tanulságok szerint: rövidebben, kevesebb körben.</p>
+</div>
+
+<!-- ======================= ENGLISH ======================= -->
+<div class="en">
+  <div class="kicker">The story of this project</div>
+  <h1>The weight of a click – and of a conversation</h1>
+  <p class="lead">Where we started, how a concern became sketches, a campaign and a working app – and, at the end, an honest question: how much energy did all this take, and how could it have taken less?</p>
+
+  <span class="chapter">1 · The concern</span>
+  <h2>Every question has a cost – we just can't see it</h2>
+  <p>When we send a question to an AI, a server somewhere does real work and uses real electricity. That in itself is fine. What isn't fine: today there is no simple, comparable way to find out <b>how much</b> – or to <b>choose less</b> when a smaller model would do the job just as well.</p>
+  <p>Most apps run the biggest model for everything by default, even a one-line email. Users get neither a number nor a choice.</p>
+
+  <span class="chapter">2 · Research and sketches</span>
+  <h2>What would people see, if they could see anything?</h2>
+  <p>The first sketches (wireframes) answered that question: a model picker sorted by energy; an estimate before you hit send; a small reward animation when you pick the lighter model; and a mobile app design for tracking your own “footprint”.</p>
+  <p>Campaign material followed (<a href="the-weight-of-a-click.html">The Weight of a Click</a>, <a href="powering-intelligence.html">Powering Intelligence</a>), a <a href="petition.html">petition</a> for a standard energy label, and a <a href="models.html">guide</a> to which model is enough for which task.</p>
+  <!-- Add your own research sources and the conversations the idea came from here. -->
+
+  <span class="chapter">3 · From sketch to app</span>
+  <h2>Let's ask an AI to build it</h2>
+  <p>With the help of an AI assistant (Claude), the mobile sketch became a working <a href="app/">app</a> you can install on your phone. Some decisions along the way:</p>
+  <ul>
+    <li><b>An installable web app</b>, not an app-store app – free to run, works offline.</li>
+    <li><b>Simulated replies</b> – the app demonstrates the choice and the feedback, not a real chatbot. Energy figures are illustrative estimates.</li>
+    <li><b>All data stays on the phone</b> – no server, no tracking.</li>
+    <li><b>No guilt-tripping</b> – the big model isn't “bad”, it's for hard tasks. Complex requests and a daily “pass” don't break your green streak.</li>
+    <li><b>Fewer pop-ups</b> and a calmer, more readable design.</li>
+  </ul>
+
+  <span class="chapter">4 · The question</span>
+  <h2>So what did all this cost?</h2>
+  <div class="ask">At the end I asked the AI: <b>“Look back at our conversation and tell me how what we did could have been done with much less energy.”</b></div>
+  <p>The answer was a little ironic: we did the whole job with the largest model – exactly what the app warns about. Here is its answer, in plain words.</p>
+
+  <div class="lesson"><span class="n">1</span><b>One topic, one conversation.</b>
+    <p>At every single step, the AI re-reads the entire conversation so far. Ours started with a completely different task and a long text – and that was “re-read” at every small step of the app work. It's like having a whole book read aloud before every question. <i>New topic, new conversation – the biggest lesson of all.</i></p></div>
+  <div class="lesson"><span class="n">2</span><b>Small job, small model.</b>
+    <p>Most of the work was routine: copying text, formatting, translating. A smaller model can do that for a fraction of the energy. The big model was only needed for decisions that took real thinking.</p></div>
+  <div class="lesson"><span class="n">3</span><b>Don't have it retype what already exists.</b>
+    <p>The AI rewrote a long text word for word into a web page, when a simple template could have displayed it. Whatever the AI has to write out is the most expensive part.</p></div>
+  <div class="lesson"><span class="n">4</span><b>Access first, work second.</b>
+    <p>It had no permission to upload the code at the start, so it had to take detours: temporary copies, repackaging the work several times. One minute of setup up front would have saved all of it.</p></div>
+  <div class="lesson"><span class="n">5</span><b>Fewer screenshots, more quick checks.</b>
+    <p>For an AI, “looking at” a screenshot costs about as much as reading a long text. Most checks (does anything overflow, does the button work) only need a short text test – one look at the end is enough.</p></div>
+  <div class="lesson"><span class="n">6</span><b>Ask in one go, not piece by piece.</b>
+    <p>Every new round re-reads the whole conversation. Collect your requests (“this, this and this”) and you need fewer rounds – a short plan before starting also means less fixing later.</p></div>
+  <div class="lesson"><span class="n">7</span><b>Shorter answers.</b>
+    <p>Sometimes the AI answered at greater length than needed. If the gist is enough, ask for the gist – and for details only when you need them.</p></div>
+
+  <p>By the AI's own estimate, these steps would have produced the same result with <b>a fraction of the energy</b>. It can't give an exact number – and that is part of the problem too: today, not even the user can see what a conversation cost.</p>
+
+  <div class="take">
+    <h3>Take away – 5 habits for more mindful AI use</h3>
+    <ol>
+      <li><b>New topic, new conversation.</b> Every step of a long chat costs more.</li>
+      <li><b>Small question, small model.</b> Translating, summarising, rewording – no need for the biggest.</li>
+      <li><b>Ask in one go.</b> Gather what you want before you send it.</li>
+      <li><b>Ask for a short answer</b> when the gist will do.</li>
+      <li><b>Don't ask for what you already have</b> – point to it, don't have it retyped.</li>
+    </ol>
+  </div>
+  <p class="note">This page was written in the same conversation – already following its own lessons: shorter, in fewer rounds.</p>
+</div>
+
+<div class="foot">
+  <span class="hu">🌿 <a href="index.html">Vissza a főoldalra</a> · <a href="app/">Az alkalmazás</a> · <a href="petition-hu.html">A petíció</a></span>
+  <span class="en">🌿 <a href="index.html">Back to home</a> · <a href="app/">The app</a> · <a href="petition.html">The petition</a></span>
+</div>
+</article>
+</body>
+</html>
