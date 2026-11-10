@@ -35,7 +35,8 @@
   var VENDOR = { openai: "OpenAI", anthropic: "Anthropic", google: "Google", local: "on-device" };
   var ECO_OF = { openai: "gpt5mini", anthropic: "haiku", google: "flash", local: "local" };
   var BRAND_COLORS = { openai: "var(--openai)", anthropic: "var(--anthropic)", google: "var(--google)", local: "var(--local)" };
-  var TIER_COLORS = { eco: "var(--green)", mid: "var(--amber)", big: "var(--red)", local: "#0ea5e9" };
+  var TIER_COLORS = { eco: "var(--green)", mid: "var(--amber)", big: "var(--deep)", local: "#0ea5e9" };
+  var MILESTONES = [3, 5, 10, 20, 30, 50, 75, 100, 150, 200];
 
   /* ------------------------------------------------------------------ *
    * i18n
@@ -65,14 +66,25 @@
       nudgeDown: "Looks like a quick ask — <b>{m}</b> would use <b>{p}% less</b> energy.",
       nudgeUp: "This looks complex — <b>{m}</b> may give a better answer (more energy).",
       switchTo: "Switch", dismiss: "Dismiss",
-      t_local: "Zero cloud energy", t_eco: "Greenest choice", t_mid: "Good balance", t_big: "Energy-heavy tier",
-      b_eco: "eco", b_mid: "ok", b_big: "heads-up",
+      t_local: "Zero cloud energy", t_eco: "Greenest choice", t_mid: "Good balance", t_big: "Deep-reasoning model",
+      b_eco: "eco", b_mid: "ok", b_big: "deep",
       m_local: "<b>{m}</b> ran on your device — nothing left it.",
       m_eco: "<b>{m}</b> uses ~{x}× less energy than Claude Opus for this kind of task.",
       m_mid: "<b>{m}</b> — solid quality at a moderate energy cost.",
-      m_big: "<b>{m}</b> draws ~{x}× more energy than an efficient model. Great for hard tasks — quick asks? Try <b>{alt}</b>.",
+      m_big: "<b>{m}</b> uses ~{x}× the energy of an efficient model — a good fit for hard, multi-step work. For quick asks, <b>{alt}</b> is enough.",
+      n_just: "🧠 Complex task — a bigger model is justified here. Your streak is safe.",
+      n_pass: "🎟️ Daily pass used — your streak is safe. The next bigger-model ask today ends it.",
+      n_break: "Streak reset — no worries, the next efficient pick starts a new one.",
+      n_mile: "🔥 {n} green picks in a row!",
+      justified: "justified", passChip: "day pass",
+      feedback: "Eco feedback", fbSmart: "Smart", fbAlways: "Always", fbOff: "Off",
+      compareTitle: "Compare models for this message", compareHint: "Estimates for your current message ({n} characters). Tap a row to switch.",
+      compareFine: "Illustrative per-request estimates; real values depend on the provider, hardware and answer length.",
+      cmpModel: "Model", cmpTime: "Time", cmpCost: "Cost", cmpEnergy: "kWh", cmpCurrent: "current", compare: "Compare ›",
+      passInfo: "<b>Daily pass:</b> one bigger-model request a day doesn't break your streak. Requests marked <b>justified</b> (complex tasks) never do.",
+      passLeft: "Today's pass: available 🎟️", passUsed: "Today's pass: used",
       s_zero: "⚡ 0 kWh cloud · on-device · ≈ 0 g CO₂",
-      s_heavy: "uses <b>{e} kWh</b> ≈ {g} CO₂ · heaviest tier",
+      s_heavy: "uses <b>{e} kWh</b> ≈ {g} CO₂",
       s_saved: "uses <b>{e} kWh</b> · saves <b>{s} kWh</b> ≈ {g} CO₂",
       // footprint
       fpTitle: "Your energy, last 30 days", vsPrev: "vs. previous 30 days", noPrev: "first month of tracking",
@@ -120,14 +132,25 @@
       nudgeDown: "Gyors kérdésnek tűnik — a <b>{m}</b> <b>{p}%-kal kevesebb</b> energiát használna.",
       nudgeUp: "Ez összetettnek tűnik — a <b>{m}</b> jobb választ adhat (több energiával).",
       switchTo: "Váltás", dismiss: "Elvetés",
-      t_local: "Nulla felhőenergia", t_eco: "A legzöldebb választás", t_mid: "Jó egyensúly", t_big: "Energiaigényes szint",
-      b_eco: "eco", b_mid: "ok", b_big: "figyelem",
+      t_local: "Nulla felhőenergia", t_eco: "A legzöldebb választás", t_mid: "Jó egyensúly", t_big: "Mély érvelésű modell",
+      b_eco: "eco", b_mid: "ok", b_big: "mély",
       m_local: "A <b>{m}</b> a saját eszközödön futott — semmi nem hagyta el.",
       m_eco: "A <b>{m}</b> ~{x}× kevesebb energiát használ, mint a Claude Opus az ilyen feladatra.",
       m_mid: "<b>{m}</b> — jó minőség mérsékelt energiaköltséggel.",
-      m_big: "A <b>{m}</b> ~{x}× több energiát fogyaszt egy takarékos modellnél. Nehéz feladatra kiváló — gyors kérdésre próbáld a <b>{alt}</b> modellt.",
+      m_big: "A <b>{m}</b> ~{x}× annyi energiát használ, mint egy takarékos modell — nehéz, többlépéses feladatra jó választás. Gyors kérdéshez elég a <b>{alt}</b>.",
+      n_just: "🧠 Összetett feladat — itt indokolt a nagyobb modell. A széria megmarad.",
+      n_pass: "🎟️ Napi szabadjegy felhasználva — a széria megmaradt. A ma következő nagyobb-modelles kérés már megszakítja.",
+      n_break: "A széria újraindul — semmi gond, a következő takarékos választással új kezdődik.",
+      n_mile: "🔥 {n} zöld választás egymás után!",
+      justified: "indokolt", passChip: "szabadjegy",
+      feedback: "Eco visszajelzés", fbSmart: "Okos", fbAlways: "Mindig", fbOff: "Ki",
+      compareTitle: "Modellek összevetése erre az üzenetre", compareHint: "Becslés a jelenlegi üzenetedre ({n} karakter). Koppints egy sorra a váltáshoz.",
+      compareFine: "Szemléltető, kérésenkénti becslés; a valós érték a szolgáltatótól, a hardvertől és a válasz hosszától függ.",
+      cmpModel: "Modell", cmpTime: "Idő", cmpCost: "Költség", cmpEnergy: "kWh", cmpCurrent: "jelenlegi", compare: "Összevetés ›",
+      passInfo: "<b>Napi szabadjegy:</b> naponta egy nagyobb-modelles kérés nem szakítja meg a szériát. Az <b>indokolt</b>-ként jelölt (összetett) kérések soha.",
+      passLeft: "Mai szabadjegy: elérhető 🎟️", passUsed: "Mai szabadjegy: felhasználva",
       s_zero: "⚡ 0 kWh felhő · eszközön · ≈ 0 g CO₂",
-      s_heavy: "<b>{e} kWh</b> ≈ {g} CO₂ · a legnehezebb szint",
+      s_heavy: "<b>{e} kWh</b> ≈ {g} CO₂",
       s_saved: "<b>{e} kWh</b> · megtakarítás <b>{s} kWh</b> ≈ {g} CO₂",
       fpTitle: "Energiafogyasztásod, utolsó 30 nap", vsPrev: "az előző 30 naphoz képest", noPrev: "a követés első hónapja",
       byVendor: "Szolgáltató szerint", byTier: "Modellszint szerint", weekly: "Heti trend", suggestions: "Javaslatok", thisMonth: "Utolsó 30 nap",
@@ -159,11 +182,12 @@
     set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} },
     del: function (k) { try { localStorage.removeItem(k); } catch (e) {} }
   };
-  function fresh() { return { defaultModel: "gpt5mini", model: "gpt5mini", nudges: true, messages: [], requests: [] }; }
+  function fresh() { return { defaultModel: "gpt5mini", model: "gpt5mini", nudges: true, feedback: "smart", messages: [], requests: [] }; }
   var S;
   try { S = JSON.parse(store.get(KEY)) || fresh(); } catch (e) { S = fresh(); }
   if (!BY_ID[S.model]) S.model = "gpt5mini";
   if (!BY_ID[S.defaultModel]) S.defaultModel = "gpt5mini";
+  if (["smart", "always", "off"].indexOf(S.feedback) < 0) S.feedback = "smart";
   function save() {
     if (S.messages.length > 200) S.messages = S.messages.slice(-200);
     if (S.requests.length > 5000) S.requests = S.requests.slice(-5000);
@@ -228,7 +252,7 @@
         ? "<p>Egy átlagos kérés energiaigénye nagyon függ a modell méretétől. Az EcoAI szemléltető becslései:</p><ul>" + rows + "</ul><p>A legnagyobb modell egy kérésre akár <b>300×</b> annyi energiát használhat, mint egy takarékos. Ha a feladathoz elég a kis modell, ott a legnagyobb a megtakarítás.</p>"
         : "<p>The energy of a typical request depends heavily on model size. EcoAI's illustrative estimates:</p><ul>" + rows + "</ul><p>The largest model can use up to <b>300×</b> the energy of an efficient one per request. When the small model is good enough, that's where the biggest savings are.</p>";
     }
-    if (/(short|rövid)/.test(s)) {
+    if (/(shorter|make it short|rövidebb|rövidítsd)/.test(s)) {
       return H ? "<p>Rövidebben: a lényeg három mondatban — mi a kérdés, mi a fő eredmény, és mit érdemes tenni ezzel.</p>"
                : "<p>Shorter: the gist in three sentences — what the question is, what the main finding is, and what to do with it.</p>";
     }
@@ -291,7 +315,7 @@
     $("mpDot").className = "dot " + m.tier;
     var e = estimate(m, text, text && isCached(text, m));
     $("est").innerHTML = "<span>⏱ " + secStr(e.sec) + "</span><span>💰 " + (m.tier === "local" ? "$0" : costStr(e.cost)) + "</span>" +
-      '<span>⚡ <b class="' + m.tier + '">' + (m.tier === "local" ? t("cloud0") : kwhStr(e.kwh) + " kWh") + "</b></span>";
+      '<span>⚡ <b class="' + m.tier + '">' + (m.tier === "local" ? t("cloud0") : kwhStr(e.kwh) + " kWh") + '</b></span><span class="cmp">' + t("compare") + "</span>";
     $("ecoPill").hidden = !(m.tier === "eco" || m.tier === "local");
 
     var n = $("nudge");
@@ -327,6 +351,8 @@
       ' <b class="' + m.tier + '">⚡ ' + (m.tier === "local" ? t("cloud0") : kwhStr(r.kwh) + " kWh") + "</b>" +
       (m.tier === "local" ? '<span class="chip green">' + t("onDevice") + "</span>" : "<span>≈ " + gStr(r.kwh) + " CO₂</span>") +
       (r.cache ? '<span class="chip green">' + t("cacheHit") + "</span>" : "") +
+      (r.kind === "just" ? '<span class="chip deep">' + t("justified") + "</span>" : "") +
+      (r.kind === "pass" ? '<span class="chip deep">🎟️ ' + t("passChip") + "</span>" : "") +
       '<span class="chip">' + t("demo") + "</span></div>";
   }
   function renderChat() {
@@ -365,13 +391,18 @@
     scrollChat();
     var delay = reduced ? 150 : Math.min(1400, 350 + e.sec * 120);
     setTimeout(function () {
-      var r = { role: "ai", html: reply(text, m), model: m.id, kwh: e.kwh, cost: e.cost, sec: e.sec, cache: cache, ts: Date.now() };
+      var prevReq = S.requests[S.requests.length - 1];
+      var streakBefore = greenStreak();
+      var just = (m.tier === "mid" || m.tier === "big") && complexity(text) === "hard";
+      var req = { ts: Date.now(), model: m.id, kwh: e.kwh, cost: e.cost, cache: cache, len: text.length, just: just };
+      S.requests.push(req);
+      var kind = kinds()[S.requests.length - 1];
+      var r = { role: "ai", html: reply(text, m), model: m.id, kwh: e.kwh, cost: e.cost, sec: e.sec, cache: cache, ts: req.ts, kind: kind };
       S.messages.push(r);
-      S.requests.push({ ts: r.ts, model: m.id, kwh: e.kwh, cost: e.cost, cache: cache, len: text.length });
       save();
       busy = false;
       renderChat();
-      fireToast(m, e.kwh);
+      feedback(m, e.kwh, kind, prevReq, streakBefore);
     }, delay);
   }
   $("form").addEventListener("submit", function (ev) { ev.preventDefault(); send($("inp").value); });
@@ -392,23 +423,51 @@
    * Eco toast
    * ------------------------------------------------------------------ */
   var toastTimer;
+  function isGreen(r) { var tr = (BY_ID[r.model] || {}).tier; return tr === "eco" || tr === "local"; }
+  /* each request: "green" | "just" (complex task, never breaks) | "pass" (first bigger ask of the day) | "break" */
+  function kinds() {
+    var used = {};
+    return S.requests.map(function (r) {
+      if (isGreen(r)) return "green";
+      if (r.just) return "just";
+      var d = dayKey(r.ts);
+      if (!used[d]) { used[d] = 1; return "pass"; }
+      return "break";
+    });
+  }
   function greenStreak() {
-    var n = 0;
-    for (var i = S.requests.length - 1; i >= 0; i--) {
-      var tr = (BY_ID[S.requests[i].model] || {}).tier;
-      if (tr === "eco" || tr === "local") n++; else break;
-    }
+    var k = kinds(), n = 0;
+    for (var i = k.length - 1; i >= 0; i--) { if (k[i] === "green") n++; else if (k[i] === "break") break; }
     return n;
   }
-  function fireToast(m, kwh) {
+  function passUsedToday() {
+    var k = kinds(), today = dayKey(Date.now());
+    return S.requests.some(function (r, i) { return k[i] === "pass" && dayKey(r.ts) === today; });
+  }
+  function feedback(m, kwh, kind, prevReq, streakBefore) {
+    var sN = greenStreak();
+    var note = kind === "just" ? t("n_just") : kind === "pass" ? t("n_pass")
+      : (kind === "break" && streakBefore > 0) ? t("n_break")
+      : (kind === "green" && MILESTONES.indexOf(sN) >= 0) ? t("n_mile", { n: sN }) : "";
+    var show = S.feedback === "always" ||
+      (S.feedback === "smart" && (S.requests.length <= 3 || !prevReq || prevReq.model !== m.id || note));
+    if (S.feedback !== "off" && show) { fireToast(m, kwh, note); return; }
+    if (S.feedback === "off") return;
+    var bs = document.querySelectorAll("#msgs .msg.ai .meta b");
+    var b = bs[bs.length - 1];
+    if (b && !reduced) b.classList.add("pop");
+  }
+  function fireToast(m, kwh, note) {
     var tier = m.tier, isEco = tier === "eco" || tier === "local", isHeavy = tier === "big";
     var tEl = $("toast");
     clearTimeout(toastTimer);
-    tEl.classList.remove("show", "hide", "amber"); void tEl.offsetWidth;
-    if (isHeavy) tEl.classList.add("amber");
+    tEl.classList.remove("show", "hide", "amber", "deep"); void tEl.offsetWidth;
+    if (isHeavy) tEl.classList.add("deep");
     $("badge").textContent = t("b_" + (tier === "local" ? "eco" : tier));
     $("ttlTxt").textContent = t("t_" + tier);
     var alt = BY_ID[ECO_OF[m.brand]];
+    $("tnote").textContent = note || "";
+    $("tnote").hidden = !note;
     $("tmsg").innerHTML = t("m_" + tier, { m: esc(m.name), x: tier === "big" ? Math.round(m.kwh / alt.kwh) : Math.round(WORST / Math.max(m.kwh, 0.0001)), alt: esc(alt.name) });
     var worstHere = kwh * (WORST / Math.max(m.kwh, 1e-9));
     var saved = tier === "local" ? 0 : Math.max(0, worstHere - kwh);
@@ -456,12 +515,12 @@
   /* ------------------------------------------------------------------ *
    * Sheets
    * ------------------------------------------------------------------ */
-  function openSheet(id) { var s = $(id); s.classList.add("on"); s.setAttribute("aria-hidden", "false"); }
+  function openSheet(id) { closeToast(); var s = $(id); s.classList.add("on"); s.setAttribute("aria-hidden", "false"); }
   function closeSheet(id) { var s = $(id); s.classList.remove("on"); s.setAttribute("aria-hidden", "true"); }
-  ["sheet", "settings"].forEach(function (id) {
+  ["sheet", "settings", "compare"].forEach(function (id) {
     $(id).addEventListener("click", function (e) { if (e.target.id === id) closeSheet(id); });
   });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { closeSheet("sheet"); closeSheet("settings"); } });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { closeSheet("sheet"); closeSheet("settings"); closeSheet("compare"); } });
 
   function modelListHTML(selId, mode) {
     return TIERS.map(function (tr) {
@@ -487,6 +546,33 @@
     var r = e.target.closest("[data-model]"); if (!r) return;
     S.model = r.getAttribute("data-model"); save();
     renderComposer(); closeSheet("sheet");
+  });
+
+  function relStr(x, base) {
+    if (x === base) return ["same", "="];
+    if (base === 0) return ["more", "+" + kwhStr(x)];
+    if (x === 0) return ["less", "−100%"];
+    if (x < base) return ["less", "−" + Math.min(99, Math.round((1 - x / base) * 100)) + "%"];
+    var r = x / base;
+    return ["more", r < 10 ? "×" + nf(r, 1) : "×" + nf(Math.round(r), 0)];
+  }
+  function renderCompare() {
+    var text = $("inp").value, me = cur();
+    var mine = estimate(me, text, false).kwh;
+    $("cmpHint").textContent = t("compareHint", { n: text.trim().length });
+    var rows = MODELS.slice().sort(function (a, b) { return a.kwh - b.kwh || a.sec - b.sec; }).map(function (m) {
+      var e = estimate(m, text, false), rel = m.id === me.id ? ["same", t("cmpCurrent")] : relStr(e.kwh, mine);
+      return '<tr data-model="' + m.id + '" class="' + (m.id === me.id ? "sel" : "") + '"><td><span class="nm"><span class="logo ' + m.brand + '">' + m.L + "</span>" + esc(m.name) + "</span></td>" +
+        "<td>" + secStr(e.sec) + "</td><td>" + (m.tier === "local" ? "$0" : costStr(e.cost)) + '</td><td class="' + m.tier + '">' + (m.tier === "local" ? "0" : kwhStr(e.kwh)) +
+        '<span class="rel ' + rel[0] + '">' + rel[1] + "</span></td></tr>";
+    }).join("");
+    $("cmpList").innerHTML = '<table class="cmp-table"><thead><tr><th>' + t("cmpModel") + "</th><th>" + t("cmpTime") + "</th><th>" + t("cmpCost") + "</th><th>" + t("cmpEnergy") + "</th></tr></thead><tbody>" + rows + "</tbody></table>";
+  }
+  $("est").addEventListener("click", function () { renderCompare(); openSheet("compare"); });
+  $("cmpList").addEventListener("click", function (e) {
+    var r = e.target.closest("[data-model]"); if (!r) return;
+    S.model = r.getAttribute("data-model"); save();
+    renderComposer(); closeSheet("compare"); $("inp").focus();
   });
 
   /* ------------------------------------------------------------------ *
@@ -617,7 +703,7 @@
   }
   function bestStreak() {
     var best = 0, n = 0;
-    S.requests.forEach(function (r) { var tr = (BY_ID[r.model] || {}).tier; if (tr === "eco" || tr === "local") { n++; best = Math.max(best, n); } else n = 0; });
+    kinds().forEach(function (k) { if (k === "green") { n++; best = Math.max(best, n); } else if (k === "break") n = 0; });
     return best;
   }
   function renderStreak() {
@@ -643,6 +729,7 @@
       '<div class="card streak-hero"><div class="n">' + sN + "</div><div><b>" + t("streakTitle") + '</b></div><div class="muted" style="margin-top:6px">' +
       t("best", { n: bestStreak() }) + " · " + t("savingWeek", { s: kwhStr(weekSaved) }) + "</div></div>" +
       '<div class="card"><h3>' + t("thisWeek") + '</h3><div class="days">' + days + "</div></div>" +
+      '<div class="card passbox"><span class="pi">🎟️</span><span><b>' + (passUsedToday() ? t("passUsed") : t("passLeft")) + "</b><br>" + t("passInfo") + "</span></div>" +
       '<h2 class="sec">' + t("badgesTitle") + '</h2><div class="badges">' +
       B.map(function (b) {
         var got = b[2] >= b[3];
@@ -680,7 +767,12 @@
     document.querySelectorAll("#themeSeg button").forEach(function (b) { b.classList.toggle("on", b.dataset.t === th); });
     document.querySelectorAll("#langSeg button").forEach(function (b) { b.classList.toggle("on", b.dataset.l === lang); });
     $("nudgeSw").checked = !!S.nudges;
+    document.querySelectorAll("#fbSeg button").forEach(function (b) { b.classList.toggle("on", b.dataset.f === S.feedback); });
   }
+  $("fbSeg").addEventListener("click", function (e) {
+    var b = e.target.closest("[data-f]"); if (!b) return;
+    S.feedback = b.dataset.f; save(); renderSettings();
+  });
   $("settingsBtn").addEventListener("click", function () { renderSettings(); openSheet("settings"); });
   $("langSeg").addEventListener("click", function (e) {
     var b = e.target.closest("[data-l]"); if (!b) return;
@@ -716,7 +808,8 @@
         var len = 30 + Math.floor(rnd() * 500);
         var cache = id !== "local" && rnd() < 0.18;
         var e = estimate(BY_ID[id], new Array(len + 1).join("x"), cache);
-        reqs.push({ ts: now - d * DAY - Math.floor(rnd() * 10) * 36e5, model: id, kwh: e.kwh, cost: e.cost, cache: cache, len: len });
+        var just = BY_ID[id].tier !== "eco" && BY_ID[id].tier !== "local" && len > 400;
+        reqs.push({ ts: now - d * DAY - Math.floor(rnd() * 10) * 36e5, model: id, kwh: e.kwh, cost: e.cost, cache: cache, len: len, just: just });
       }
     }
     // keep today's real requests, replace the rest
@@ -732,9 +825,9 @@
   function flash(msg) {
     var tEl = $("toast");
     clearTimeout(toastTimer);
-    tEl.classList.remove("show", "hide", "amber"); void tEl.offsetWidth;
+    tEl.classList.remove("show", "hide", "amber", "deep"); void tEl.offsetWidth;
     $("ttlTxt").textContent = msg; $("badge").textContent = "✓";
-    $("tmsg").textContent = ""; $("tsave").textContent = ""; $("tstreak").innerHTML = "";
+    $("tmsg").textContent = ""; $("tsave").textContent = ""; $("tstreak").innerHTML = ""; $("tnote").hidden = true;
     $("ringPct").textContent = "🌿"; $("ringFg").style.strokeDashoffset = 0;
     tEl.classList.add("show");
     toastTimer = setTimeout(closeToast, 2500);

@@ -68,7 +68,7 @@ if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)
       <button class="mpick" id="mpick" type="button">
         <span class="logo" id="mpLogo"></span><span id="mpName"></span><span class="dot" id="mpDot"></span><span class="caret">▾</span>
       </button>
-      <div class="est" id="est"></div>
+      <button class="est" id="est" type="button" aria-haspopup="dialog"></button>
     </div>
     <form class="comp-row" id="form" autocomplete="off">
       <input id="inp" type="text" enterkeyhint="send" data-i-ph="placeholder">
@@ -93,6 +93,17 @@ if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)
     </div>
   </div>
 
+  <!-- compare sheet -->
+  <div class="sheet" id="compare" aria-hidden="true">
+    <div class="pane" role="dialog" aria-modal="true" aria-labelledby="cmpTitle">
+      <div class="grab"></div>
+      <h3 id="cmpTitle" data-i="compareTitle"></h3>
+      <p class="hint" id="cmpHint"></p>
+      <div id="cmpList"></div>
+      <p class="fine" data-i="compareFine"></p>
+    </div>
+  </div>
+
   <!-- settings sheet -->
   <div class="sheet" id="settings" aria-hidden="true">
     <div class="pane" role="dialog" aria-modal="true" aria-labelledby="setTitle">
@@ -102,6 +113,8 @@ if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)
         <span class="seg" id="langSeg"><button type="button" data-l="hu">HU</button><button type="button" data-l="en">EN</button></span></div>
       <div class="setrow"><span data-i="theme"></span>
         <span class="seg" id="themeSeg"><button type="button" data-t="auto" data-i="auto"></button><button type="button" data-t="light">☀️</button><button type="button" data-t="dark">🌙</button></span></div>
+      <div class="setrow"><span data-i="feedback"></span>
+        <span class="seg" id="fbSeg"><button type="button" data-f="smart" data-i="fbSmart"></button><button type="button" data-f="always" data-i="fbAlways"></button><button type="button" data-f="off" data-i="fbOff"></button></span></div>
       <div class="setrow"><span data-i="nudges"></span>
         <label class="switch"><input type="checkbox" id="nudgeSw"><span></span></label></div>
       <div class="setrow col">
@@ -120,6 +133,7 @@ if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t)
     <div class="tbody">
       <div class="ttl"><span id="ttlTxt"></span><span class="badge" id="badge"></span></div>
       <div class="msg2" id="tmsg"></div>
+      <div class="note" id="tnote" hidden></div>
       <div class="save" id="tsave"></div>
       <div class="streak" id="tstreak"></div>
     </div>
