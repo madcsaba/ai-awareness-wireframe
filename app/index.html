@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>EcoAI – low-energy AI assistant</title>
+<meta name="description" content="EcoAI: an AI assistant app that shows the energy cost of every request and rewards the least-energy model choice.">
+<meta name="theme-color" content="#f4f5f2" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e1113" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="EcoAI">
+<meta property="og:title" content="🌿 EcoAI – low-energy AI assistant (app)">
+<meta property="og:description" content="Installable app: model picker sorted by energy, per-request kWh/CO₂, footprint, streaks and badges.">
+<meta property="og:image" content="https://madcsaba.github.io/ai-awareness-wireframe/og.png">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<script>
+(function(){var l;try{l=localStorage.getItem("ecoai-lang")}catch(e){}
+if(l!=="hu"&&l!=="en")l=(navigator.language||"").toLowerCase().indexOf("hu")===0?"hu":"en";
+document.documentElement.lang=l;
+var t;try{t=localStorage.getItem("ecoai-theme")}catch(e){}
+if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);})();
+</script>
+<link rel="preload" href="fonts/inter-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="app" id="app">
+
+  <header class="apphead">
+    <div class="row">
+      <img class="applogo" src="icons/icon.svg" alt="" width="28" height="28">
+      <h1 id="viewTitle">EcoAI</h1>
+      <span class="eco-pill" id="ecoPill" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg><span data-i="ecoOn"></span></span>
+      <button class="iconbtn" id="settingsBtn" type="button" data-i-aria="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg></button>
+    </div>
+  </header>
+
+  <main class="views">
+    <!-- CHAT -->
+    <section class="view on" id="v-chat" aria-live="polite">
+      <div id="chatEmpty" class="empty">
+        <div class="empty-ico"><img src="icons/icon.svg" alt="" width="56" height="56"></div>
+        <p class="tagline" data-i="tagline"></p>
+        <h2 data-i="emptyTitle"></h2>
+        <p data-i="emptyText"></p>
+        <div class="starters" id="starters"></div>
+      </div>
+      <div id="msgs"></div>
+    </section>
+
+    <!-- FOOTPRINT -->
+    <section class="view" id="v-footprint"></section>
+
+    <!-- MODELS -->
+    <section class="view" id="v-models"></section>
+
+    <!-- STREAK -->
+    <section class="view" id="v-streak"></section>
+  </main>
+
+  <div class="composer" id="composer">
+    <div class="nudge" id="nudge" hidden></div>
+    <div class="comp-top">
+      <button class="mpick" id="mpick" type="button">
+        <span class="logo" id="mpLogo"></span><span id="mpName"></span><span class="dot" id="mpDot"></span><span class="caret">▾</span>
+      </button>
+      <button class="est" id="est" type="button" aria-haspopup="dialog"></button>
+    </div>
+    <form class="comp-row" id="form" autocomplete="off">
+      <input id="inp" type="text" enterkeyhint="send" data-i-ph="placeholder">
+      <button class="send" type="submit" data-i-aria="send"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+    </form>
+  </div>
+
+  <nav class="tabs" role="tablist">
+    <button class="on" data-v="chat" type="button" role="tab"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg><span data-i="tabChat"></span></button>
+    <button data-v="footprint" type="button" role="tab"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10Z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg><span data-i="tabFootprint"></span></button>
+    <button data-v="models" type="button" role="tab"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg><span data-i="tabModels"></span></button>
+    <button data-v="streak" type="button" role="tab"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg><span data-i="tabStreak"></span></button>
+  </nav>
+
+  <!-- model picker sheet -->
+  <div class="sheet" id="sheet" aria-hidden="true">
+    <div class="pane" role="dialog" aria-modal="true" aria-labelledby="sheetTitle">
+      <div class="grab"></div>
+      <h3 id="sheetTitle" data-i="chooseModel"></h3>
+      <p class="hint" data-i="chooseHint"></p>
+      <div id="sheetList"></div>
+    </div>
+  </div>
+
+  <!-- compare sheet -->
+  <div class="sheet" id="compare" aria-hidden="true">
+    <div class="pane" role="dialog" aria-modal="true" aria-labelledby="cmpTitle">
+      <div class="grab"></div>
+      <h3 id="cmpTitle" data-i="compareTitle"></h3>
+      <p class="hint" id="cmpHint"></p>
+      <div id="cmpList"></div>
+      <p class="fine" data-i="compareFine"></p>
+    </div>
+  </div>
+
+  <!-- settings sheet -->
+  <div class="sheet" id="settings" aria-hidden="true">
+    <div class="pane" role="dialog" aria-modal="true" aria-labelledby="setTitle">
+      <div class="grab"></div>
+      <h3 id="setTitle" data-i="settings"></h3>
+      <div class="setrow"><span data-i="language"></span>
+        <span class="seg" id="langSeg"><button type="button" data-l="hu">HU</button><button type="button" data-l="en">EN</button></span></div>
+      <div class="setrow"><span data-i="theme"></span>
+        <span class="seg" id="themeSeg"><button type="button" data-t="auto" data-i="auto"></button><button type="button" data-t="light">☀️</button><button type="button" data-t="dark">🌙</button></span></div>
+      <div class="setrow"><span data-i="feedback"></span>
+        <span class="seg" id="fbSeg"><button type="button" data-f="smart" data-i="fbSmart"></button><button type="button" data-f="always" data-i="fbAlways"></button><button type="button" data-f="off" data-i="fbOff"></button></span></div>
+      <div class="setrow"><span data-i="nudges"></span>
+        <label class="switch"><input type="checkbox" id="nudgeSw"><span></span></label></div>
+      <div class="setrow col">
+        <button class="btn" type="button" id="installBtn" hidden data-i="install"></button>
+        <button class="btn" type="button" id="demoBtn" data-i="loadDemo"></button>
+        <button class="btn danger" type="button" id="resetBtn" data-i="reset"></button>
+      </div>
+      <p class="fine" data-i="disclaimer"></p>
+      <p class="fine"><a href="../" data-i="backToPack"></a></p>
+    </div>
+  </div>
+
+  <!-- eco toast -->
+  <div class="toast" id="toast" role="status">
+    <div class="ring"><svg width="46" height="46" viewBox="0 0 46 46"><circle class="bg" cx="23" cy="23" r="19"/><circle class="fg" id="ringFg" cx="23" cy="23" r="19"/></svg><span class="pct" id="ringPct"></span></div>
+    <div class="tbody">
+      <div class="ttl"><span id="ttlTxt"></span><span class="badge" id="badge"></span></div>
+      <div class="msg2" id="tmsg"></div>
+      <div class="note" id="tnote" hidden></div>
+      <div class="save" id="tsave"></div>
+      <div class="streak" id="tstreak"></div>
+    </div>
+  </div>
+  <div class="glow" id="glow"></div>
+  <div class="burst" id="burst"></div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
