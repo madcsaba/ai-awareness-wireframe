@@ -32,7 +32,8 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   h1{font:600 30px/1.2 var(--serif);margin:6px 0 6px}
   .lead{color:var(--dim);max-width:900px;margin:0}
   .grid{max-width:1320px;margin:0 auto;padding:14px 18px 40px;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px}
-  @media (max-width:980px){.grid{grid-template-columns:1fr}}
+  @media (max-width:980px){.grid{grid-template-columns:minmax(0,1fr)}}
+  @media (max-width:600px){.tri-pairs,.pairs{grid-template-columns:repeat(2,minmax(0,1fr))}}
   @media (min-width:981px){.grid>section:first-child{position:sticky;top:60px;align-self:start}}
   .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px}
   h2{font:600 19px/1.3 var(--serif);margin:0 0 8px}
@@ -52,7 +53,7 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   .axes{position:absolute;right:10px;top:8px;background:rgba(255,255,255,.8);border-radius:8px;padding:2px 6px;font-size:12px;color:var(--dim);text-align:right;pointer-events:none;line-height:1.4}
   .tip{position:absolute;pointer-events:none;background:rgba(26,29,33,.92);color:#fff;font-size:12.5px;padding:5px 8px;border-radius:8px;display:none;white-space:nowrap}
   .legend{display:flex;flex-wrap:wrap;gap:10px 16px;font-size:12.5px;color:var(--dim);margin-top:10px}
-  .tri-pairs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:6px}
+  .tri-pairs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:6px}
   .tp{border:1px solid var(--line);border-radius:10px;padding:6px 4px;text-align:center;font-size:12px;cursor:pointer;background:#fff}
   .tp:hover{border-color:#c5cad1}
   .tp b{font-size:22px;font-weight:400;line-height:1}
@@ -65,7 +66,7 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   .ttl .nm{font-size:16px;font-weight:600}
   .ttl .tr{font-size:13px;color:var(--dim);margin-top:4px}
   .small{font-size:12.5px;color:var(--dim)}
-  .pairs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+  .pairs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
   .pc{border:1px solid var(--line);border-radius:12px;padding:8px 6px 6px;text-align:center;cursor:pointer;background:#fff;position:relative}
   .pc:hover{border-color:#c5cad1}
   .pc .k{font-size:11px;font-weight:700;letter-spacing:.04em}
@@ -161,6 +162,12 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     <div class="gen-note"><span class="hu">A jelenet és az analógia generált réteg (trigram-képek + vonalhelyek sablonja), nem a klasszikus szöveg része.</span><span class="en">The scene and analogy are a generated layer (trigram images + line-position templates), not part of the classical text.</span></div>
 
     <h3>Spidron</h3>
+    <div class="bar">
+      <button class="t on" data-spmode="2d">2D</button>
+      <button class="t" data-spmode="3d"><span class="hu">3D dombormű</span><span class="en">3D relief</span></button>
+      <button class="t" id="dl-svg"><span class="hu">⬇ Hajtogatási minta (SVG)</span><span class="en">⬇ Fold pattern (SVG)</span></button>
+      <button class="t" id="dl-json"><span class="hu">⬇ Jelenet-leírás (JSON)</span><span class="en">⬇ Scene description (JSON)</span></button>
+    </div>
     <div class="spwrap">
       <canvas id="spid" width="640" height="640"></canvas>
       <div class="small" id="spcap"></div>
@@ -221,14 +228,14 @@ const COL={pair:css("--pair"),cuo:css("--cuo"),zong:css("--zong"),hu:css("--hu")
 
 /* ---------- trigrams (bits bottom→top) ---------- */
 const TRI={
- "111":{zh:"乾",py:"Qián",s:"☰",hu:"ég",en:"heaven",q:["erős, teremtő","strong, creative"],f:["apa","father"],a:["ló","horse"],c:"#5b8def"},
- "110":{zh:"兌",py:"Duì",s:"☱",hu:"tó",en:"lake",q:["derűs, nyitott","joyous, open"],f:["legfiatalabb leány","youngest daughter"],a:["juh","sheep"],c:"#2bb3a6"},
- "101":{zh:"離",py:"Lí",s:"☲",hu:"tűz",en:"fire",q:["fényes, tapadó","bright, clinging"],f:["középső leány","middle daughter"],a:["fácán","pheasant"],c:"#f07a2b"},
- "100":{zh:"震",py:"Zhèn",s:"☳",hu:"mennydörgés",en:"thunder",q:["felrázó, mozgató","arousing, moving"],f:["legidősebb fiú","eldest son"],a:["sárkány","dragon"],c:"#8a5cd6"},
- "011":{zh:"巽",py:"Xùn",s:"☴",hu:"szél",en:"wind",q:["szelíd, átható","gentle, penetrating"],f:["legidősebb leány","eldest daughter"],a:["kakas","rooster"],c:"#7cb342"},
- "010":{zh:"坎",py:"Kǎn",s:"☵",hu:"víz",en:"water",q:["mély, veszélyes","deep, perilous"],f:["középső fiú","middle son"],a:["disznó","pig"],c:"#1e4fa0"},
- "001":{zh:"艮",py:"Gèn",s:"☶",hu:"hegy",en:"mountain",q:["nyugvó, megálló","still, stopping"],f:["legfiatalabb fiú","youngest son"],a:["kutya","dog"],c:"#8d8676"},
- "000":{zh:"坤",py:"Kūn",s:"☷",hu:"föld",en:"earth",q:["befogadó, odaadó","receptive, yielding"],f:["anya","mother"],a:["ökör","ox"],c:"#b08850"}
+ "111":{zh:"乾",py:"Qián",s:"☰",hu:"ég",en:"heaven",q:["erős, teremtő","strong, creative"],f:["apa","father"],a:["ló","horse"],c:"#5b8def",sc:["nyitott, fényes ég ragyogó nappal","an open bright sky with a radiant sun"]},
+ "110":{zh:"兌",py:"Duì",s:"☱",hu:"tó",en:"lake",q:["derűs, nyitott","joyous, open"],f:["legfiatalabb leány","youngest daughter"],a:["juh","sheep"],c:"#2bb3a6",sc:["csendes, tükröző tó, apró fodrokkal","a calm reflecting lake with small ripples"]},
+ "101":{zh:"離",py:"Lí",s:"☲",hu:"tűz",en:"fire",q:["fényes, tapadó","bright, clinging"],f:["középső leány","middle daughter"],a:["fácán","pheasant"],c:"#f07a2b",sc:["lobogó tűz, meleg fény","flickering fire and warm light"]},
+ "100":{zh:"震",py:"Zhèn",s:"☳",hu:"mennydörgés",en:"thunder",q:["felrázó, mozgató","arousing, moving"],f:["legidősebb fiú","eldest son"],a:["sárkány","dragon"],c:"#8a5cd6",sc:["viharfelhők, villámlás, mennydörgés","storm clouds, lightning and thunder"]},
+ "011":{zh:"巽",py:"Xùn",s:"☴",hu:"szél",en:"wind",q:["szelíd, átható","gentle, penetrating"],f:["legidősebb leány","eldest daughter"],a:["kakas","rooster"],c:"#7cb342",sc:["hajladozó fű és fák a szélben","grass and trees bending in the wind"]},
+ "010":{zh:"坎",py:"Kǎn",s:"☵",hu:"víz",en:"water",q:["mély, veszélyes","deep, perilous"],f:["középső fiú","middle son"],a:["disznó","pig"],c:"#1e4fa0",sc:["mély, sötét, áramló víz","deep, dark, flowing water"]},
+ "001":{zh:"艮",py:"Gèn",s:"☶",hu:"hegy",en:"mountain",q:["nyugvó, megálló","still, stopping"],f:["legfiatalabb fiú","youngest son"],a:["kutya","dog"],c:"#8d8676",sc:["mozdulatlan, rétegzett hegyek","still, layered mountains"]},
+ "000":{zh:"坤",py:"Kūn",s:"☷",hu:"föld",en:"earth",q:["befogadó, odaadó","receptive, yielding"],f:["anya","mother"],a:["ökör","ox"],c:"#b08850",sc:["széles, megművelt föld","wide, cultivated earth"]}
 };
 const TRI_PAIRS=[["111","000"],["100","011"],["010","101"],["001","110"]];
 const POS=[
@@ -513,31 +520,109 @@ function mixAt(now){const el=(now-sceneStart)/1000,ph=el%7,k=ph<1.5?0:ph<4?(ph-1
    arm j at level n = isosceles 30-30-120 (P(n,j),P(n,j+1),P(n+1,j)) + equilateral (P(n,j+1),P(n+1,j),P(n+1,j+1)).
    yang: isosceles lit / equilateral shaded (mountain fold); yin: the reverse (valley fold). A changing line flips its arm. */
 const sp=$("#spid"),spx=sp.getContext("2d"),SPW=sp.width,LEV=8;let spTris=[];
+const SPV={mode:"2d",yaw:.35,pitch:.95};
+const SQ3=Math.sqrt(3);
+/* geometry in unit radius; s[j] in [-1,1] = fold sign of arm j; tw = twist per level (rad) */
+function spGeom(s,tw){
+  const V={},key=(n,j)=>n+","+((j%6+6)%6);
+  for(let n=0;n<=LEV;n++)for(let j=0;j<6;j++){const a=(-180+30*n+60*j)*Math.PI/180+tw*n,r=Math.pow(1/SQ3,n);V[key(n,j)]=[r*Math.cos(a),r*Math.sin(a),0];}
+  // relief: each arm pushes its inner crease up (yang) or down (yin), scaled by level size
+  for(let n=0;n<LEV;n++)for(let j=0;j<6;j++){const a=.2*Math.pow(1/SQ3,n)*s[j];
+    V[key(n,j+1)][2]+=a;V[key(n+1,j)][2]+=a;V[key(n,j)][2]-=a*.5;V[key(n+1,j+1)][2]-=a*.5;}
+  const T=[];
+  for(let n=0;n<LEV;n++)for(let j=0;j<6;j++){
+    T.push({k:[key(n,j),key(n,j+1),key(n+1,j)],arm:j,n,iso:true});
+    T.push({k:[key(n,j+1),key(n+1,j),key(n+1,j+1)],arm:j,n,iso:false});}
+  return {V,T,key};
+}
+function armSigns(e){const h=S.sel,t=target();return [0,1,2,3,4,5].map(j=>{let v=h.b[j]==="1"?1:-1;if(t&&S.chg[j])v*=Math.cos(Math.PI*e);return v;});}
+function twistAt(e){const h=S.sel,t=target();return ((yang(h)-3)*(1-e)+((t?yang(t):yang(h))-3)*e)*2.2*Math.PI/180;}
+function shade(hex,b){const n=parseInt(hex.slice(1),16),f=x=>Math.max(0,Math.min(255,Math.round(x)));
+  const r=n>>16,g=n>>8&255,bl=n&255;return b<1?`rgb(${f(r*b)},${f(g*b)},${f(bl*b)})`:`rgb(${f(r+(255-r)*(b-1))},${f(g+(255-g)*(b-1))},${f(bl+(255-bl)*(b-1))})`;}
 function drawSpidron(now,e){
   const h=S.sel,t=target();spx.clearRect(0,0,SPW,SPW);spTris=[];
-  const tw=((yang(h)-3)*(1-e)+((t||h)===h?yang(h)-3:yang(t)-3)*e)*2.2*Math.PI/180;
-  const R0=SPW*.47,C=SPW/2;
-  const P=(n,j)=>{const a=(-180+30*n+60*j)*Math.PI/180+tw*n,r=R0*Math.pow(1/Math.sqrt(3),n);return [C+r*Math.cos(a),C-r*Math.sin(a)];};
-  for(let n=0;n<LEV;n++)for(let j=0;j<6;j++){
-    let s=h.b[j]==="1"?1:-1;if(t&&S.chg[j])s*=Math.cos(Math.PI*e);
-    const tri=j<3?lo(h):up(h);
-    const iso=[P(n,j),P(n,(j+1)%6),P(n+1,j)],eq=[P(n,(j+1)%6),P(n+1,j),P(n+1,(j+1)%6)];
-    [[iso,s],[eq,-s]].forEach(([q,v])=>{spx.globalAlpha=1-n*.07;spx.beginPath();spx.moveTo(q[0][0],q[0][1]);spx.lineTo(q[1][0],q[1][1]);spx.lineTo(q[2][0],q[2][1]);spx.closePath();
-      spx.fillStyle=tri.c;spx.fill();spx.fillStyle=v>0?`rgba(255,255,255,${.45*v})`:`rgba(0,0,0,${-.4*v})`;spx.fill();
-      spx.strokeStyle=t&&S.chg[j]?COL.chg:"rgba(255,255,255,.7)";spx.lineWidth=t&&S.chg[j]?2:1;spx.stroke();spTris.push([q,j]);});
+  const s=armSigns(e),G=spGeom(s,twistAt(e)),C=SPW/2,SC=SPW*.45;
+  const col=j=>(j<3?lo(h):up(h)).c;
+  if(SPV.mode==="2d"){
+    for(const tr of G.T){const q=tr.k.map(k=>[C+G.V[k][0]*SC,C-G.V[k][1]*SC]),v=tr.iso?s[tr.arm]:-s[tr.arm];
+      spx.globalAlpha=1-tr.n*.07;spx.beginPath();spx.moveTo(q[0][0],q[0][1]);spx.lineTo(q[1][0],q[1][1]);spx.lineTo(q[2][0],q[2][1]);spx.closePath();
+      spx.fillStyle=col(tr.arm);spx.fill();spx.fillStyle=v>0?`rgba(255,255,255,${.45*v})`:`rgba(0,0,0,${-.4*v})`;spx.fill();
+      const c=t&&S.chg[tr.arm];spx.strokeStyle=c?COL.chg:"rgba(255,255,255,.7)";spx.lineWidth=c?2:1;spx.stroke();spTris.push([q,tr.arm]);}
+  }else{
+    const cy=Math.cos(SPV.yaw),sy=Math.sin(SPV.yaw),cp=Math.cos(SPV.pitch),spp=Math.sin(SPV.pitch);
+    const R={};for(const k in G.V){const [x,y,z]=G.V[k];const x1=x*cy-y*sy,y1=x*sy+y*cy,y2=y1*cp-z*spp,z2=y1*spp+z*cp;R[k]=[x1,y2,z2];}
+    const L=[-.45,.55,.7],ln=Math.hypot(...L);
+    const list=G.T.map(tr=>{const a=R[tr.k[0]],b=R[tr.k[1]],c=R[tr.k[2]];
+      const u=[b[0]-a[0],b[1]-a[1],b[2]-a[2]],w=[c[0]-a[0],c[1]-a[1],c[2]-a[2]];
+      let nx=u[1]*w[2]-u[2]*w[1],ny=u[2]*w[0]-u[0]*w[2],nz=u[0]*w[1]-u[1]*w[0];const m=Math.hypot(nx,ny,nz)||1;nx/=m;ny/=m;nz/=m;if(nz<0){nx=-nx;ny=-ny;nz=-nz;}
+      const lit=Math.max(0,(nx*L[0]+ny*L[1]+nz*L[2])/ln);return {tr,d:(a[2]+b[2]+c[2])/3,b:.45+.85*lit,q:[a,b,c].map(p=>[C+p[0]*SC,C-p[1]*SC])};});
+    list.sort((p,q)=>p.d-q.d);
+    for(const it of list){const q=it.q;spx.beginPath();spx.moveTo(q[0][0],q[0][1]);spx.lineTo(q[1][0],q[1][1]);spx.lineTo(q[2][0],q[2][1]);spx.closePath();
+      spx.fillStyle=shade(col(it.tr.arm),it.b);spx.fill();const c=t&&S.chg[it.tr.arm];spx.strokeStyle=c?COL.chg:"rgba(255,255,255,.35)";spx.lineWidth=c?1.6:.7;spx.stroke();}
+    spTris=list.slice().reverse().map(it=>[it.q,it.tr.arm]);
   }
-  spx.globalAlpha=1;
-  // line numbers at the outer edge
-  spx.fillStyle="#1a1d21";spx.font="600 22px ui-sans-serif,system-ui";spx.textAlign="center";spx.textBaseline="middle";
-  for(let j=0;j<6;j++){const a=(-150+60*j)*Math.PI/180;spx.fillText(String(j+1),C+(R0*.866+0)*Math.cos(a)*1.0,C-(R0*.866)*Math.sin(a)*1.0);}
+  if(SPV.mode==="2d"){spx.fillStyle="#1a1d21";spx.font="600 22px ui-sans-serif,system-ui";spx.textAlign="center";spx.textBaseline="middle";
+    for(let j=0;j<6;j++){const a=(-150+60*j)*Math.PI/180;spx.fillText(String(j+1),C+SC*.82*Math.cos(a),C-SC*.82*Math.sin(a));}}
 }
 function inTri(p,q){const d=(a,b,c)=>(a[0]-c[0])*(b[1]-c[1])-(b[0]-c[0])*(a[1]-c[1]);const d1=d(p,q[0],q[1]),d2=d(p,q[1],q[2]),d3=d(p,q[2],q[0]);
   return !((d1<0||d2<0||d3<0)&&(d1>0||d2>0||d3>0));}
-sp.addEventListener("click",ev=>{const r=sp.getBoundingClientRect(),p=[(ev.clientX-r.left)*SPW/r.width,(ev.clientY-r.top)*SPW/r.height];
+let spDrag=null;
+sp.addEventListener("pointerdown",ev=>{spDrag={x:ev.clientX,y:ev.clientY,yaw:SPV.yaw,pitch:SPV.pitch,moved:false};sp.setPointerCapture(ev.pointerId);});
+sp.addEventListener("pointermove",ev=>{if(!spDrag||SPV.mode!=="3d")return;const dx=ev.clientX-spDrag.x,dy=ev.clientY-spDrag.y;
+  if(Math.abs(dx)+Math.abs(dy)>4)spDrag.moved=true;SPV.yaw=spDrag.yaw+dx*.01;SPV.pitch=Math.max(0,Math.min(1.45,spDrag.pitch+dy*.01));});
+sp.addEventListener("pointerup",ev=>{const d=spDrag;spDrag=null;if(!d||d.moved)return;
+  const r=sp.getBoundingClientRect(),p=[(ev.clientX-r.left)*SPW/r.width,(ev.clientY-r.top)*SPW/r.height];
   const hit=spTris.find(([q])=>inTri(p,q));if(hit){S.chg[hit[1]]=S.chg[hit[1]]?0:1;renderPanel();}});
+document.querySelectorAll("[data-spmode]").forEach(b=>b.addEventListener("click",()=>{SPV.mode=b.dataset.spmode;
+  document.querySelectorAll("[data-spmode]").forEach(x=>x.classList.toggle("on",x===b));sp.style.cursor=SPV.mode==="3d"?"grab":"pointer";}));
+
+/* ---------- downloads ---------- */
+function download(name,text,type){const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;
+  document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500);}
+/* fold pattern: flat (no twist), mm units; mountain = red dashed, valley = blue dash-dot, between arms = grey dotted, outline = cut */
+function foldSVG(){
+  const h=S.sel,s=[0,1,2,3,4,5].map(j=>h.b[j]==="1"?1:-1),G=spGeom(s,0),R=88,C=100;
+  const P=k=>[C+G.V[k][0]*R,C-G.V[k][1]*R],seen=new Set(),E=[];
+  const add=(a,b,type)=>{const id=[a,b].sort().join("|");if(seen.has(id))return;seen.add(id);E.push([P(a),P(b),type]);};
+  for(let n=0;n<LEV;n++)for(let j=0;j<6;j++){const k=G.key,m=s[j]>0;
+    if(n===0)add(k(0,j),k(0,j+1),"cut");
+    add(k(n,j+1),k(n+1,j),m?"M":"V");          // crease inside the arm
+    add(k(n+1,j),k(n+1,j+1),m?"V":"M");        // crease to the next level
+    add(k(n,j),k(n+1,j),"G");}                  // border to the neighbouring arm
+  const st={cut:'stroke="#000" stroke-width="0.4"',M:'stroke="#dc2626" stroke-width="0.35" stroke-dasharray="2.2 1.2"',
+    V:'stroke="#2563eb" stroke-width="0.35" stroke-dasharray="2.2 0.8 0.5 0.8"',G:'stroke="#9ca3af" stroke-width="0.25" stroke-dasharray="0.6 0.9"'};
+  const f=x=>x.toFixed(2);
+  return `<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="200mm" height="230mm" viewBox="0 0 200 230">
+<title>${h.n}. ${h.zh} ${h.py} – spidron fold pattern</title>
+<rect width="200" height="230" fill="#fff"/>
+${E.map(([a,b,t])=>`<line x1="${f(a[0])}" y1="${f(a[1])}" x2="${f(b[0])}" y2="${f(b[1])}" ${st[t]}/>`).join("\n")}
+<g font-family="Georgia,serif" font-size="5" fill="#1a1d21">
+<text x="10" y="205">${h.n}. ${h.zh} ${h.py} – ${esc(h.en)} / ${esc(h.hu)}   ${up(h).s} ${up(h).zh} / ${lo(h).s} ${lo(h).zh}</text>
+<text x="10" y="213" font-size="3.6"><tspan fill="#dc2626">– – hegyhajtás / mountain (jang)</tspan>   <tspan fill="#2563eb">–·– völgyhajtás / valley (jin)</tspan>   <tspan fill="#6b7280">··· karhatár / arm border</tspan>   ── vágás / cut</text>
+<text x="10" y="220" font-size="3.2" fill="#6b7280">Kar 1–6 = vonal 1–6 (alulról), az óramutatóval ellentétesen a bal alsó kartól. Kísérleti minta: próbahajtogatás szükséges.</text>
+<text x="10" y="225" font-size="3.2" fill="#6b7280">Arms 1–6 = lines 1–6, counter-clockwise from lower left. Experimental pattern: test-fold first.</text>
+</g>
+</svg>`;
+}
+function sceneJSON(){
+  const h=S.sel,t=target(),tri=x=>({zh:x.zh,pinyin:x.py,symbol:x.s,image:{hu:x.hu,en:x.en},quality:{hu:x.q[0],en:x.q[1]},family:{hu:x.f[0],en:x.f[1]},animal:{hu:x.a[0],en:x.a[1]},scene:{hu:x.sc[0],en:x.sc[1]},color:x.c});
+  const hx=x=>({number:x.n,zh:x.zh,pinyin:x.py,name:{hu:x.hu,en:x.en},lines_bottom_to_top:x.b,codon:codon(x),amino_acid:AA[aaOf(x)][2],upper:tri(up(x)),lower:tri(lo(x)),judgment:{zh:x.j,hu:x.hj,en_legge_1882:x.lj}});
+  const chg=S.chg.map((c,k)=>c?{line:k+1,position:{hu:POS[k][0],en:POS[k][1]},from:h.b[k]==="1"?"yang":"yin",to:h.b[k]==="1"?"yin":"yang",text:{zh:h.y[k],hu:h.hy[k],en_legge_1882:h.ll[k]}}:null).filter(Boolean);
+  const U=up(h),D=lo(h);
+  let en=`A two-layer scene: above, ${U.sc[1]}; below, ${D.sc[1]}. Mood: inside ${D.q[1]}, outside ${U.q[1]}.`,hu=`Kétrétegű jelenet: fent ${U.sc[0]}; lent ${D.sc[0]}. Hangulat: belül ${D.q[0]}, kívül ${U.q[0]}.`;
+  if(t){en+=` Over time it transforms: above becomes ${up(t).sc[1]}, below becomes ${lo(t).sc[1]}.`;hu+=` Idővel átalakul: fent ${up(t).sc[0]}, lent ${lo(t).sc[0]} lesz.`;}
+  return JSON.stringify({generator:"iching.html – The Space of Changes",note:"Generated layer from trigram images and line positions; the classical text is quoted separately.",
+    hexagram:hx(h),changing_lines:chg,becomes:t?hx(t):null,
+    path:t?pathOf().map(p=>p.zh):null,
+    prompt:{hu,en}},null,2);
+}
+$("#dl-svg").addEventListener("click",()=>download(`iching-${String(S.sel.n).padStart(2,"0")}-spidron.svg`,foldSVG(),"image/svg+xml"));
+$("#dl-json").addEventListener("click",()=>download(`iching-${String(S.sel.n).padStart(2,"0")}${target()?"-"+String(target().n).padStart(2,"0"):""}-scene.json`,sceneJSON(),"application/json"));
+
 function renderSpCap(){$("#spcap").innerHTML=T(
- `<b>Hat kar = hat vonal.</b> A spidron egyenlő oldalú és 30–30–120°-os egyenlő szárú háromszögek láncából álló spirál; a hatszögben hat ilyen kar fut befelé, szintenként 1/√3-szorosára kicsinyedve. Az 1–3. kar (lent) az alsó, a 4–6. (fent) a felső trigram, annak színével. <b>Jang</b> = hegyhajtás (a szárú háromszög világos), <b>jin</b> = völgyhajtás (fordítva). A változó vonal karja átfordul, és az egész csavarodása a jang vonalak számával változik – ahogy a valódi spidron-dombormű is elfordul, ha összenyomják. Kattints egy karra: az a vonal változóvá válik.`,
- `<b>Six arms = six lines.</b> A spidron is a spiral chain of equilateral and 30–30–120° isosceles triangles; in the hexagon six such arms run inward, shrinking by 1/√3 per level. Arms 1–3 (bottom) are the lower trigram, 4–6 (top) the upper, in its colour. <b>Yang</b> = mountain fold (isosceles triangle lit), <b>yin</b> = valley fold (the reverse). A changing line flips its arm, and the twist of the whole follows the number of yang lines – as a real spidron relief rotates when compressed. Click an arm: that line becomes changing.`);}
+ `<b>Hat kar = hat vonal.</b> A spidron egyenlő oldalú és 30–30–120°-os egyenlő szárú háromszögek láncából álló spirál; a hatszögben hat ilyen kar fut befelé, szintenként 1/√3-szorosára kicsinyedve. Az 1–3. kar (lent) az alsó, a 4–6. (fent) a felső trigram, annak színével. <b>Jang</b> = hegyhajtás (a szárú háromszög világos), <b>jin</b> = völgyhajtás (fordítva). A változó vonal karja átfordul, és az egész csavarodása a jang vonalak számával változik – ahogy a valódi spidron-dombormű is elfordul, ha összenyomják. Kattints egy karra: az a vonal változóvá válik. A <b>3D dombormű</b> húzással forgatható; ez szemléltető magasságtérkép, nem méretpontos hajtogatás. A <b>hajtogatási minta</b> a kiválasztott hexagram hegy- és völgyhajtásait adja ki nyomtatható SVG-ben (kísérleti: érdemes próbahajtogatni).`,
+ `<b>Six arms = six lines.</b> A spidron is a spiral chain of equilateral and 30–30–120° isosceles triangles; in the hexagon six such arms run inward, shrinking by 1/√3 per level. Arms 1–3 (bottom) are the lower trigram, 4–6 (top) the upper, in its colour. <b>Yang</b> = mountain fold (isosceles triangle lit), <b>yin</b> = valley fold (the reverse). A changing line flips its arm, and the twist of the whole follows the number of yang lines – as a real spidron relief rotates when compressed. Click an arm: that line becomes changing. The <b>3D relief</b> rotates by dragging; it is an illustrative height map, not a dimensionally exact fold. The <b>fold pattern</b> exports the selected hexagram's mountain and valley folds as a printable SVG (experimental: test-fold first).`);}
 function sceneLoop(now){
   const h=S.sel,t=target();sx.clearRect(0,0,SW,SH);
   if(!t){paintHex(h,now,1);}
