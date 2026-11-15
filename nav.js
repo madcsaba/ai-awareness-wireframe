@@ -22,6 +22,7 @@
     "story.html": ["story.html", "story.html"],
     "beyond-the-chatbox.html": ["beyond-the-chatbox.html", "beyond-the-chatbox.html"],
     "start.html": ["start.html", "start.html"],
+    "iching.html": ["iching.html", "iching.html"],
     "eco-feedback.html": ["eco-feedback.html", "eco-feedback-hu.html"],
     "eco-feedback-hu.html": ["eco-feedback.html", "eco-feedback-hu.html"],
     "petition.html": ["petition.html", "petition-hu.html"],
