@@ -52,6 +52,7 @@
       cloud0: "0 kWh cloud", recommended: "Recommended", deflt: "Default",
       language: "Language", theme: "Theme", auto: "Auto", nudges: "Pre-send nudges",
       install: "📲 Install app", loadDemo: "Load demo data (60 days)", reset: "Delete all my data",
+      updateAvailable: "↻ Update available",
       resetConfirm: "Delete all chats and footprint data on this device?",
       disclaimer: "Demo app: replies are simulated. Energy, time and cost are illustrative estimates per request (≈400 g CO₂/kWh). Everything is stored only on this device.",
       backToPack: "← Back to the wireframe pack",
@@ -119,6 +120,7 @@
       cloud0: "0 kWh felhő", recommended: "Ajánlott", deflt: "Alapértelmezett",
       language: "Nyelv", theme: "Téma", auto: "Auto", nudges: "Küldés előtti javaslatok",
       install: "📲 Alkalmazás telepítése", loadDemo: "Demó adatok betöltése (60 nap)", reset: "Minden adatom törlése",
+      updateAvailable: "↻ Frissítés elérhető",
       resetConfirm: "Törlöd az összes beszélgetést és lábnyom-adatot erről az eszközről?",
       disclaimer: "Demó alkalmazás: a válaszok szimuláltak. Az energia, idő és költség kérésenkénti szemléltető becslés (≈400 g CO₂/kWh). Minden adat csak ezen az eszközön tárolódik.",
       backToPack: "← Vissza a wireframe csomaghoz",
@@ -852,8 +854,63 @@
     deferredPrompt.userChoice.finally(function () { deferredPrompt = null; $("installBtn").hidden = true; });
   });
   window.addEventListener("appinstalled", function () { $("installBtn").hidden = true; });
+
+  /* ---------- Frissítés: új verzió érhető el ---------- */
+  /* A service worker az install után megvár, hogy a felhasználó jóváhagyja
+   * a verzióváltást. Ez a gomb jelzi a frissítést, és csak utána indul el
+   * az új verzió (a controllerchange újratölti az oldalt). */
   if ("serviceWorker" in navigator && location.protocol !== "file:") {
-    window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
+    var frissitesGomb = $("updateBtn");
+    var frissitesPending = false;
+
+    var frissitesElerheto = function () {
+      frissitesPending = true;
+      if (frissitesGomb) frissitesGomb.hidden = false;
+    };
+
+    // a már várakozó service worker (pl. egy korábbi látogatás után)
+    navigator.serviceWorker.getRegistration().then(function (r) {
+      if (r && r.waiting && navigator.serviceWorker.controller) frissitesElerheto();
+    });
+
+    // a böngésző csak időszakosan ellenőrzi az új verziót – szóljunk neki
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js").then(function (reg) {
+        try { reg.update(); } catch (e) {}
+      }).catch(function () {});
+      // időszakos ellenőrzés (a böngésző 24 óránként frissít automatikusan)
+      setInterval(function () { try { reg.update(); } catch (e) {} }, 60 * 60 * 1000);
+    });
+
+    navigator.serviceWorker.addEventListener("controllerchange", function () {
+      if (!frissitesPending) return;
+      frissitesPending = false;
+      location.reload();
+    });
+
+    /* Az `updatefound` a REGISZTRÁCIÓN tűzel (nem a containeren) – ezért
+     * a `ready` promise-en keresztül vesszük meg a regisztrációt. */
+    navigator.serviceWorker.ready.then(function (reg) {
+      var jelez = function (sw) {
+        if (!sw) return;
+        sw.addEventListener("statechange", function () {
+          if (sw.state === "installed" && navigator.serviceWorker.controller) frissitesElerheto();
+        });
+      };
+      reg.addEventListener("updatefound", function () { jelez(reg.installing); });
+      // ha egy korábbi látogatásból már várakozik egy új verzió
+      jelez(reg.waiting);
+      if (reg.waiting && navigator.serviceWorker.controller) frissitesElerheto();
+    }).catch(function () {});
+
+    if (frissitesGomb) {
+      frissitesGomb.addEventListener("click", function () {
+        navigator.serviceWorker.getRegistration().then(function (r) {
+          if (r && r.waiting) r.waiting.postMessage({ type: "SKIP_WAITING" });
+        }).catch(function () {});
+        frissitesGomb.hidden = true;
+      });
+    }
   }
 
   /* ------------------------------------------------------------------ *
