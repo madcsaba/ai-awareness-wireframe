@@ -14,7 +14,7 @@
  *     stale-while-revalidate – ezek ritkán változnak, és gyorsan kell
  *     betöltődniük.
  */
-var CACHE = "ecoai-v6";
+var CACHE = "ecoai-v7";
 var SHELL = ["./", "index.html", "app.css", "app.js", "manifest.webmanifest",
   "icons/icon.svg", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png", "icons/apple-touch-icon.png", "fonts/inter-latin-wght-normal.woff2", "fonts/inter-latin-ext-wght-normal.woff2"];
 
@@ -46,17 +46,22 @@ self.addEventListener("message", function (e) {
 self.addEventListener("fetch", function (e) {
   if (e.request.method !== "GET" || new URL(e.request.url).origin !== location.origin) return;
   var url = new URL(e.request.url);
+  var navigacio = e.request.mode === "navigate";
+  var frissKell = navigacio || mindigFriss(url);
   e.respondWith(caches.open(CACHE).then(function (c) {
     return c.match(e.request, { ignoreSearch: true }).then(function (hit) {
-      var net = fetch(e.request).then(function (res) {
+      // A kódot és a navigációt `no-store`-ral kérjük: a GitHub Pages 10
+      // perces HTTP cache-e (max-age=600) különben megelőzné a frissítést,
+      // és a felhasználó a régi appot kapná újratöltés után is.
+      var net = fetch(e.request, frissKell ? { cache: "no-store" } : undefined).then(function (res) {
         if (res && res.ok) c.put(e.request, res.clone());
         return res;
       }).catch(function () {
         // offline: a gyorsítótárazott shellt adjuk vissza
-        return hit || (e.request.mode === "navigate" ? c.match("index.html") : undefined);
+        return hit || (navigacio ? c.match("index.html") : undefined);
       });
       // a kód és a navigáció: hálózat-először (friss app), offline a cache
-      if (mindigFriss(url) || e.request.mode === "navigate") return net;
+      if (frissKell) return net;
       return hit || net;
     });
   }));
