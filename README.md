@@ -43,6 +43,11 @@ Majd / then: http://localhost:8000
 - **`nav.js`:** közös felső sáv és nyelvváltó; a `MAP` rendeli össze a nyelvi párokat.
 - **Stílus:** minden CSS/JS inline, rendszerfontok, nincs CDN és nincs követés (kivéve a két átvett kampányoldalt).
 - **`app/`:** külön PWA saját service workerrel (`sw.js`) és helyben tárolt Inter fonttal.
+  Az új verzió **nem cseréli ki magát észrevétlenül**: a service worker megvárja, hogy a
+  felhasználó a „↻ Frissítés elérhető" gombra kattintson (a `sw.js` `SKIP_WAITING` üzenete
+  után aktiválódik, majd az oldal újratölt). A kód és a navigáció hálózat-first, a statikus
+  assetek cache-first; a `CACHE` verziót (`ecoai-vN`) a shell-lista vagy a logika változásakor
+  kell emelni.
 - **`.claude/skills/projekt-indito/`:** Claude Code skill új projektek energiatakarékos indításához.
 
 Fejlesztési szabályok: [`CLAUDE.md`](CLAUDE.md). Közzététel: GitHub Pages a `main` ágról.
