@@ -22,7 +22,7 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
 <style>
   :root{--bg:#f6f7f9;--panel:#fff;--line:#e3e6ea;--ink:#1a1d21;--dim:#6b7280;
     --acc:#2563eb;--green:#16a34a;--amber:#d97706;--red:#dc2626;
-    --anthropic:#d97757;--openai:#10a37f;--google:#4285f4;--local:#16a34a;--deepseek:#4d6bfe;
+    --anthropic:#d97757;--openai:#10a37f;--google:#4285f4;--local:#16a34a;--deepseek:#4d6bfe;--opencode:#0f172a;
     --display:ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial;
     --mono:ui-monospace,SFMono-Regular,Menlo,monospace}
   *{box-sizing:border-box}
@@ -37,6 +37,7 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     color:#fff;font-size:11px;font-weight:800;flex:0 0 auto;vertical-align:-3px}
   .logo.anthropic{background:var(--anthropic)}.logo.openai{background:var(--openai)}
   .logo.google{background:var(--google)}.logo.local{background:var(--local)}.logo.deepseek{background:var(--deepseek)}
+  .logo.opencode{background:var(--opencode)}
 
   /* 1 · chips */
   .chips{display:flex;gap:8px;flex-wrap:wrap}
@@ -87,7 +88,22 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   .bar{height:7px;border-radius:99px;background:#eceff3;overflow:hidden;margin-top:9px;display:flex}
   .bar i{display:block;height:100%}
 
-  /* 4 · table */
+  /* 4 · OpenCode választó – színezett kezdőmondatokkal */
+  .oc{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--c,var(--acc));
+    border-radius:0 14px 14px 0;padding:16px 18px;margin-bottom:12px}
+  .oc .lead{display:flex;align-items:center;gap:8px;margin:0 0 7px;font-size:15px;font-weight:800;
+    color:var(--c,var(--acc));letter-spacing:-.01em}
+  .oc .lead .logo{width:20px;height:20px}
+  .oc p{margin:0;font-size:13.5px;color:var(--dim);line-height:1.6}
+  .oc b{color:var(--ink)}
+  .oc .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+  .oc .tg{font:11.5px var(--mono);background:#f1f4f8;border:1px solid var(--line);border-radius:8px;
+    padding:4px 9px;color:#334155;white-space:nowrap}
+  .oc.free{--c:var(--green)}.oc.oai{--c:var(--openai)}.oc.gog{--c:var(--google)}.oc.hint{--c:var(--amber)}
+  .oc code{font:12px var(--mono);background:#f1f4f8;border:1px solid var(--line);border-radius:6px;
+    padding:1px 5px;color:#334155;white-space:nowrap}
+
+  /* 5 · table */
   .tbl-wrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px}
   table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:640px}
   th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
@@ -97,7 +113,7 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   .pill{font-size:11px;border-radius:99px;padding:2px 9px;background:#eef1f5;color:var(--dim);white-space:nowrap}
   .pill.g{background:#e7f7ed;color:var(--green)}.pill.a{background:#fdf3e3;color:var(--amber)}
 
-  /* 5 · rules */
+  /* 6 · rules */
   .rules{display:grid;gap:11px}
   @media(min-width:700px){.rules{grid-template-columns:1fr 1fr}}
   .rule{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--green);
@@ -105,7 +121,7 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   .rule b{display:block;margin-bottom:3px}
   .rule span{color:var(--dim);font-size:13px}
 
-  /* 6 · warnings */
+  /* 7 · warnings */
   .warn{background:#fdf8ee;border:1px solid #f3ddb6;border-radius:14px;padding:18px 20px}
   .warn li{margin:9px 0;font-size:14px}
   .warn b{color:#9a5b12}
@@ -414,8 +430,77 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     </div>
   </details>
 
-  <!-- 4 · TABLE -->
-  <h2><span class="hu">4 · Összehasonlítás egy lapon</span><span class="en">4 · Side-by-side comparison</span></h2>
+  <!-- 4 · OPENCODE VÁLASZTÓ -->
+  <h2><span class="hu">4 · Mit válassz OpenCode-ban?</span><span class="en">4 · What to pick in OpenCode?</span></h2>
+
+  <div class="oc free">
+    <p class="lead"><span class="logo opencode">◉</span>
+      <span class="hu">Ingyenes: az OpenCode beépített modelljei</span>
+      <span class="en">Free: OpenCode's built-in models</span></p>
+    <p>
+      <span class="hu"><b>Ha nincs előfizetésed, ez a leggyorsabb kezdés:</b> a <code>opencode/…-free</code> modellek API-kulcs nélkül is mennek. Napi kérdésre, összefoglalóra, könnyű kódolásra elegendők — nagy, összetett feladatnál inkább egy fizetős modell kell.</span>
+      <span class="en"><b>No subscription? Fastest way to start:</b> the <code>opencode/…-free</code> models run without an API key. Enough for everyday questions, summaries and light coding — big, complex jobs need a paid model.</span>
+    </p>
+    <div class="tags">
+      <span class="tg">deepseek-v4.1-flash-free</span>
+      <span class="tg">glm-5.3-flash-free</span>
+      <span class="tg">mimo-v2.6-flash-free</span>
+      <span class="tg">nemotron-3.5-super-vl-free</span>
+      <span class="tg">longcat-2.5-free</span>
+      <span class="tg">beam-free</span>
+      <span class="tg">hy4-flash-free</span>
+    </div>
+  </div>
+
+  <div class="oc oai">
+    <p class="lead"><span class="logo openai">O</span>
+      <span class="hu">OpenAI Pro csomaggal: a GPT-6.1 család</span>
+      <span class="en">With an OpenAI plan: the GPT-6.1 family</span></p>
+    <p>
+      <span class="hu"><b>A ChatGPT-csomagodat terheli, nem külön API-számlát</b> (a /connect → OpenAI → „Sign in with ChatGPT” után). Nehéz feladatra a <b>GPT-6.1 Sol</b> vagy <b>Terra</b> (500 000 tokenes kontextus), gyors lépésre a <b>GPT-6 Luna / Astra</b>, általános munkára a <b>GPT-5.5</b>.</span>
+      <span class="en"><b>It bills your ChatGPT plan, not a separate API account</b> (after /connect → OpenAI → “Sign in with ChatGPT”). For hard tasks <b>GPT-6.1 Sol</b> or <b>Terra</b> (500,000-token context), for quick steps <b>GPT-6 Luna / Astra</b>, for general work <b>GPT-5.5</b>.</span>
+    </p>
+    <div class="tags">
+      <span class="tg">openai/gpt-6.1-sol</span>
+      <span class="tg">openai/gpt-6.1-terra</span>
+      <span class="tg">openai/gpt-6-luna</span>
+      <span class="tg">openai/gpt-6-astra</span>
+      <span class="tg">openai/gpt-5.5</span>
+    </div>
+  </div>
+
+  <div class="oc gog">
+    <p class="lead"><span class="logo google">G</span>
+      <span class="hu">Gemini-hozzáféréssel: Gemini 4 és a Flash család</span>
+      <span class="en">With Gemini access: Gemini 4 and the Flash family</span></p>
+    <p>
+      <span class="hu"><b>Google AI Studio API-kulccsal</b> a nehéz elemzéshez és hosszú dokumentumhoz a <b>Gemini 4 Hydrogen</b>, a napi gyors válaszhoz a <b>Gemini 3.8 Flash</b>, a címkézéshez és rövid összefoglaláshoz a <b>Gemini 3.5 Flash Lite</b> a jó választás.</span>
+      <span class="en"><b>With a Google AI Studio API key</b>, pick <b>Gemini 4 Hydrogen</b> for hard analysis and long documents, <b>Gemini 3.8 Flash</b> for quick everyday answers, and <b>Gemini 3.5 Flash Lite</b> for tagging and short summaries.</span>
+    </p>
+    <div class="tags">
+      <span class="tg">google/gemini-4-hydrogen</span>
+      <span class="tg">google/gemini-3.8-flash</span>
+      <span class="tg">google/gemini-3.5-flash-lite</span>
+    </div>
+  </div>
+
+  <div class="oc hint">
+    <p class="lead"><span class="logo opencode" style="background:var(--amber)">!</span>
+      <span class="hu">Jó tudni: a választás nem végleges</span>
+      <span class="en">Good to know: your choice isn't final</span></p>
+    <p>
+      <span class="hu">A <b>/models</b> paranccsal bármikor válthatsz. Tartsd az <a href="#rules" style="color:var(--amber)">5 szabályt</a>: előbb a kis vagy ingyenes modell, csak ha elakad, lépj feljebb. Érzékeny adatnál helyi modell vagy anonimizálás előbb.</span>
+      <span class="en">Switch any time with the <b>/models</b> command. Keep the <a href="#rules" style="color:var(--amber)">five rules</a>: small or free first, step up only when it struggles. For sensitive data, use a local model or anonymize first.</span>
+    </p>
+    <div class="tags">
+      <span class="tg">/connect</span>
+      <span class="tg">/models</span>
+      <span class="tg">/mcps</span>
+    </div>
+  </div>
+
+  <!-- 5 · TABLE -->
+  <h2 id="comparison"><span class="hu">5 · Összehasonlítás egy lapon</span><span class="en">5 · Side-by-side comparison</span></h2>
   <div class="tbl-wrap">
     <table>
       <thead><tr>
@@ -466,8 +551,8 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     </table>
   </div>
 
-  <!-- 5 · RULES -->
-  <h2><span class="hu">5 · Öt szabály, ami 90%-ban elég</span><span class="en">5 · Five rules that cover 90% of cases</span></h2>
+  <!-- 6 · RULES -->
+  <h2 id="rules"><span class="hu">6 · Öt szabály, ami 90%-ban elég</span><span class="en">6 · Five rules that cover 90% of cases</span></h2>
   <div class="rules">
     <div class="rule"><b><span class="hu">1 · Ha 3 mondatnál rövidebb a válasz, elég a kis modell.</span><span class="en">1 · If the answer fits in 3 sentences, use the small model.</span></b>
       <span><span class="hu">A legtöbb napi kérdés ide tartozik.</span><span class="en">Most everyday questions land here.</span></span></div>
@@ -481,8 +566,8 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
       <span><span class="hu">A kényelem nem éri meg az adatszivárgást.</span><span class="en">Convenience isn't worth a data leak.</span></span></div>
   </div>
 
-  <!-- 6 · WARNINGS -->
-  <h2><span class="hu">6 · Gyakori tévhitek</span><span class="en">6 · Common myths</span></h2>
+  <!-- 7 · WARNINGS -->
+  <h2><span class="hu">7 · Gyakori tévhitek</span><span class="en">7 · Common myths</span></h2>
   <div class="warn">
     <ul>
       <li><b><span class="hu">„A nagy modell mindig pontosabb."</span><span class="en">“The big model is always more accurate.”</span></b>
