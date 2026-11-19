@@ -17,14 +17,16 @@ Megnézéshez: `python3 -m http.server`, majd böngésző.
    `null` = nincs fordítás. A „Minden oldal” menüben a `groups` megfelelő csoportjába kerüljön
    (Próbáld ki / Olvasd el / Vegyél részt / Design referenciák); az `items` fő sávban csoportonként csak egy elem van.
 3. **`index.html`:** kártya a főoldalon, ugyanabba a szekcióba, mint a menüben (`<a class="card">`, HU/EN szöveggel).
-   „új” címke csak a legfrissebb oldalon legyen; egyetlen hero (az app) van, újabb `wide` kártyát ne tegyél.
+   „új” címke (`.badge`) csak a legfrissebb oldalon legyen. A főoldal felépítése: sötét hero (cím + álló videó),
+   infografika, app-kiemelés, majd a négy szekció kártyái; újabb herót vagy kiemelt blokkot ne tegyél.
+   Ikonok: a főoldal tetején lévő SVG `<symbol>` készletből (`<svg class="ic"><use href="#i-…"/></svg>`), emoji nélkül.
 4. **Fejléc:** `<script src="nav.js" defer></script>` a `<head>`-ben, plusz `<title>`,
    `description`, és `og:*` meta (`og:url` a teljes Pages-URL, `og:image` → `og.png`).
    Mintának a `petition.html` / `petition-hu.html` a legrövidebb.
 
 ## Stílus
 
-- **Nincs külső betűtípus, CDN, tracking.** Rendszerfontok:
+- **Nincs külső betűtípus, CDN, tracking.** A főoldal a helyben tárolt Inter-t használja (`app/fonts/`); a többi oldal rendszerfontot:
   `ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial`, címekhez `Georgia` serif.
   Az `app/` saját Inter fontot használ az `app/fonts/` mappából (helyben tárolva, OFL).
 - Minden CSS/JS inline az oldalban; színek `:root` változókban

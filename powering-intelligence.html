@@ -3867,37 +3867,37 @@ main{color-scheme:light}
     /* fő sáv: csoportonként a legfontosabb oldal (ugyanaz a logika, mint a főoldalon) */
     var items = [
       ["home", hu ? "Főoldal" : "Home", "index.html"],
-      ["app", "🌿 " + (hu ? "App" : "App"), "app/"],
-      ["models", "🧠 " + (hu ? "Modellek" : "Models"), "models.html"],
-      ["petition", "✍️ " + (hu ? "Petíció" : "Petition"), hu ? "petition-hu.html" : "petition.html"]
+      ["app", "App", "app/"],
+      ["models", (hu ? "Modellek" : "Models"), "models.html"],
+      ["petition", (hu ? "Petíció" : "Petition"), hu ? "petition-hu.html" : "petition.html"]
     ];
     /* minden oldal, ugyanabban a 4 csoportban, mint az index.html: [ikon, HU, EN, EN-fájl, HU-fájl, nyelv] */
     var groups = [
       [hu ? "Próbáld ki" : "Try it", [
-        ["🌿", "EcoAI app", "EcoAI app", "app/", "app/", "HU/EN"],
-        ["🖥️", "Asztali wireframe", "Desktop wireframe", "index-en.html", "hu.html", "HU/EN"],
-        ["📱", "Mobil app wireframe", "Mobile app wireframe", "mobile-app.html", "mobile-app-hu.html", "HU/EN"],
-        ["✨", "Eco-feedback", "Eco-feedback", "eco-feedback.html", "eco-feedback-hu.html", "HU/EN"]]],
+         ["", "EcoAI app", "EcoAI app", "app/", "app/", "HU/EN"],
+         ["", "Asztali wireframe", "Desktop wireframe", "index-en.html", "hu.html", "HU/EN"],
+         ["", "Mobil app wireframe", "Mobile app wireframe", "mobile-app.html", "mobile-app-hu.html", "HU/EN"],
+         ["", "Eco-feedback", "Eco-feedback", "eco-feedback.html", "eco-feedback-hu.html", "HU/EN"]]],
       [hu ? "Olvasd el" : "Read", [
-        ["💬", "Túl a chatablakon", "Beyond the chatbox", "beyond-the-chatbox.html", "beyond-the-chatbox.html", "HU/EN"],
-        ["🧠", "Melyik modellt használd?", "Which model to use?", "models.html", "models.html", "HU/EN"],
-        ["🚀", "Hogyan kezdj bele", "How to get started", "start.html", "start.html", "HU/EN"],
-        ["📖", "A projekt története", "The story", "story.html", "story.html", "HU/EN"]]],
+         ["", "Túl a chatablakon", "Beyond the chatbox", "beyond-the-chatbox.html", "beyond-the-chatbox.html", "HU/EN"],
+         ["", "Melyik modellt használd?", "Which model to use?", "models.html", "models.html", "HU/EN"],
+         ["", "Hogyan kezdj bele", "How to get started", "start.html", "start.html", "HU/EN"],
+         ["", "A projekt története", "The story", "story.html", "story.html", "HU/EN"]]],
       [hu ? "Vegyél részt" : "Take part", [
-        ["✍️", "Petíció", "Petition", "petition.html", "petition-hu.html", "HU/EN"],
-        ["🖱️", "The Weight of a Click", "The Weight of a Click", "the-weight-of-a-click.html", "the-weight-of-a-click-hu.html", "HU/EN"],
-        ["⚡", "Prezentáció", "Presentation", "powering-intelligence.html", "powering-intelligence-hu.html", "HU/EN"],
-        ["🎧", "Előadások és média", "Talks & media", "media.html", "media.html", "HU/EN"]]],
+         ["", "Petíció", "Petition", "petition.html", "petition-hu.html", "HU/EN"],
+         ["", "The Weight of a Click", "The Weight of a Click", "the-weight-of-a-click.html", "the-weight-of-a-click-hu.html", "HU/EN"],
+         ["", "Prezentáció", "Presentation", "powering-intelligence.html", "powering-intelligence-hu.html", "HU/EN"],
+         ["", "Előadások és média", "Talks & media", "media.html", "media.html", "HU/EN"]]],
       [hu ? "Design referenciák" : "Design references", [
-        ["📊", "Social graphic", "Social graphic", "social-graphic/Social.dc.html", "social-graphic/Social.dc.html", "EN"],
-        ["📄", "One-pager", "One-pager", "one-pager/Main.dc.html", "one-pager/Main.dc.html", "EN"]]]
+         ["", "Social graphic", "Social graphic", "social-graphic/Social.dc.html", "social-graphic/Social.dc.html", "EN"],
+         ["", "One-pager", "One-pager", "one-pager/Main.dc.html", "one-pager/Main.dc.html", "EN"]]]
     ];
     var cur = M[hu ? 1 : 0] || key;
     function isCur(f) { return f === cur || f.split("/").pop() === key || (f === "app/" && key === "app"); }
     var inBar = items.some(function (it) { return it[0] !== "home" && isCur(it[2]); }) || key === "index.html";
 
     var html =
-      '<a class="eh" href="' + u("index.html") + '"><span class="elogo">🌿</span> EcoAI</a>' +
+      '<a class="eh" href="' + u("index.html") + '"><span class="elogo"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></svg></span> EcoAI</a>' +
       '<nav class="enav">' +
       items.map(function (it) {
         var active = it[0] === "home" ? key === "index.html" : isCur(it[2]);
@@ -3908,7 +3908,7 @@ main{color-scheme:light}
       groups.map(function (g) {
         return '<b>' + g[0] + "</b>" + g[1].map(function (m) {
           var f = hu ? m[4] : m[3];
-          return '<a class="' + (isCur(f) ? "on" : "") + '" href="' + u(f) + '">' + m[0] + " " + (hu ? m[1] : m[2]) +
+          return '<a class="' + (isCur(f) ? "on" : "") + '" href="' + u(f) + '">' + (m[0] ? m[0] + " " : "") + (hu ? m[1] : m[2]) +
             (m[5] === "EN" ? " <i>EN</i>" : "") + "</a>";
         }).join("");
       }).join("") + "</span></span>" +
