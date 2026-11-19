@@ -33,6 +33,10 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   .sec{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:30px 34px;margin-bottom:22px}
   .sec .sub{color:var(--dim);margin:0 0 18px;font-size:15.5px}
   audio{width:100%;margin:6px 0 10px}
+  .vid{display:flex;gap:28px;align-items:flex-start}
+  .vid video{width:300px;max-width:100%;aspect-ratio:9/16;border-radius:16px;background:#111;flex:none}
+  .vid .txt{flex:1}
+  @media(max-width:700px){.vid{flex-direction:column}.vid video{width:100%}}
   .meta{font-size:14px;color:var(--dim)}
   .meta a,.sec a{color:var(--acc)}
   .figure{display:block;border:1px solid var(--line);border-radius:12px;overflow:hidden}
@@ -59,8 +63,20 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   <header class="head">
     <div class="kicker">Előadások és média</div>
     <h1>Hallgasd, nézd, mutasd be</h1>
-    <p class="lead">A projekt 2026. november 10-én született, a bohinji Node AI Summiton. Itt találod a róla készült podcastot, infografikát, előadásokat és háttércikket, és mindent, amivel továbbadhatod.</p>
+    <p class="lead">A projekt 2026. november 10-én született, a bohinji Node AI Summiton. Itt találod a róla készült videót, podcastot, infografikát, előadásokat és háttércikket, és mindent, amivel továbbadhatod.</p>
   </header>
+
+  <section class="sec">
+    <h2>🎬 Videó: Egy kattintás súlya</h2>
+    <div class="vid">
+      <video controls playsinline preload="none" poster="media/video-hu-poster.jpg" src="media/video-hu.mp4"></video>
+      <div class="txt">
+        <p class="sub">Egyperces álló videó a láthatatlan energiaköltségről, bohinji fotókkal, felirattal. Telefonra, Reelsre, TikTokra és Storyba is jó.</p>
+        <p class="meta">1080×1920, 66 másodperc, magyar narrációval és felirattal. · <a href="media/video-hu.mp4" download>Letöltés (mp4)</a></p>
+        <div class="post"><b>Javasolt szöveg:</b> Egy kérdés. Egy kattintás. Valahol messze egy szerver dolgozik érte. Nézd meg, és válassz könnyebbet: madcsaba.github.io/ai-awareness-wireframe/media.html</div>
+      </div>
+    </div>
+  </section>
 
   <section class="sec">
     <h2>🎧 Podcast: Mennyi áramot zabál egyetlen AI-kérdés?</h2>
@@ -108,8 +124,19 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   <header class="head">
     <div class="kicker">Talks &amp; media</div>
     <h1>Listen, look, present</h1>
-    <p class="lead">The project was born on 10 November 2026 at the Node AI Summit in Bohinj. Here is the podcast, the infographic, the talks and the background article, and everything you need to pass it on.</p>
+    <p class="lead">The project was born on 10 November 2026 at the Node AI Summit in Bohinj. Here is the video, the podcast, the infographic, the talks and the background article, and everything you need to pass it on.</p>
   </header>
+
+  <section class="sec">
+    <h2>🎬 Video: The Weight of a Click</h2>
+    <div class="vid">
+      <video controls playsinline preload="none" poster="media/video-hu-poster.jpg" src="media/video-hu.mp4"></video>
+      <div class="txt">
+        <p class="sub">A one-minute vertical video about the invisible energy cost of AI, with photos from Bohinj. Made for phones, Reels, TikTok and Stories.</p>
+        <p class="meta">1080×1920, 66 seconds, Hungarian narration with Hungarian subtitles. · <a href="media/video-hu.mp4" download>Download (mp4)</a></p>
+      </div>
+    </div>
+  </section>
 
   <section class="sec">
     <h2>🎧 Podcast: The Hidden Energy Cost of AI Prompts</h2>
