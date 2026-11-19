@@ -14,6 +14,7 @@
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary">
 <script src="nav.js" defer></script>
+<script src="models-data.js"></script>
 <script>
 (function(){var l;try{l=localStorage.getItem("ecoai-lang")}catch(e){}
 if(l!=="hu"&&l!=="en")l=(navigator.language||"").toLowerCase().indexOf("hu")===0?"hu":"en";
@@ -127,6 +128,78 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   .warn b{color:#9a5b12}
   .foot{margin-top:34px;font-size:12.5px;color:var(--dim);border-top:1px solid var(--line);padding-top:16px}
   .foot a{color:var(--acc);text-decoration:none}
+
+  /* 8 · kereső-motor (models-data.js) */
+  .logo.mistral{background:#fa523f}.logo.other{background:#94a3b8}
+  .lbl{display:block;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);
+    font-weight:700;margin:14px 0 7px}
+  .eng{display:grid;gap:6px 26px}
+  @media(min-width:760px){.eng{grid-template-columns:1.55fr 1fr}}
+  .eng textarea{width:100%;min-height:74px;resize:vertical;border:1px solid var(--line);border-radius:11px;
+    padding:10px 12px;font:14px/1.5 var(--display);background:#fbfcfd;color:var(--ink)}
+  .samples{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+  .samples button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:5px 11px;
+    font:12.5px var(--display);cursor:pointer;color:var(--dim)}
+  .samples button:hover{border-color:var(--acc);color:var(--acc)}
+  .checks{display:grid;gap:7px}
+  .check{display:flex;gap:8px;align-items:center;font-size:13.5px;cursor:pointer;color:var(--dim)}
+  .check input{accent-color:var(--acc);width:15px;height:15px}
+  .check select{border:1px solid var(--line);border-radius:8px;padding:5px 8px;font:13px var(--display);
+    background:#fff;color:var(--ink)}
+  .prio{width:100%;accent-color:var(--acc)}
+  .range-ends{display:flex;justify-content:space-between;font-size:11.5px;color:var(--dim);margin-top:3px}
+  .vol{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+  .vol label{display:grid;gap:3px;font-size:12px;color:var(--dim)}
+  .vol input{border:1px solid var(--line);border-radius:8px;padding:6px 9px;font:13.5px var(--mono);
+    background:#fff;color:var(--ink);width:100%}
+  .hint{font-size:12px;color:var(--dim);margin-top:7px}
+  .res-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin:20px 0 10px}
+  .res-head h3{margin:0;font-size:15px}
+  .pwhy{margin:8px 0 0;padding-left:16px;font-size:12.5px;color:var(--dim)}
+  .pwhy li{margin:2px 0}
+  .pick .cost{display:block;font:700 14px var(--mono);color:var(--acc);margin-top:8px}
+  .pick .cost small{font:11.5px var(--display);color:var(--dim);font-weight:400}
+  .pick .kwh{font:11.5px var(--mono);color:var(--green);margin-top:3px;display:block}
+  .empty{text-align:center;padding:26px 18px;display:grid;gap:9px;justify-items:center}
+  .empty button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;
+    font:13.5px var(--display);cursor:pointer}
+  .noscript-note{background:#fdf8ee;border:1px solid #f3ddb6;border-radius:12px;padding:14px 16px;font-size:13.5px}
+
+  /* 9 · dinamikus katalógus-tábla + összehasonlítás */
+  .cat-tools{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+  .cat-tools input[type=search]{flex:1 1 220px;min-width:0;border:1px solid var(--line);border-radius:10px;
+    padding:8px 11px;font:13.5px var(--display);background:#fff;color:var(--ink)}
+  .cat-tools select{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:13.5px var(--display);
+    background:#fff;color:var(--ink)}
+  .cat-tools button{border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:10px;
+    padding:8px 13px;font:600 13.5px var(--display);cursor:pointer}
+  .cat-tools button[hidden]{display:none}
+  #tbl table{min-width:880px}
+  #tbl th button{all:unset;cursor:pointer;font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit}
+  #tbl th button:hover{color:var(--acc)}
+  #tbl td.fit{min-width:120px}
+  .fitbar{display:flex;align-items:center;gap:7px}
+  .fitbar i.track{flex:1;height:6px;border-radius:99px;background:#eceff3;overflow:hidden;min-width:44px}
+  .fitbar i.on{display:block;height:100%;background:var(--acc);border-radius:99px}
+  .pips{display:inline-flex;gap:2px;vertical-align:middle}
+  .pips i{width:7px;height:7px;border-radius:2px;background:#e3e6ea}
+  .pips i.on{background:var(--acc)}
+  .cbcol{width:34px}
+  .cbcol input{accent-color:var(--acc);width:16px;height:16px;cursor:pointer}
+  #cmpBox{margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:16px 18px;overflow-x:auto}
+  #cmpBox h3{margin:0 0 10px;font-size:14px}
+  #cmpBox table{min-width:0;font-size:13px}
+  #cmpBox th[scope=row]{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim);
+    white-space:nowrap;background:transparent;position:static}
+  #cmpBox td.best{color:var(--green);font-weight:700}
+  #cmpBox .legend{font-size:12px;color:var(--dim);margin-top:9px}
+  .approx{color:var(--amber);cursor:help;font-weight:700}
+  .num{font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums}
+  #tbody tr:hover{background:#fbfcfd}
+  #tbody tr{cursor:default}
+  .cat-tools button:disabled{opacity:.5;cursor:not-allowed}
+  @media(max-width:640px){.hide-sm{display:none}}
 </style>
 </head>
 <body>
@@ -143,8 +216,61 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
       want to do — the recommendations appear below. Colors and brands match the rest of the site.</span>
   </p>
 
-  <!-- 1 · CHIPS -->
-  <h2><span class="hu">1 · Mit szeretnél csinálni?</span><span class="en">1 · What do you want to do?</span></h2>
+  <!-- 1 · KERESŐ-MOTOR (models-data.js: feladat → igények → szűrők → top-3 + havi költség + energia) -->
+  <h2 id="engine"><span class="hu">1 · Írd le, mire kell a modell</span><span class="en">1 · Describe what you need the model for</span></h2>
+  <noscript><div class="noscript-note"><b>JavaScript nélkül a kereső nem működik</b> — a lenti modell-kártyák és a tudnivalók azért elérhetők.</div></noscript>
+  <div class="task" id="engineBox">
+    <div class="eng">
+      <div>
+        <label class="lbl" for="task"><span class="hu">Feladat</span><span class="en">Task</span></label>
+        <textarea id="task" placeholder="Írd le egy-két mondatban, pl.: „Magyar nyelvű ügyfélszolgálati chatbot, napi több ezer kérdéssel”"></textarea>
+        <div class="samples" aria-label="Példák">
+          <span class="hint" style="margin:0 4px 0 0"><span class="hu">Példák:</span><span class="en">Examples:</span></span>
+          <button type="button" data-sample="chat"><span class="hu">💬 Chatbot</span><span class="en">💬 Chatbot</span></button>
+          <button type="button" data-sample="code"><span class="hu">💻 Kódoló ágens</span><span class="en">💻 Coding agent</span></button>
+          <button type="button" data-sample="pdf"><span class="hu">📄 Hosszú PDF-ek</span><span class="en">📄 Long PDFs</span></button>
+          <button type="button" data-sample="priv"><span class="hu">🔒 Saját szerver</span><span class="en">🔒 Own server</span></button>
+          <button type="button" data-sample="math"><span class="hu">🧮 Matek, logika</span><span class="en">🧮 Maths, logic</span></button>
+        </div>
+        <span class="lbl"><span class="hu">Igények — a leírásból felismerjük, kézzel is állítható</span><span class="en">Needs — detected from your text, adjustable by hand</span></span>
+        <div class="chips" id="needs" role="group"></div>
+        <span class="lbl"><span class="hu">Feltételek</span><span class="en">Constraints</span></span>
+        <div class="checks">
+          <label class="check"><input type="checkbox" id="cOpen"><span class="hu">Csak nyílt súlyú (saját szerveren futtatható)</span><span class="en">Open weights only (runnable on your own server)</span></label>
+          <label class="check"><input type="checkbox" id="cEu"><span class="hu">Csak EU-s szolgáltató</span><span class="en">EU providers only</span></label>
+          <label class="check"><input type="checkbox" id="cStable"><span class="hu">Csak stabil (nem előzetes) verzió</span><span class="en">Stable versions only (no preview)</span></label>
+          <label class="check"><span class="hu">Legalább ennyi kontextus:</span><span class="en">At least this much context:</span>
+            <select id="cCtx">
+              <option value="0"><span class="hu">mindegy</span><span class="en">any</span></option>
+              <option value="128000">128K (~300 <span class="hu">oldal</span><span class="en">pages</span>)</option>
+              <option value="256000">256K (~600 <span class="hu">oldal</span><span class="en">pages</span>)</option>
+              <option value="1000000">1M (~2 500 <span class="hu">oldal</span><span class="en">pages</span>)</option>
+            </select></label>
+        </div>
+      </div>
+      <div>
+        <label class="lbl" for="prio"><span class="hu">Mi a fontosabb?</span><span class="en">What matters more?</span></label>
+        <input type="range" class="prio" id="prio" min="0" max="100" step="5" value="30">
+        <div class="range-ends"><span><span class="hu">Legjobb minőség</span><span class="en">Best quality</span></span><span><span class="hu">Legalacsonyabb költség</span><span class="en">Lowest cost</span></span></div>
+        <p class="hint" id="prioDesc"></p>
+        <span class="lbl"><span class="hu">Várható havi forgalom</span><span class="en">Expected monthly volume</span></span>
+        <div class="vol">
+          <label><span class="hu">Bemenet (M token)</span><span class="en">Input (M tokens)</span><input type="number" id="volIn" min="0" step="1" value="20" inputmode="decimal"></label>
+          <label><span class="hu">Kimenet (M token)</span><span class="en">Output (M tokens)</span><input type="number" id="volOut" min="0" step="1" value="4" inputmode="decimal"></label>
+        </div>
+        <p class="hint"><span class="hu">1 M token ≈ 2 500 oldal magyar szöveg. A havi költség a listaárból számol, kedvezmények nélkül. A havi energia 1 kérés ≈ 500 kimenő tokennel becsül.</span>
+          <span class="en">1 M tokens ≈ 2,500 pages of Hungarian text. Monthly cost uses list prices, no discounts. Monthly energy assumes 1 request ≈ 500 output tokens.</span></p>
+      </div>
+    </div>
+    <div class="res-head">
+      <h3><span class="hu">Ajánlás</span><span class="en">Recommendation</span></h3>
+      <span class="hint" id="resMeta" aria-live="polite"></span>
+    </div>
+    <div class="picks" id="picks"></div>
+  </div>
+
+  <!-- 2 · CHIPS -->
+  <h2><span class="hu">2 · Mit szeretnél csinálni?</span><span class="en">2 · What do you want to do?</span></h2>
   <div class="chips" id="chips">
     <button class="chip on" data-f="all"><span class="hu">Mind</span><span class="en">All</span></button>
     <button class="chip" data-f="sum"><span class="hu">📝 Összefoglaló</span><span class="en">📝 Summary</span></button>
@@ -155,21 +281,21 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     <button class="chip" data-f="priv"><span class="hu">🔒 Privát / fájlok</span><span class="en">🔒 Private / files</span></button>
   </div>
 
-  <!-- 2 · TASK CARDS -->
-  <h2><span class="hu">2 · Erre a célra ezt</span><span class="en">2 · Best pick for the job</span></h2>
+  <!-- 3 · TASK CARDS -->
+  <h2><span class="hu">3 · Erre a célra ezt</span><span class="en">3 · Best pick for the job</span></h2>
 
   <div class="task" data-cat="sum">
     <h3><span class="hu">📝 Egy hosszú dokumentum összefoglalása</span><span class="en">📝 Summarizing a long document</span></h3>
     <p class="why"><span class="hu">Strukturált kivonat, kulcspontok, bullet-point átirat — a tartalom közvetlen átadása a cél, nem az éleslátás.</span>
       <span class="en">Structured extract, key points, bullet rewrite — the job is faithful compression, not deep insight.</span></p>
     <div class="picks">
-      <div class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
+      <div data-model="gpt-6-luna" class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
         <b><span class="logo openai">O</span> GPT-5 mini</b><span class="vend">OpenAI</span>
         <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
-      <div class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
+      <div data-model="claude-haiku-5-5" class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
         <b><span class="logo anthropic">A</span> Claude Haiku</b><span class="vend">Anthropic</span>
         <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
-      <div class="pick"><span class="rank"><span class="hu">3. hosszú szöveghez</span><span class="en">3rd, for long text</span></span>
+      <div data-model="gemini-3.8-flash" class="pick"><span class="rank"><span class="hu">3. hosszú szöveghez</span><span class="en">3rd, for long text</span></span>
         <b><span class="logo google">G</span> Gemini Flash</b><span class="vend">Google</span>
         <div class="meta"><span>⚡ 0,0002 kWh</span><span>⏱ ~1 s</span></div></div>
     </div>
@@ -186,16 +312,16 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     <p class="why"><span class="hu">Itt a pontosság a tét: egy rossz sor többe kerül, mint a gyors válasz. Közepes a minimum.</span>
       <span class="en">Accuracy is the stakes here: a wrong line costs more than a slow reply. Mid-tier is the minimum.</span></p>
     <div class="picks">
-      <div class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
+      <div data-model="claude-sonnet-5-5" class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
         <b><span class="logo anthropic">A</span> Claude Sonnet</b><span class="vend">Anthropic</span>
         <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
-      <div class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
+      <div data-model="gpt-6.1-terra" class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
         <b><span class="logo openai">O</span> GPT-5</b><span class="vend">OpenAI</span>
         <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
-      <div class="pick"><span class="rank"><span class="hu">3. nagy átalakításhoz</span><span class="en">3rd, big rewrites</span></span>
+      <div data-model="claude-opus-5-5" class="pick"><span class="rank"><span class="hu">3. nagy átalakításhoz</span><span class="en">3rd, big rewrites</span></span>
         <b><span class="logo anthropic">A</span> Claude Opus</b><span class="vend">Anthropic</span>
         <div class="meta"><span>⚡ 0,03 kWh</span><span>⏱ ~25 s</span></div></div>
-      <div class="pick"><span class="rank"><span class="hu">olcsó alternatíva</span><span class="en">budget alternative</span></span>
+      <div data-model="deepseek-v4-pro" class="pick"><span class="rank"><span class="hu">olcsó alternatíva</span><span class="en">budget alternative</span></span>
         <b><span class="logo deepseek">D</span> DeepSeek V3</b><span class="vend">DeepSeek</span>
         <div class="meta"><span>⚡ 0,0005 kWh</span><span>⏱ ~3 s</span></div></div>
     </div>
@@ -212,16 +338,16 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     <p class="why"><span class="hu">Több lépcsős következtetés, hosszú kontextus, bizonyíték-mérlegelés — itt a nehéz modell a helyén van.</span>
       <span class="en">Multi-step reasoning, long context, weighing evidence — this is where the heavy model earns its cost.</span></p>
     <div class="picks">
-      <div class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
+      <div data-model="claude-opus-5-5" class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
         <b><span class="logo anthropic">A</span> Claude Opus</b><span class="vend">Anthropic</span>
         <div class="meta"><span>⚡ 0,03 kWh</span><span>⏱ ~25 s</span></div></div>
-      <div class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
+      <div data-model="gpt-6-astra" class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
         <b><span class="logo openai">O</span> GPT-5 Pro</b><span class="vend">OpenAI</span>
         <div class="meta"><span>⚡ 0,04 kWh</span><span>⏱ ~30 s</span></div></div>
-      <div class="pick"><span class="rank"><span class="hu">3. nyitott kérdésekre</span><span class="en">3rd, open questions</span></span>
+      <div data-model="gemini-4-argon" class="pick"><span class="rank"><span class="hu">3. nyitott kérdésekre</span><span class="en">3rd, open questions</span></span>
         <b><span class="logo google">G</span> Gemini Deep Think</b><span class="vend">Google</span>
         <div class="meta"><span>⚡ 0,05 kWh</span><span>⏱ ~35 s</span></div></div>
-      <div class="pick"><span class="rank"><span class="hu">nyílt modell, lépésenként</span><span class="en">open model, step by step</span></span>
+      <div data-model="deepseek-v4-pro" class="pick"><span class="rank"><span class="hu">nyílt modell, lépésenként</span><span class="en">open model, step by step</span></span>
         <b><span class="logo deepseek">D</span> DeepSeek R1</b><span class="vend">DeepSeek</span>
         <div class="meta"><span>⚡ 0,02 kWh</span><span>⏱ ~30 s</span></div></div>
     </div>
@@ -238,13 +364,13 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     <p class="why"><span class="hu">Stílus és hangvétel számít, de a tények egyszerűek — a közepes modell itt a legjobb ár/érzés arány.</span>
       <span class="en">Tone matters but the facts are simple — mid-tier gives the best style-per-watt ratio.</span></p>
     <div class="picks">
-      <div class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
+      <div data-model="claude-sonnet-5-5" class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
         <b><span class="logo anthropic">A</span> Claude Sonnet</b><span class="vend">Anthropic</span>
         <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
-      <div class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
+      <div data-model="gpt-6.1-terra" class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
         <b><span class="logo openai">O</span> GPT-5</b><span class="vend">OpenAI</span>
         <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
-      <div class="pick"><span class="rank"><span class="hu">3. gyors vázlat</span><span class="en">3rd, quick draft</span></span>
+      <div data-model="gpt-6-luna" class="pick"><span class="rank"><span class="hu">3. gyors vázlat</span><span class="en">3rd, quick draft</span></span>
         <b><span class="logo openai">O</span> GPT-5 mini</b><span class="vend">OpenAI</span>
         <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
     </div>
@@ -261,13 +387,13 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     <p class="why"><span class="hu">A legtöbb kérdésre a gyors, olcsó modell is jól válaszol — a nagy modell itt pazarlás.</span>
       <span class="en">For most questions a fast, cheap model answers fine — the large model is waste here.</span></p>
     <div class="picks">
-      <div class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
+      <div data-model="gpt-6-luna" class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
         <b><span class="logo openai">O</span> GPT-5 mini</b><span class="vend">OpenAI</span>
         <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
-      <div class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
+      <div data-model="claude-haiku-5-5" class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
         <b><span class="logo anthropic">A</span> Claude Haiku</b><span class="vend">Anthropic</span>
         <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
-      <div class="pick"><span class="rank"><span class="hu">3. „okosabb" válasz kell</span><span class="en">3rd, needs more depth</span></span>
+      <div data-model="gpt-6.1-terra" class="pick"><span class="rank"><span class="hu">3. „okosabb" válasz kell</span><span class="en">3rd, needs more depth</span></span>
         <b><span class="logo openai">O</span> GPT-5</b><span class="vend">OpenAI</span>
         <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
     </div>
@@ -284,13 +410,13 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     <p class="why"><span class="hu">Ha nem mehet felhőbe, a helyi modell az egyetlen jó válasz — és nulla felhőenergiával fut.</span>
       <span class="en">If it can't go to the cloud, a local model is the only right answer — and it runs on zero cloud energy.</span></p>
     <div class="picks">
-      <div class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
+      <div data-model="local-open" class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
         <b><span class="logo local">L</span> Llama / Mistral</b><span class="vend"><span class="hu">helyben fut</span><span class="en">on-device</span></span>
         <div class="meta"><span>⚡ 0 kWh cloud</span><span>⏱ ~3 s</span></div></div>
-      <div class="pick"><span class="rank"><span class="hu">2. felhővel is jó</span><span class="en">2nd, cloud OK</span></span>
+      <div data-model="claude-haiku-5-5" class="pick"><span class="rank"><span class="hu">2. felhővel is jó</span><span class="en">2nd, cloud OK</span></span>
         <b><span class="logo anthropic">A</span> Claude Haiku</b><span class="vend">Anthropic</span>
         <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
-      <div class="pick"><span class="rank"><span class="hu">3. hosszú fájlok</span><span class="en">3rd, long files</span></span>
+      <div data-model="gemini-3.8-flash" class="pick"><span class="rank"><span class="hu">3. hosszú fájlok</span><span class="en">3rd, long files</span></span>
         <b><span class="logo google">G</span> Gemini Flash</b><span class="vend">Google</span>
         <div class="meta"><span>⚡ 0,0002 kWh</span><span>⏱ ~1 s</span></div></div>
     </div>
@@ -302,136 +428,12 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
       <span class="en"> local small models are weaker on complex text — sensitive + complex? anonymize first, then consider the cloud.</span></div>
   </div>
 
-  <!-- 3 · MODEL CARDS -->
-  <h2><span class="hu">3 · Modell-kártyák részletesen</span><span class="en">3 · Model cards in detail</span></h2>
+  <!-- 4 · MODEL CARDS – a models-data.js katalógusból töltődik -->
+  <h2 id="modelcards"><span class="hu">4 · Modell-kártyák részletesen</span><span class="en">4 · Model cards in detail</span></h2>
+  <div id="cards"></div>
 
-  <details class="model" open>
-    <summary><span class="logo openai">O</span> GPT-5 mini <span class="vend" style="color:var(--dim);font-weight:400;font-size:12px">OpenAI</span></summary>
-    <div class="body">
-      <div class="cols">
-        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
-          <ul><li><span class="hu">a leggyorsabb, legtakarékosabb mindennapi válasz</span><span class="en">fastest, cheapest everyday answers</span></li>
-              <li><span class="hu">összefoglaló, fordítás, formázás</span><span class="en">summaries, translation, formatting</span></li>
-              <li><span class="hu">magabiztos magyar nyelv</span><span class="en">confident Hungarian</span></li></ul></div>
-        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
-          <ul><li><span class="hu">hosszú, többlépcsős következtetésben elbizonytalanodik</span><span class="en">falters on long multi-step reasoning</span></li>
-              <li><span class="hu">kreatív szövegben sablonosabb</span><span class="en">more formulaic in creative copy</span></li></ul></div>
-      </div>
-      <div class="bar"><i style="width:95%;background:var(--green)"></i><i style="width:20%;background:var(--amber)"></i></div>
-      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: 1× (alap) · minőség: ★★★☆☆</div>
-    </div>
-  </details>
-
-  <details class="model">
-    <summary><span class="logo anthropic">A</span> Claude Haiku <span style="color:var(--dim);font-weight:400;font-size:12px">Anthropic</span></summary>
-    <div class="body">
-      <div class="cols">
-        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
-          <ul><li><span class="hu">gyors Q&amp;A, strukturált adatkinyerés</span><span class="en">quick Q&amp;A, structured extraction</span></li>
-              <li><span class="hu">udvarias, következetes hangnem</span><span class="en">consistent, courteous tone</span></li></ul></div>
-        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
-          <ul><li><span class="hu">kevésbé jó hosszú dokumentumok feldolgozásában</span><span class="en">weaker on very long documents</span></li></ul></div>
-      </div>
-      <div class="bar"><i style="width:95%;background:var(--green)"></i><i style="width:25%;background:var(--amber)"></i></div>
-      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: 1× (alap) · minőség: ★★★☆☆</div>
-    </div>
-  </details>
-
-  <details class="model">
-    <summary><span class="logo google">G</span> Gemini Flash <span style="color:var(--dim);font-weight:400;font-size:12px">Google</span></summary>
-    <div class="body">
-      <div class="cols">
-        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
-          <ul><li><span class="hu">nagyon hosszú szöveg + multimodal (kép, videó)</span><span class="en">very long context + multimodal (image, video)</span></li>
-              <li><span class="hu">sebesség ár/energia arányban kiváló</span><span class="en">excellent speed per watt</span></li></ul></div>
-        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
-          <ul><li><span class="hu">néha túl tömör, kihagy részleteket</span><span class="en">sometimes terse, drops details</span></li></ul></div>
-      </div>
-      <div class="bar"><i style="width:92%;background:var(--green)"></i><i style="width:35%;background:var(--amber)"></i></div>
-      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: 2× · minőség: ★★★☆☆</div>
-    </div>
-  </details>
-
-  <details class="model">
-    <summary><span class="logo anthropic">A</span> Claude Sonnet <span style="color:var(--dim);font-weight:400;font-size:12px">Anthropic</span></summary>
-    <div class="body">
-      <div class="cols">
-        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
-          <ul><li><span class="hu">kód, elemzés, hosszú dokumentum — a „lovas közép"</span><span class="en">code, analysis, long docs — the workhorse</span></li>
-              <li><span class="hu">jó stílusérzék, kevesebb kitaláció</span><span class="en">good style, fewer hallucinations</span></li></ul></div>
-        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
-          <ul><li><span class="hu">10× energia a minihez képest — felesleges egyszerű kérdésre</span><span class="en">10× the energy of a mini — overkill for simple asks</span></li></ul></div>
-      </div>
-      <div class="bar"><i style="width:60%;background:var(--green)"></i><i style="width:70%;background:var(--amber)"></i></div>
-      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: 10× · minőség: ★★★★☆</div>
-    </div>
-  </details>
-
-  <details class="model">
-    <summary><span class="logo openai">O</span> GPT-5 <span style="color:var(--dim);font-weight:400;font-size:12px">OpenAI</span></summary>
-    <div class="body">
-      <div class="cols">
-        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
-          <ul><li><span class="hu">napi chat + könnyű gondolkodás, kiegyensúlyozott</span><span class="en">daily chat + light reasoning, well balanced</span></li>
-              <li><span class="hu">széles eszköz- és nyelvtámogatás</span><span class="en">broad tooling and language support</span></li></ul></div>
-        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
-          <ul><li><span class="hu">nehéz elemzésben a Pro verzió a jobb</span><span class="en">for heavy analysis the Pro tier is better</span></li></ul></div>
-      </div>
-      <div class="bar"><i style="width:62%;background:var(--green)"></i><i style="width:70%;background:var(--amber)"></i></div>
-      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: 10× · minőség: ★★★★☆</div>
-    </div>
-  </details>
-
-  <details class="model">
-    <summary><span class="logo anthropic">A</span> Claude Opus <span style="color:var(--dim);font-weight:400;font-size:12px">Anthropic</span></summary>
-    <div class="body">
-      <div class="cols">
-        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
-          <ul><li><span class="hu">összetett kutatás, többlépcsős tervezés</span><span class="en">complex research, multi-step planning</span></li>
-              <li><span class="hu">a legjobb „gondolkodás" hosszú feladatokon</span><span class="en">best reasoning on long tasks</span></li></ul></div>
-        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
-          <ul><li><span class="hu">~300× energia, ~25 mp — egyszerű kérésre pazarlás</span><span class="en">~300× energy, ~25 s — waste on simple asks</span></li></ul></div>
-      </div>
-      <div class="bar"><i style="width:15%;background:var(--red)"></i><i style="width:95%;background:var(--green)"></i></div>
-      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: 300× · minőség: ★★★★★</div>
-    </div>
-  </details>
-
-  <details class="model">
-    <summary><span class="logo local">L</span> Llama / Mistral / Qwen <span style="color:var(--dim);font-weight:400;font-size:12px">open source · local</span></summary>
-    <div class="body">
-      <div class="cols">
-        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
-          <ul><li><span class="hu">nulla felhőenergia, teljes adatvédelem, offline</span><span class="en">zero cloud energy, full privacy, offline</span></li>
-              <li><span class="hu">osztályozás, összefoglaló, egyszerű kimenet tökéletes</span><span class="en">great for classification, summaries, simple output</span></li></ul></div>
-        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
-          <ul><li><span class="hu">gyengébb összetett magyar szövegen, kisebb tudásbázis</span><span class="en">weaker on complex text, smaller knowledge base</span></li>
-              <li><span class="hu">telepítést és gépet igényel</span><span class="en">needs setup and hardware</span></li></ul></div>
-      </div>
-      <div class="bar"><i style="width:100%;background:var(--green)"></i><i style="width:45%;background:var(--amber)"></i></div>
-      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: 0 cloud · minőség: ★★★☆☆</div>
-    </div>
-  </details>
-
-  <details class="model">
-    <summary><span class="logo deepseek">D</span> DeepSeek V3 / R1 <span style="color:var(--dim);font-weight:400;font-size:12px">DeepSeek · open weights</span></summary>
-    <div class="body">
-      <div class="cols">
-        <div class="col"><h4><span class="hu">Erősség</span><span class="en">Strengths</span></h4>
-          <ul><li><span class="hu">kódban és matekban erős, nagyon olcsó (MoE: kérdésenként csak a modell egy része dolgozik)</span><span class="en">strong at code and maths, very cheap (MoE: only part of the model works per request)</span></li>
-              <li><span class="hu">az R1 lépésenként „gondolkodik” – nehéz feladatnál jó</span><span class="en">R1 “thinks” step by step – good for hard problems</span></li>
-              <li><span class="hu">nyílt súlyok: saját szerveren is futtatható</span><span class="en">open weights: can run on your own server</span></li></ul></div>
-        <div class="col"><h4><span class="hu">Gyengeség</span><span class="en">Weaknesses</span></h4>
-          <ul><li><span class="hu">a hivatalos szolgáltatás Kínában tárolja az adatot – érzékeny anyaghoz ne</span><span class="en">the official service stores data in China – not for sensitive material</span></li>
-              <li><span class="hu">az R1 hosszú gondolatmenete sok energiát visz – egyszerű kérdésre a V3 elég</span><span class="en">R1's long reasoning costs a lot of energy – V3 is enough for simple asks</span></li></ul></div>
-      </div>
-      <div class="bar"><i style="width:80%;background:var(--green)"></i><i style="width:55%;background:var(--amber)"></i></div>
-      <div style="font:11px var(--mono);color:var(--dim);margin-top:5px">⚡ energia: V3 ~5× · R1 ~200× · minőség: ★★★★☆</div>
-    </div>
-  </details>
-
-  <!-- 4 · OPENCODE VÁLASZTÓ -->
-  <h2><span class="hu">4 · Mit válassz OpenCode-ban?</span><span class="en">4 · What to pick in OpenCode?</span></h2>
+  <!-- 5 · OPENCODE VÁLASZTÓ -->
+  <h2 id="opencode"><span class="hu">5 · Mit válassz OpenCode-ban?</span><span class="en">5 · What to pick in OpenCode?</span></h2>
 
   <div class="oc free">
     <p class="lead"><span class="logo opencode">◉</span>
@@ -499,60 +501,28 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     </div>
   </div>
 
-  <!-- 5 · TABLE -->
-  <h2 id="comparison"><span class="hu">5 · Összehasonlítás egy lapon</span><span class="en">5 · Side-by-side comparison</span></h2>
-  <div class="tbl-wrap">
+  <!-- 6 · DINAMIKUS KATALÓGUS (models-data.js) -->
+  <h2 id="comparison"><span class="hu">6 · Összes modell – rendezhető, összehasonlítható</span><span class="en">6 · Every model – sortable, comparable</span></h2>
+  <div class="cat-tools">
+    <input type="search" id="q" placeholder="Keresés név vagy címke alapján" aria-label="Keresés a modellek között">
+    <select id="provF" aria-label="Szolgáltató"><option value="all">Mind</option></select>
+    <span class="hint" id="catMeta" style="margin-left:auto"></span>
+    <button type="button" id="cmpOpen" hidden></button>
+  </div>
+  <div class="tbl-wrap" id="tbl">
     <table>
-      <thead><tr>
-        <th><span class="hu">Modell</span><span class="en">Model</span></th>
-        <th><span class="hu">Legjobb</span><span class="en">Best for</span></th>
-        <th><span class="hu">Példa</span><span class="en">Example</span></th>
-        <th><span class="hu">Energia</span><span class="en">Energy</span></th>
-        <th><span class="hu">Sebesség</span><span class="en">Speed</span></th>
-      </tr></thead>
-      <tbody>
-        <tr><td><span class="logo openai">O</span> GPT-5 mini</td>
-          <td><span class="hu">napi kérés, összefoglaló</span><span class="en">everyday asks, summaries</span></td>
-          <td><span class="hu">„5 pontban"</span><span class="en">“in 5 bullets”</span></td>
-          <td class="num"><span class="pill g">0,0001 kWh</span></td><td class="num">~1 s</td></tr>
-        <tr><td><span class="logo anthropic">A</span> Claude Haiku</td>
-          <td><span class="hu">gyors Q&amp;A, kinyerés</span><span class="en">quick Q&amp;A, extraction</span></td>
-          <td><span class="hu">„melyik záradék kockázatos?"</span><span class="en">“which clause is risky?”</span></td>
-          <td class="num"><span class="pill g">0,0001 kWh</span></td><td class="num">~1 s</td></tr>
-        <tr><td><span class="logo google">G</span> Gemini Flash</td>
-          <td><span class="hu">hosszú dokumentum, kép</span><span class="en">long docs, images</span></td>
-          <td><span class="hu">„200 oldal → kivonat"</span><span class="en">“200 pages → digest”</span></td>
-          <td class="num"><span class="pill g">0,0002 kWh</span></td><td class="num">~1 s</td></tr>
-        <tr><td><span class="logo anthropic">A</span> Claude Sonnet</td>
-          <td><span class="hu">kód, elemzés, szöveg</span><span class="en">code, analysis, copy</span></td>
-          <td><span class="hu">„hibás sor + javítás"</span><span class="en">“buggy line + fix”</span></td>
-          <td class="num"><span class="pill a">0,001 kWh</span></td><td class="num">~3 s</td></tr>
-        <tr><td><span class="logo openai">O</span> GPT-5</td>
-          <td><span class="hu">chat + könnyű okoskodás</span><span class="en">chat + light reasoning</span></td>
-          <td><span class="hu">„magyarázd el egyszerűen"</span><span class="en">“explain simply”</span></td>
-          <td class="num"><span class="pill a">0,001 kWh</span></td><td class="num">~3 s</td></tr>
-        <tr><td><span class="logo anthropic">A</span> Claude Opus</td>
-          <td><span class="hu">összetett kutatás</span><span class="en">complex research</span></td>
-          <td><span class="hu">„mérlegeld az érveket"</span><span class="en">“weigh the arguments”</span></td>
-          <td class="num"><span class="pill a">0,03 kWh</span></td><td class="num">~25 s</td></tr>
-        <tr><td><span class="logo openai">O</span> GPT-5 Pro</td>
-          <td><span class="hu">nehéz logika, tudomány</span><span class="en">hard logic, science</span></td>
-          <td><span class="hu">„bizonyítsd be, hogy…"</span><span class="en">“prove that…”</span></td>
-          <td class="num"><span class="pill a">0,04 kWh</span></td><td class="num">~30 s</td></tr>
-        <tr><td><span class="logo deepseek">D</span> DeepSeek V3 / R1</td>
-          <td><span class="hu">kód, matek olcsón; nyílt modell</span><span class="en">code, maths on a budget; open model</span></td>
-          <td><span class="hu">„javítsd ki ezt a függvényt"</span><span class="en">“fix this function”</span></td>
-          <td class="num"><span class="pill a">0,0005–0,02 kWh</span></td><td class="num">~3–30 s</td></tr>
-        <tr><td><span class="logo local">L</span> Llama / Mistral</td>
-          <td><span class="hu">privát, offline</span><span class="en">private, offline</span></td>
-          <td><span class="hu">„fájl helyben feldolgozva"</span><span class="en">“file processed locally”</span></td>
-          <td class="num"><span class="pill g">0 cloud</span></td><td class="num">~3 s</td></tr>
-      </tbody>
+      <thead><tr id="thead"></tr></thead>
+      <tbody id="tbody"></tbody>
     </table>
   </div>
+  <div id="cmpBox" hidden></div>
+  <div class="hint" style="margin-top:10px">
+    <span class="hu">Az illeszkedés a kiválasztott igényekre adott szerkesztői értékelés és a havi költség súlyozott átlaga (a 2. szekció csúszkájával). Az értékelések becslések, nem mérések. A szolgáltatók nem közölnek kérésenkénti energiafogyasztást: a <b>⚡ kWh</b> érték szerkesztői becslés kérésenként. <span class="approx" title="közelítő adat">≈</span> = a források eltértek vagy közelítő az adat; döntés előtt nézd meg a szolgáltató árlistáját.</span>
+    <span class="en">Fit is a weighted average of editorial ratings for the selected needs and the monthly cost (slider in section 2). Ratings are estimates, not measurements. Providers don't publish per-request energy: the <b>⚡ kWh</b> figure is an editorial per-request estimate. <span class="approx" title="approximate data">≈</span> = sources disagree or the figure is approximate; check the provider's price list before deciding.</span>
+  </div>
 
-  <!-- 6 · RULES -->
-  <h2 id="rules"><span class="hu">6 · Öt szabály, ami 90%-ban elég</span><span class="en">6 · Five rules that cover 90% of cases</span></h2>
+  <!-- 7 · RULES -->
+  <h2 id="rules"><span class="hu">7 · Öt szabály, ami 90%-ban elég</span><span class="en">7 · Five rules that cover 90% of cases</span></h2>
   <div class="rules">
     <div class="rule"><b><span class="hu">1 · Ha 3 mondatnál rövidebb a válasz, elég a kis modell.</span><span class="en">1 · If the answer fits in 3 sentences, use the small model.</span></b>
       <span><span class="hu">A legtöbb napi kérdés ide tartozik.</span><span class="en">Most everyday questions land here.</span></span></div>
@@ -566,8 +536,8 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
       <span><span class="hu">A kényelem nem éri meg az adatszivárgást.</span><span class="en">Convenience isn't worth a data leak.</span></span></div>
   </div>
 
-  <!-- 7 · WARNINGS -->
-  <h2><span class="hu">7 · Gyakori tévhitek</span><span class="en">7 · Common myths</span></h2>
+  <!-- 8 · WARNINGS -->
+  <h2><span class="hu">8 · Gyakori tévhitek</span><span class="en">8 · Common myths</span></h2>
   <div class="warn">
     <ul>
       <li><b><span class="hu">„A nagy modell mindig pontosabb."</span><span class="en">“The big model is always more accurate.”</span></b>
@@ -590,19 +560,24 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
       <a href="index-en.html">🖥️ desktop wireframe</a> ·
       <a href="mobile-app.html">📱 mobil app</a> ·
       <a href="eco-feedback.html">✨ eco-feedback</a> ·
-      <a href="petition.html">✍️ petíció</a> —
+      <a href="petition.html">✍️ petíció</a> ·
+      <a href="https://madcsaba.github.io/ai_modell_selector/">💰 Modellválasztó</a> —
       az ajánlott modellek ugyanazokat a márkákat és színeket használják.</span>
     <span class="en">Related pages:
       <a href="index-en.html">🖥️ desktop wireframe</a> ·
       <a href="mobile-app.html">📱 mobile app</a> ·
       <a href="eco-feedback.html">✨ eco-feedback</a> ·
-      <a href="petition.html">✍️ petition</a> —
+      <a href="petition.html">✍️ petition</a> ·
+      <a href="https://madcsaba.github.io/ai_modell_selector/">💰 Model selector</a> —
       recommended models share the same brands and colors.</span>
+    <span class="hu" style="display:block;margin-top:6px">A kereső, a kártyák és a tábla adatai egy közös fájlból jönnek (<code>models-data.js</code>), amit a <a href="https://madcsaba.github.io/ai_modell_selector/">Modellválasztó</a> is használ.</span>
+    <span class="en" style="display:block;margin-top:6px">The finder, cards and table all read one shared file (<code>models-data.js</code>), also used by the <a href="https://madcsaba.github.io/ai_modell_selector/">Model selector</a>.</span>
   </div>
 
 </div>
 
 <script>
+  /* ============ EcoAI modell-kereső – minden adat a models-data.js-ből ============ */
   /* ajánlás-kártyák: kattintásra (vagy Enterrel) az lesz a kiválasztott */
   document.querySelectorAll(".pick").forEach(function (p) {
     p.tabIndex = 0; p.setAttribute("role", "button");
@@ -618,18 +593,536 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     var p = e.target.closest && e.target.closest(".pick");
     if (p && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); choose(p); }
   });
-  /* chip-szűrő: a feladat-kártyák szűrése + visszagörgetés */
+  /* chip-szűrő: a feladat-kártyák szűrése + visszagörgetés (a kereső-motor nem érintett) */
   document.getElementById("chips").addEventListener("click", function (e) {
     var b = e.target.closest(".chip"); if (!b) return;
     document.querySelectorAll("#chips .chip").forEach(function (c) { c.classList.remove("on"); });
     b.classList.add("on");
     var f = b.dataset.f;
-    document.querySelectorAll(".task").forEach(function (t) {
+    document.querySelectorAll(".task[data-cat]").forEach(function (t) {
       t.classList.toggle("hide", f !== "all" && t.dataset.cat !== f);
     });
-    var first = document.querySelector(".task:not(.hide)");
+    var first = document.querySelector(".task[data-cat]:not(.hide)");
     if (first && f !== "all") first.scrollIntoView({ behavior: "smooth", block: "start" });
   });
+
+  (function () {
+    var D = window.KH_MODELS;
+    if (!D) {
+      var eb = document.getElementById("engineBox");
+      if (eb) eb.innerHTML = '<div class="empty"><b>Az adatfájlt nem sikerült betölteni (models-data.js).</b>' +
+        '<p class="hint">Töltsd újra az oldalt, vagy nézd meg a <a href="https://madcsaba.github.io/ai_modell_selector/">Modellválasztót</a>.</p></div>';
+      var cbe = document.getElementById("cards");
+      if (cbe) cbe.innerHTML = '<div class="empty"><span class="hint">A modell-kártyákhoz a models-data.js kell.</span></div>';
+      return;
+    }
+
+    var PROVIDERS = D.providers, MODELS = D.models, NEEDS = D.needs, RL = D.ratingLabels;
+    var byId = {};
+    MODELS.forEach(function (m) { byId[m.id] = m; });
+
+    var $ = function (s) { return document.querySelector(s); };
+    var lang = function () { return document.documentElement.lang === "en" ? "en" : "hu"; };
+    var L = function (hu, en) { return lang() === "en" ? en : hu; };
+    var esc = function (s) { return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); };
+    var norm = function (t) { return (t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, ""); };
+    var fmtKwh = function (v) { return v === 0 ? "0" : String(v).replace(".", ","); };
+    var fmtUsd = function (v) {
+      if (v == null) return "–";
+      return "$" + v.toLocaleString("hu-HU", { minimumFractionDigits: v % 1 ? 2 : 0, maximumFractionDigits: 2 });
+    };
+    var fmtCtx = function (n) {
+      return n >= 1e6 ? (n / 1e6).toLocaleString("hu-HU", { maximumFractionDigits: 2 }) + "M" : Math.round(n / 1000) + "K";
+    };
+    var pips = function (n) {
+      var s = '<span class="pips" aria-label="' + n + '/5">';
+      for (var i = 1; i <= 5; i++) s += '<i class="' + (i <= n ? "on" : "") + '"></i>';
+      return s + "</span>";
+    };
+    var stars = function (n) { var s = ""; for (var i = 1; i <= 5; i++) s += i <= n ? "★" : "☆"; return s; };
+    var badges = function (m) {
+      var b = [];
+      if (m.open === true) b.push('<span class="pill g">' + L("nyílt súlyú", "open weights") + "</span>");
+      if (m.status === "preview") b.push('<span class="pill a">' + L("előzetes", "preview") + "</span>");
+      if (m.free) b.push('<span class="pill g">' + L("ingyenes", "free") + "</span>");
+      return b.length ? " " + b.join(" ") : "";
+    };
+
+    var SAMPLES = {
+      chat: { hu: "Magyar nyelvű ügyfélszolgálati chatbot, napi több ezer kérdés, olcsón",
+              en: "Hungarian customer-service chatbot, thousands of questions a day, cheaply" },
+      code: { hu: "Nagy React és Python kódbázis refaktorálása kódoló ágenssel",
+              en: "Refactoring a large React and Python codebase with a coding agent" },
+      pdf:  { hu: "300 oldalas szerződések és PDF-szkennek elemzése, összefoglalása",
+              en: "Analyzing and summarizing 300-page contracts and scanned PDFs" },
+      priv: { hu: "Érzékeny adatok, saját szerveren futó nyílt súlyú modell kell",
+              en: "Sensitive data — need an open-weight model running on our own server" },
+      math: { hu: "Nehéz matematikai bizonyítás és algoritmus-tervezés",
+              en: "Hard mathematical proof and algorithm design" }
+    };
+
+    /* ============================== ÁLLAPOT ============================== */
+    var state = { needs: new Set(), autoNeeds: new Set(), autoOpen: false, autoEu: false,
+                  prov: "all", q: "", sort: { key: "fit", dir: -1 }, cmp: [] };
+    var lastScores = [];
+
+    /* ============================== PONTOZÁS ============================== */
+    function volume() { return { i: Math.max(0, +$("#volIn").value || 0), o: Math.max(0, +$("#volOut").value || 0) }; }
+    function monthly(m, v) { return m.in == null ? null : m.in * v.i + m.out * v.o; }
+    function monthlyKwh(m, v) { return m.kwh * (v.o * 1e6 / 500); } /* 1 kérés ≈ 500 kimenő token */
+    function constraints() {
+      return { open: $("#cOpen").checked, eu: $("#cEu").checked, stable: $("#cStable").checked,
+               ctx: +$("#cCtx").value, vision: state.needs.has("vision") };
+    }
+    function failReason(m, c) {
+      if (c.open && m.open !== true) return L("nem nyílt súlyú", "not open-weight");
+      if (c.eu && !PROVIDERS[m.p].eu) return L("nem EU-s szolgáltató", "not an EU provider");
+      if (c.stable && m.status === "preview") return L("előzetes verzió", "preview version");
+      if (c.ctx && m.ctx < c.ctx) return L("kevés kontextus", "context too small");
+      if (c.vision && m.vision !== true) return L("nem fogad képet", "no image input");
+      return "";
+    }
+    function ctxScore(m) {
+      var x = Math.log2(m.ctx / 32000) / Math.log2(1e6 / 32000);
+      return Math.min(1, Math.max(0, x));
+    }
+    function scoreAll() {
+      var c = constraints(), v = volume(), w = +$("#prio").value / 100;
+      var costs = MODELS.map(function (m) { return monthly(m, v); }).filter(function (x) { return x != null && x > 0; });
+      var lo = Math.log10(Math.min.apply(null, costs.concat([1e9])));
+      var hi = Math.log10(Math.max.apply(null, costs.concat([1e-9])));
+      var costScore = function (m) {
+        var x = monthly(m, v);
+        if (x == null) return 0.85; /* saját hardver: nincs tokendíj, de van üzemeltetési költség */
+        if (x <= 0 || hi === lo) return 1;
+        return 1 - (Math.log10(x) - lo) / (hi - lo);
+      };
+      var needList = Array.from(state.needs);
+      return MODELS.map(function (m) {
+        var r = m.r, part = {}, nv = function (k) { return (r[k] - 1) / 4; };
+        needList.forEach(function (n) {
+          part[n] = n === "code" ? nv("code") : n === "reason" ? nv("reason") : n === "write" ? nv("write")
+            : n === "longctx" ? ctxScore(m) : n === "vision" ? (m.vision === true ? 1 : 0)
+            : (nv("speed") + costScore(m)) / 2;
+        });
+        var keys = Object.keys(part);
+        var vals = keys.map(function (k) { return part[k]; });
+        var quality = vals.length ? vals.reduce(function (a, b) { return a + b; }, 0) / vals.length
+                                  : (nv("code") + nv("reason") + nv("write")) / 3;
+        var cs = costScore(m), fail = failReason(m, c);
+        /* a minőség négyzetre emelése: így a log-skálás árelőny nem viszi el az olcsó modelleket */
+        return { m: m, part: part, quality: quality, cs: cs, cost: monthly(m, v), fail: fail,
+                 score: fail ? -1 : (1 - w) * quality * quality + w * cs };
+      });
+    }
+    function reasonsFor(s, byCost) {
+      var m = s.m, out = [];
+      var lbl = { code: L("kódolás", "coding"), reason: L("érvelés", "reasoning"), write: L("magyar szövegírás", "Hungarian writing") };
+      ["code", "reason", "write"].forEach(function (k) {
+        if (s.part[k] !== undefined && m.r[k] >= 4) out.push(L("Erős ", "Strong ") + lbl[k] + " (" + m.r[k] + "/5)");
+      });
+      if (s.part.longctx !== undefined && m.ctx >= 4e5)
+        out.push(fmtCtx(m.ctx) + " " + L("token kontextus: egyben befér egy hosszú dokumentum", "token context: a long document fits in one go"));
+      if (s.part.vision !== undefined) out.push(L("Képet és szkennelt oldalt is fogad", "Accepts images and scanned pages"));
+      if (s.part.bulk !== undefined && m.r.speed >= 4) out.push(L("Gyors válaszidő nagy forgalomnál", "Fast responses at high volume"));
+      if (m.open === true) out.push(L("Nyílt súlyú (", "Open weights (") + m.license + L("), saját szerveren is futhat", "), can run on your own server"));
+      if (m.free) out.push(L("Ingyenes az OpenCode-ban — API-kulcs nélkül", "Free in OpenCode — no API key"));
+      var rank = byCost.indexOf(m.id);
+      if (s.cost != null && rank > -1 && rank < Math.max(1, Math.ceil(byCost.length / 3)))
+        out.push(L("Az alkalmas modellek olcsóbb harmadában van", "Among the cheapest third of the fitting models"));
+      if (!out.length) out.push(L("Kiegyensúlyozott teljesítmény a kiválasztott feltételek mellett", "Balanced performance under the selected constraints"));
+      return out.slice(0, 3);
+    }
+    function caveatsFor(m) {
+      var c = [];
+      if (m.status === "preview") c.push(L("Előzetes verzió: viselkedése és ára még változhat.", "Preview: behaviour and price may still change."));
+      if (m.approx && m.approx.indexOf("price") > -1) c.push(L("Az ár bizonytalan, nézd meg a hivatalos árlistát.", "Price is uncertain — check the official price list."));
+      if (m.thinking === "always") c.push(L("Mindig gondolkodik: a valós tokenszám és költség magasabb lehet.", "Always thinking: actual token use and cost may be higher."));
+      if (m.p === "deepseek") c.push(L("Kínai szolgáltató: érzékeny adatnál inkább saját hosztolás.", "Chinese provider: for sensitive data, self-host instead."));
+      if (m.in == null) c.push(L("Saját hardver vagy külső szolgáltató költsége nincs benne.", "Own-hardware or third-party costs are not included."));
+      return c.slice(0, 2);
+    }
+
+    /* ============================== IGÉNYEK / SZÖVEG ============================== */
+    function needLabel(n) { return lang() === "en" ? n.labelEn : n.label; }
+    function renderNeeds() {
+      $("#needs").innerHTML = NEEDS.map(function (n) {
+        var on = state.needs.has(n.id);
+        var auto = state.autoNeeds.has(n.id) && on;
+        return '<button type="button" class="chip' + (on ? " on" : "") + '" data-need="' + n.id + '" aria-pressed="' + on + '">' +
+          esc(needLabel(n)) + (auto ? ' <span style="font-size:10.5px;font-weight:700">✓ ' + L("felismerve", "detected") + "</span>" : "") + "</button>";
+      }).join("");
+    }
+    function detectFromText() {
+      var t = norm($("#task").value);
+      Array.from(state.autoNeeds).forEach(function (id) { state.needs.delete(id); });
+      state.autoNeeds = new Set(NEEDS.filter(function (n) { return n.rx.test(t); }).map(function (n) { return n.id; }));
+      Array.from(state.autoNeeds).forEach(function (id) { state.needs.add(id); });
+      var o = D.rxOpen.test(t), e = D.rxEU.test(t);
+      if (o !== state.autoOpen) { $("#cOpen").checked = o; state.autoOpen = o; }
+      if (e !== state.autoEu) { $("#cEu").checked = e; state.autoEu = e; }
+      renderNeeds();
+    }
+    function prioText() {
+      var v = +$("#prio").value;
+      $("#prioDesc").textContent = lang() === "en"
+        ? (v <= 20 ? "Quality decides; price barely matters." : v >= 80 ? "Price decides; quality only breaks ties."
+          : v < 50 ? "Mostly quality, but price counts." : v === 50 ? "Quality and price weigh the same."
+          : "Mostly price, but quality counts.")
+        : (v <= 20 ? "A minőség dönt, az ár alig számít." : v >= 80 ? "Az ár dönt; a minőség csak döntetlennél számít."
+          : v < 50 ? "Inkább minőség, de az ár is számít." : v === 50 ? "Minőség és ár egyforma súllyal."
+          : "Inkább ár, de a minőség is számít.");
+    }
+
+    /* ============================== AJÁNLÁS (top 3) ============================== */
+    function relax() {
+      ["#cOpen", "#cEu", "#cStable"].forEach(function (s) { $(s).checked = false; });
+      $("#cCtx").value = "0";
+      state.needs.delete("vision");
+      renderNeeds(); renderAll();
+    }
+    function renderPicks() {
+      var v = volume();
+      var scores = scoreAll();
+      lastScores = scores;
+      var ok = scores.filter(function (s) { return !s.fail; }).sort(function (a, b) { return b.score - a.score; });
+      var out = scores.length - ok.length;
+      var byCost = ok.filter(function (s) { return s.cost != null; })
+                     .sort(function (a, b) { return a.cost - b.cost; })
+                     .map(function (s) { return s.m.id; });
+      var needTxt = state.needs.size
+        ? Array.from(state.needs).map(function (id) {
+            var n = NEEDS.filter(function (x) { return x.id === id; })[0];
+            return n ? needLabel(n).toLowerCase() : id;
+          }).join(", ")
+        : L("általános használat", "everyday use");
+      $("#resMeta").textContent = ok.length + " " + L("alkalmas modell", "fitting models") +
+        (out ? ", " + out + " " + L("kiesett a feltételek miatt", "dropped by the constraints") : "") +
+        " · " + L("szempont: ", "needs: ") + needTxt;
+      var box = $("#picks");
+      if (!ok.length) {
+        box.innerHTML = '<div class="task empty"><b>' + L("Egyik modell sem felel meg minden feltételnek.", "No model satisfies every constraint.") +
+          '</b><p class="hint">' + L("Leggyakrabban a „csak EU-s” és a „csak nyílt súlyú” együtt szűkít túl, vagy a képbemenet igénye.",
+                                    "Usually “EU only” and “open weights only” together over-filter, or the image-input need.") +
+          '</p><button type="button" id="relax">' + L("Feltételek törlése", "Clear constraints") + "</button></div>";
+        $("#relax").onclick = relax;
+        return;
+      }
+      var ranks = [L("1. ajánlott", "1st choice"), L("2.", "2nd"), L("3.", "3rd")];
+      box.innerHTML = '<div class="picks">' + ok.slice(0, 3).map(function (s, i) {
+        var m = s.m, pr = PROVIDERS[m.p] || PROVIDERS.other, cav = caveatsFor(m);
+        var kwhM = monthlyKwh(m, v);
+        var kwhTxt = m.kwh === 0
+          ? L("0 cloud", "0 cloud")
+          : fmtKwh(m.kwh) + " " + L("kWh/kérés", "kWh/request") + " · " +
+            (kwhM < 0.05 ? "<0,05" : kwhM.toLocaleString("hu-HU", { maximumFractionDigits: 1 })) + " " + L("kWh/hó", "kWh/mo");
+        return '<div class="pick' + (i === 0 ? " best" : "") + '" data-model="' + esc(m.id) + '" role="button" tabindex="0" aria-pressed="' + (i === 0) + '">' +
+          '<span class="rank">' + ranks[i] + "</span>" +
+          '<b><span class="logo ' + pr.cls + '">' + pr.letter + "</span> " + esc(m.name) + "</b>" +
+          '<span class="vend">' + esc(m.p === "local" ? L("helyben fut", "on-device") : m.free ? L("ingyenes", "free") : pr.name) + "</span>" +
+          '<ul class="pwhy">' + reasonsFor(s, byCost).map(function (r) { return "<li>" + esc(r) + "</li>"; }).join("") + "</ul>" +
+          (cav.length ? '<p style="font-size:11.5px;color:var(--amber);margin:7px 0 0">' + esc(cav.join(" ")) + "</p>" : "") +
+          '<span class="cost">' + (s.cost == null ? L("saját hardver", "own hardware") : fmtUsd(s.cost) + ' <small>' + L("/ hó", "/ mo") + "</small>") + "</span>" +
+          '<span class="kwh">⚡ ' + kwhTxt + "</span>" +
+          '<div class="meta"><span>' + fmtCtx(m.ctx) + "</span><span>" +
+            (m.in == null ? "–" : fmtUsd(m.in) + " / " + fmtUsd(m.out)) + "</span></div>" +
+        "</div>";
+      }).join("") + "</div>";
+    }
+
+    /* ============================== FELADAT-KÁRTYA IKONOK/ADATOK ============================== */
+    function hydratePicks() {
+      document.querySelectorAll(".task[data-cat] .pick[data-model]").forEach(function (p) {
+        var m = byId[p.getAttribute("data-model")]; if (!m) return;
+        var pr = PROVIDERS[m.p] || PROVIDERS.other;
+        var b = p.querySelector("b");
+        if (b) b.innerHTML = '<span class="logo ' + pr.cls + '">' + pr.letter + "</span> " + esc(m.name);
+        var v = p.querySelector(".vend");
+        if (v) v.textContent = m.p === "local" ? L("helyben fut", "on-device") : m.free ? L("ingyenes", "free") : pr.name;
+        var meta = p.querySelector(".meta");
+        if (meta) meta.innerHTML = "<span>⚡ " + (m.kwh === 0 ? "0 kWh cloud" : fmtKwh(m.kwh) + " kWh") +
+          "</span><span>⏱ ~" + m.lat + " s</span>";
+      });
+    }
+
+    /* ============================== MODELL-KÁRTYÁK ============================== */
+    function renderCards() {
+      var box = document.getElementById("cards"); if (!box) return;
+      box.innerHTML = MODELS.map(function (m, i) {
+        var pr = PROVIDERS[m.p] || PROVIDERS.other;
+        var en = lang() === "en";
+        var pros = m.pros ? (en ? m.pros.en : m.pros.hu) : null;
+        var cons = m.cons ? (en ? m.cons.en : m.cons.hu) : null;
+        var avg = (m.r.code + m.r.reason + m.r.write) / 3;
+        var li = function (x) { return "<li>" + esc(x) + "</li>"; };
+        var meta = "⚡ " + (m.kwh === 0 ? L("0 cloud energy", "0 cloud energy") : fmtKwh(m.kwh) + " " + L("kWh/kérés", "kWh/request")) +
+          " · ⏱ ~" + m.lat + " " + L("mp", "s") +
+          " · " + L("minőség", "quality") + ": " + stars(Math.round(avg)) + " (" + avg.toFixed(1).replace(".", ",") + "/5)" +
+          " · " + fmtCtx(m.ctx) + " · " + (m.in == null ? L("nincs API-díj", "no API fee") : fmtUsd(m.in) + " / " + fmtUsd(m.out)) +
+          (m.approx && m.approx.length ? ' <span class="approx" title="' + L("közelítő adat", "approximate data") + '">≈</span>' : "");
+        return '<details class="model" data-mid="' + esc(m.id) + '"' + (i === 0 ? " open" : "") + ">" +
+          '<summary><span class="logo ' + pr.cls + '">' + pr.letter + "</span> " + esc(m.name) +
+          ' <span style="color:var(--dim);font-weight:400;font-size:12px">' + esc(pr.name) + "</span>" +
+          (m.free ? ' <span class="pill g">' + L("ingyenes", "free") + "</span>" : "") +
+          (m.status === "preview" ? ' <span class="pill a">' + L("előzetes", "preview") + "</span>" : "") +
+          (m.open === true ? ' <span class="pill">' + L("nyílt súlyú", "open weights") + "</span>" : "") +
+          "</summary>" +
+          '<div class="body"><p style="margin:0 0 4px">' + esc(en ? (m.sumEn || m.sum) : m.sum) + "</p>" +
+          (pros || cons ? '<div class="cols">' +
+            (pros ? '<div class="col"><h4>' + L("Erősség", "Strengths") + "</h4><ul>" + pros.map(li).join("") + "</ul></div>" : "") +
+            (cons ? '<div class="col"><h4>' + L("Gyengeség", "Weaknesses") + "</h4><ul>" + cons.map(li).join("") + "</ul></div>" : "") +
+            "</div>" : "") +
+          '<div style="margin-top:10px;display:grid;gap:3px">' +
+            ["code", "reason", "write", "speed"].map(function (k) {
+              return '<div style="display:flex;gap:9px;align-items:center;font-size:12px;color:var(--dim)">' +
+                '<span style="width:118px;flex:none">' + esc(en ? RL[k].en : RL[k].hu) + "</span>" + pips(m.r[k]) +
+                '<span class="num">' + m.r[k] + "/5</span></div>";
+            }).join("") + "</div>" +
+          '<div style="font:11px var(--mono);color:var(--dim);margin-top:9px">' + meta + "</div>" +
+          "</div></details>";
+      }).join("");
+    }
+    function openCard(id) {
+      var d = document.querySelector('#cards details[data-mid="' + id + '"]');
+      if (!d) return;
+      d.open = true;
+      d.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+
+    /* ============================== KATALÓGUS-TÁBLA ============================== */
+    var COLS = [
+      { key: "name", hu: "Modell", en: "Model" },
+      { key: "fit", hu: "Illeszkedés", en: "Fit" },
+      { key: "ctx", hu: "Kontextus", en: "Context", num: true },
+      { key: "in", hu: "Be $/1M", en: "In $/1M", num: true },
+      { key: "out", hu: "Ki $/1M", en: "Out $/1M", num: true },
+      { key: "cost", hu: "Havi $", en: "Monthly $", num: true },
+      { key: "kwh", hu: "⚡ kWh", en: "⚡ kWh", num: true },
+      { key: "caps", hu: "Kód · Érv · Írás", en: "Code · Reason · Write", nosort: true, hideSm: true },
+      { key: "cmp", hu: "Jelölés", en: "Select", nosort: true }
+    ];
+    function renderHead() {
+      $("#thead").innerHTML = COLS.map(function (c) {
+        var cls = (c.num ? "num " : "") + (c.hideSm ? "hide-sm" : "");
+        if (c.nosort) return '<th scope="col"' + (cls ? ' class="' + cls.trim() + '"' : "") + ">" + esc(L(c.hu, c.en)) + "</th>";
+        var active = state.sort.key === c.key;
+        var aria = active ? ' aria-sort="' + (state.sort.dir > 0 ? "ascending" : "descending") + '"' : "";
+        return '<th scope="col"' + aria + (cls ? ' class="' + cls.trim() + '"' : "") +
+          '><button type="button" data-sort="' + c.key + '">' + esc(L(c.hu, c.en)) +
+          (active ? (state.sort.dir > 0 ? " ↑" : " ↓") : "") + "</button></th>";
+      }).join("");
+    }
+    function renderProvF() {
+      var ids = ["all"].concat(Object.keys(PROVIDERS).filter(function (p) {
+        return MODELS.some(function (m) { return m.p === p; });
+      }));
+      $("#provF").innerHTML = ids.map(function (p) {
+        var n = p === "all" ? MODELS.length : MODELS.filter(function (m) { return m.p === p; }).length;
+        return '<option value="' + p + '"' + (state.prov === p ? " selected" : "") + ">" +
+          (p === "all" ? L("Mind szolgáltató", "All providers") : esc(PROVIDERS[p].name)) + " (" + n + ")";
+      }).join("");
+    }
+    function renderTable() {
+      var q = norm(state.q).trim();
+      var rows = lastScores.filter(function (s) {
+        if (state.prov !== "all" && s.m.p !== state.prov) return false;
+        if (!q) return true;
+        var hay = norm([s.m.name, (PROVIDERS[s.m.p] || {}).name || "", s.m.tags.join(" "), s.m.license || ""].join(" "));
+        return hay.indexOf(q) > -1;
+      });
+      var k = state.sort.key, d = state.sort.dir;
+      var val = function (s) {
+        if (k === "name") return norm(s.m.name);
+        if (k === "fit") return s.fail ? null : s.score;
+        if (k === "ctx") return s.m.ctx;
+        if (k === "in") return s.m.in;
+        if (k === "out") return s.m.out;
+        if (k === "cost") return s.cost;
+        if (k === "kwh") return s.m.kwh;
+        return 0;
+      };
+      rows.sort(function (a, b) {
+        var x = val(a), y = val(b);
+        if (x == null && y == null) return 0;
+        if (x == null) return 1;
+        if (y == null) return -1;
+        return (x < y ? -1 : x > y ? 1 : 0) * d;
+      });
+      var cm = document.getElementById("catMeta");
+      if (cm) cm.textContent = rows.length + " / " + lastScores.length + (lang() === "en" ? " models" : " modell");
+      if (!rows.length) {
+        $("#tbody").innerHTML = '<tr><td colspan="' + COLS.length + '" class="hint" style="text-align:center;padding:24px;cursor:default">' +
+          L("Nincs találat erre: „" + state.q + "”.", "No match for: “" + state.q + "”.") + "</td></tr>";
+        return;
+      }
+      var full = state.cmp.length >= 4;
+      $("#tbody").innerHTML = rows.map(function (s) {
+        var m = s.m, pr = PROVIDERS[m.p] || PROVIDERS.other, on = state.cmp.indexOf(m.id) > -1;
+        var fit = s.fail ? '<span class="hint">' + esc(s.fail) + "</span>"
+          : '<span class="fitbar"><i class="track"><i class="on" style="width:' + Math.round(s.score * 100) +
+            '%"></i></i><b class="num">' + Math.round(s.score * 100) + "</b></span>";
+        return "<tr>" +
+          '<td><a href="#modelcards" data-goto="' + esc(m.id) + '" style="font-weight:700;color:var(--ink);text-decoration:none">' + esc(m.name) + "</a>" +
+            '<div class="hint" style="margin-top:2px"><span class="logo ' + pr.cls + '" style="width:14px;height:14px;font-size:9px;border-radius:4px;vertical-align:-2px">' +
+            pr.letter + "</span> " + esc(pr.name) + badges(m) + "</div></td>" +
+          '<td class="fit">' + fit + "</td>" +
+          '<td class="num">' + fmtCtx(m.ctx) + "</td>" +
+          '<td class="num">' + fmtUsd(m.in) + "</td>" +
+          '<td class="num">' + fmtUsd(m.out) + "</td>" +
+          '<td class="num">' + (s.cost == null ? '<span class="hint">' + L("saját hw", "own hw") + "</span>" : fmtUsd(s.cost)) + "</td>" +
+          '<td class="num">⚡ ' + fmtKwh(m.kwh) + "</td>" +
+          '<td class="hide-sm">' + pips(m.r.code) + " " + pips(m.r.reason) + " " + pips(m.r.write) + "</td>" +
+          '<td class="cbcol"><input type="checkbox" data-cmp="' + esc(m.id) + '"' + (on ? " checked" : "") +
+            (!on && full ? " disabled" : "") + ' aria-label="' + esc(m.name) + " " + L("összehasonlításhoz", "for comparison") + '"></td>' +
+        "</tr>";
+      }).join("");
+    }
+
+    /* ============================== ÖSSZEHASONLÍTÁS ============================== */
+    function renderCmpBtn() {
+      var b = $("#cmpOpen");
+      b.hidden = state.cmp.length === 0;
+      b.disabled = state.cmp.length < 2;
+      b.textContent = L("Összehasonlítás (", "Compare (") + state.cmp.length + ")";
+    }
+    function renderCmp() {
+      var box = $("#cmpBox");
+      if (state.cmp.length < 2) { box.hidden = true; box.innerHTML = ""; return; }
+      var sc = state.cmp.map(function (id) {
+        return lastScores.filter(function (s) { return s.m.id === id; })[0];
+      }).filter(Boolean);
+      var bestNum = function (get, dir) {
+        var v = sc.map(get).filter(function (x) { return x != null; });
+        if (!v.length) return null;
+        return dir > 0 ? Math.max.apply(null, v) : Math.min.apply(null, v);
+      };
+      var cell = function (val, b, txt) {
+        return '<td class="' + (val != null && val === b ? "best" : "") + '">' + txt + "</td>";
+      };
+      var rows = [];
+      rows.push([L("Szolgáltató", "Provider"), sc.map(function (s) {
+        var pr = PROVIDERS[s.m.p] || PROVIDERS.other;
+        return "<td>" + esc(pr.name) + '<div class="hint">' + esc(pr.hq) + "</div></td>";
+      }).join("")]);
+      (function () {
+        var b = bestNum(function (s) { return s.fail ? null : s.score; }, 1);
+        rows.push([L("Illeszkedés", "Fit"), sc.map(function (s) {
+          return s.fail ? '<td class="hint">' + esc(s.fail) + "</td>"
+                        : cell(s.score, b, '<b class="num">' + Math.round(s.score * 100) + "</b>");
+        }).join("")]);
+      })();
+      (function () {
+        var b = bestNum(function (s) { return s.cost; }, -1);
+        rows.push([L("Havi költség", "Monthly cost"), sc.map(function (s) {
+          return cell(s.cost, b, s.cost == null ? L("saját hardver", "own hardware") : '<b class="num">' + fmtUsd(s.cost) + "</b>");
+        }).join("")]);
+      })();
+      (function () {
+        var v = volume();
+        var kb = bestNum(function (s) { return s.m.kwh; }, -1);
+        var mb = bestNum(function (s) { return monthlyKwh(s.m, v); }, -1);
+        rows.push([L("⚡ kWh / kérés", "⚡ kWh / request"), sc.map(function (s) {
+          return cell(s.m.kwh, kb, '<b class="num">⚡ ' + fmtKwh(s.m.kwh) + "</b>");
+        }).join("")]);
+        rows.push([L("⚡ kWh / hó", "⚡ kWh / month"), sc.map(function (s) {
+          var x = monthlyKwh(s.m, v);
+          return cell(x, mb, '<b class="num">⚡ ' + (x < 0.05 ? "<0,05" : x.toLocaleString("hu-HU", { maximumFractionDigits: 1 })) + "</b>");
+        }).join("")]);
+      })();
+      (function () {
+        var b = bestNum(function (s) { return s.m.ctx; }, 1);
+        rows.push([L("Kontextus", "Context"), sc.map(function (s) {
+          return cell(s.m.ctx, b, '<b class="num">' + fmtCtx(s.m.ctx) + "</b>");
+        }).join("")]);
+      })();
+      rows.push([L("Ár be / ki ($/1M)", "Price in / out ($/1M)"), sc.map(function (s) {
+        return '<td class="num">' + (s.m.in == null ? "–" : fmtUsd(s.m.in) + " / " + fmtUsd(s.m.out)) + "</td>";
+      }).join("")]);
+      ["code", "reason", "write", "speed"].forEach(function (k) {
+        var b = bestNum(function (s) { return s.m.r[k]; }, 1);
+        rows.push([enLabel(k), sc.map(function (s) { return cell(s.m.r[k], b, pips(s.m.r[k])); }).join("")]);
+      });
+      rows.push([L("Képbemenet", "Image input"), sc.map(function (s) {
+        return "<td>" + (s.m.vision === true ? L("igen", "yes") : s.m.vision === false ? L("nem", "no") : '<span class="hint">' + L("nincs adat", "unknown") + "</span>") + "</td>";
+      }).join("")]);
+      rows.push([L("Súlyok", "Weights"), sc.map(function (s) {
+        var m = s.m;
+        return "<td>" + (m.open === true ? L("nyílt (", "open (") + esc(m.license || "?") + ")"
+          : m.open === null ? '<span class="hint">' + L("ellenőrizendő", "to verify") + "</span>"
+          : L("zárt, csak API", "closed, API only")) + "</td>";
+      }).join("")]);
+      box.hidden = false;
+      box.innerHTML = "<h3>" + L("Összehasonlítás", "Comparison") + "</h3>" +
+        '<table class="tbl"><thead><tr><th scope="col"></th>' +
+        sc.map(function (s) { return '<th scope="col"><span class="num" style="font-weight:700">' + esc(s.m.name) + "</span></th>"; }).join("") +
+        "</tr></thead><tbody>" +
+        rows.map(function (r) { return '<tr><th scope="row">' + esc(r[0]) + "</th>" + r[1] + "</tr>"; }).join("") +
+        "</tbody></table>" +
+        '<p class="legend">' + L("Zölddel a sor legjobb értéke. Az értékelések szerkesztői becslések; a kWh kérésenkénti becslés.",
+                                "Green = best value in the row. Ratings are editorial estimates; kWh is a per-request estimate.") + "</p>";
+    }
+    function enLabel(k) { return lang() === "en" ? RL[k].en : RL[k].hu; }
+
+    /* ============================== ESEMÉNYEK ============================== */
+    var typeT;
+    $("#task").addEventListener("input", function () {
+      clearTimeout(typeT);
+      typeT = setTimeout(function () { detectFromText(); renderAll(); }, 250);
+    });
+    document.querySelectorAll("[data-sample]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var s = SAMPLES[b.getAttribute("data-sample")]; if (!s) return;
+        $("#task").value = lang() === "en" ? s.en : s.hu;
+        detectFromText(); renderAll();
+      });
+    });
+    $("#needs").addEventListener("click", function (e) {
+      var b = e.target.closest("[data-need]"); if (!b) return;
+      var id = b.getAttribute("data-need");
+      if (state.needs.has(id)) state.needs.delete(id); else state.needs.add(id);
+      state.autoNeeds.delete(id); /* kézi döntés: többé nem írjuk felül */
+      renderNeeds(); renderAll();
+    });
+    ["#cOpen", "#cEu", "#cStable", "#cCtx", "#volIn", "#volOut"].forEach(function (s) {
+      $(s).addEventListener("input", renderAll);
+    });
+    $("#prio").addEventListener("input", function () { prioText(); renderAll(); });
+    $("#q").addEventListener("input", function (e) { state.q = e.target.value; renderTable(); });
+    $("#provF").addEventListener("change", function (e) { state.prov = e.target.value; renderTable(); });
+    $("#thead").addEventListener("click", function (e) {
+      var b = e.target.closest("[data-sort]"); if (!b) return;
+      var k = b.getAttribute("data-sort");
+      state.sort = state.sort.key === k ? { key: k, dir: -state.sort.dir }
+        : { key: k, dir: (k === "name" || k === "in" || k === "out" || k === "cost" || k === "kwh") ? 1 : -1 };
+      renderHead(); renderTable();
+    });
+    $("#tbody").addEventListener("click", function (e) {
+      var cb = e.target.closest("[data-cmp]");
+      if (cb) {
+        var id = cb.getAttribute("data-cmp"), i = state.cmp.indexOf(id);
+        if (i > -1) state.cmp.splice(i, 1);
+        else if (state.cmp.length < 4) state.cmp.push(id);
+        else { cb.checked = false; return; }
+        renderCmpBtn(); renderCmp();
+        return;
+      }
+      var g = e.target.closest("[data-goto]");
+      if (g) { e.preventDefault(); openCard(g.getAttribute("data-goto")); }
+    });
+    $("#cmpOpen").addEventListener("click", renderCmp);
+
+    /* ============================== INDULÁS ============================== */
+    function renderAll() { renderPicks(); renderTable(); }
+    function initAll() {
+      renderNeeds(); prioText(); renderPicks(); hydratePicks(); renderCards();
+      renderHead(); renderProvF(); renderTable(); renderCmpBtn(); renderCmp();
+    }
+    window.addEventListener("ecoai:lang", initAll);
+    $("#task").value = lang() === "en" ? SAMPLES.chat.en : SAMPLES.chat.hu;
+    detectFromText();
+    initAll();
+  })();
 </script>
 <script data-goatcounter="https://kiazami.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
