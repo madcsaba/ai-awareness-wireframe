@@ -3,17 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>AI tudatossági UI – wireframe csomag / AI awareness UI – wireframe pack</title>
-<meta name="description" content="Wireframe gyűjtemény: modelltudatosság, energia-költség visszajelzés, eco-feedback animáció, mobil app, petíció és kampányoldalak. / Wireframe pack: model awareness, energy-cost feedback, eco animation, mobile app, petition and campaign pages.">
+<title>EcoAI – Minden kattintásnak súlya van / Every click has a weight</title>
+<meta name="description" content="Lásd, mibe kerül egy AI-kérdés, és válassz könnyebbet: app, prototípusok, útmutatók, videó, infografika és kampány. / See what an AI question costs and choose lighter: app, prototypes, guides, video, infographic and campaign.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="🌿 AI tudatossági UI – wireframe csomag">
-<meta property="og:description" content="Modellválasztó, energia-költség visszajelzés, eco-feedback animáció és mobil app – interaktív HTML wireframe-ek.">
+<meta property="og:title" content="EcoAI – Minden kattintásnak súlya van">
+<meta property="og:description" content="Lásd, mibe kerül egy AI-kérdés, és válassz könnyebbet. App, videó, infografika, útmutatók és kampány – magyarul és angolul.">
 <meta property="og:url" content="https://madcsaba.github.io/ai-awareness-wireframe/">
 <meta property="og:image" content="https://madcsaba.github.io/ai-awareness-wireframe/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:locale" content="hu_HU">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:card" content="summary_large_image">
 <script src="nav.js" defer></script>
 <script>
 /* korai nyelv-beállítás, hogy ne villanjon meg mindkét nyelv */
@@ -22,212 +22,375 @@ if(l!=="hu"&&l!=="en")l=(navigator.language||"").toLowerCase().indexOf("hu")===0
 document.documentElement.setAttribute("data-lang",l);document.documentElement.lang=l;})();
 </script>
 <style>
-  :root{--bg:#f6f7f9;--panel:#fff;--line:#e3e6ea;--ink:#1a1d21;--dim:#6b7280;
-    --acc:#2563eb;--green:#16a34a;--green-d:#0f7a37;--soft:#f2fbf5;--soft2:#e7f7ed;
-    --display:ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial;--serif:Georgia,'Times New Roman',serif}
+  /* Inter: helyben tárolt betűtípus (app/fonts, OFL) – nincs külső betöltés */
+  @font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;
+    src:url(app/fonts/inter-latin-ext-wght-normal.woff2) format("woff2");
+    unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+  @font-face{font-family:"Inter";font-style:normal;font-weight:100 900;font-display:swap;
+    src:url(app/fonts/inter-latin-wght-normal.woff2) format("woff2");
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+  :root{
+    --bg:#f6f7f5;--panel:#fff;--line:#e4e7e3;--ink:#0f1a14;--dim:#5b6660;--soft:#eef6f0;
+    --green:#16a34a;--green-d:#0f7a37;--mint:#4ade80;--night:#07130d;--night2:#0d2017;
+    --font:"Inter",ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial,sans-serif}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--display);padding:40px 18px 70px}
-  .wrap{max-width:980px;margin:28px auto 0}
-  .kicker{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--green-d);font-weight:700}
-  h1{font:600 34px/1.2 var(--serif);margin:8px 0 8px;letter-spacing:-.01em}
-  .sub{color:#3b4148;margin:0 0 26px;max-width:680px;font-size:16.5px}
-  /* hero */
-  .hero{display:grid;gap:22px;align-items:center;background:linear-gradient(135deg,#f2fbf5 0%,#fff 70%);
-    border:1px solid #cfe9d8;border-radius:22px;padding:30px 32px;margin-bottom:12px}
-  @media(min-width:760px){.hero{grid-template-columns:1.5fr 1fr}}
-  .hero h2{font:600 26px/1.25 var(--serif);margin:6px 0 10px}
-  .hero p{margin:0 0 18px;color:#3b4148;font-size:15.5px}
-  .btns{display:flex;flex-wrap:wrap;gap:10px}
-  .btn{display:inline-block;padding:11px 18px;border-radius:11px;font-weight:700;text-decoration:none;font-size:14.5px;transition:.15s}
-  .btn.pri{background:var(--green);color:#fff}
-  .btn.pri:hover{background:var(--green-d)}
-  .btn.sec{background:#fff;color:var(--green-d);border:1px solid #cfe9d8}
-  .btn.sec:hover{border-color:var(--green)}
-  .hero ul{list-style:none;margin:0;padding:0;font-size:14px;color:#3b4148}
-  .hero li{padding:8px 0;border-top:1px solid #dcefe3}
-  .hero li:first-child{border-top:0}
-  .hero li.note{font-size:12.5px;color:var(--dim)}
-  /* szekciók */
-  section{margin-top:40px}
-  .sec-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:14px}
-  .sec-h .num{width:28px;height:28px;border-radius:9px;background:var(--soft2);color:var(--green-d);
-    display:inline-grid;place-items:center;font:700 14px var(--serif);flex:0 0 auto;align-self:center}
-  .sec-h h2{font:600 22px/1.2 var(--serif);margin:0}
-  .sec-h p{margin:0;color:var(--dim);font-size:14px;flex-basis:100%;padding-left:40px}
-  .grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(215px,1fr))}
-  a.card,.card{display:block;background:var(--panel);border:1px solid var(--line);border-radius:16px;
-    padding:18px 20px;text-decoration:none;color:inherit;transition:.15s}
-  a.card:hover{border-color:var(--green);transform:translateY(-2px);box-shadow:0 8px 24px rgba(22,163,74,.12)}
-  .ico{font-size:24px}
-  .card h3{font-size:16.5px;margin:8px 0 5px}
-  .card p{margin:0;font-size:13.5px;color:var(--dim)}
-  .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
-  .tag{font-size:11px;border-radius:99px;padding:2px 9px;background:#eef1f5;color:var(--dim)}
-  .tag.new{background:var(--soft2);color:var(--green-d);font-weight:700}
-  /* design referenciák: egy halk kártya */
-  .card.ref{background:transparent;border-style:dashed;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-  .card.ref p{flex:1 1 300px}
-  .card.ref .links{display:flex;gap:8px;flex-wrap:wrap}
-  .card.ref .links a{font-size:13.5px;color:var(--ink);text-decoration:none;border:1px solid var(--line);
-    background:#fff;border-radius:9px;padding:6px 11px}
-  .card.ref .links a:hover{border-color:var(--green);color:var(--green-d)}
-  .foot{margin-top:40px;font-size:12.5px;color:var(--dim);border-top:1px solid var(--line);padding-top:16px}
-  .foot a{color:var(--green-d)}
-  /* nyelv-váltás: a nav.js data-lang attribútuma vezérel */
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 var(--font);-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1160px;margin:0 auto;padding:0 24px}
+  .ic{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+  .pill{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.02em;
+    padding:7px 14px;border-radius:99px}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:14px 22px;border-radius:14px;font-weight:650;
+    font-size:15.5px;text-decoration:none;transition:transform .15s,background .15s,border-color .15s}
+  .btn:hover{transform:translateY(-1px)}
+  .btn .ic{width:18px;height:18px}
+
+  /* ============ HERO ============ */
+  .hero{position:relative;overflow:hidden;color:#fff;
+    background:radial-gradient(1200px 600px at 85% 20%,rgba(74,222,128,.18),transparent 60%),
+               radial-gradient(900px 500px at 0% 100%,rgba(22,163,74,.22),transparent 60%),
+               linear-gradient(160deg,var(--night2),var(--night) 60%)}
+  .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:48px 48px;mask-image:linear-gradient(180deg,#000,transparent 85%)}
+  .hero .wrap{position:relative;z-index:1;display:grid;gap:56px;align-items:center;padding-top:72px;padding-bottom:84px}
+  @media(min-width:900px){.hero .wrap{grid-template-columns:1.25fr .75fr}}
+  .hero .pill{background:rgba(74,222,128,.12);color:#b7f5cb;border:1px solid rgba(74,222,128,.25)}
+  .hero h1{font-size:clamp(42px,6.2vw,76px);line-height:1.02;letter-spacing:-.035em;font-weight:800;margin:22px 0 20px}
+  .hero h1 em{font-style:normal;background:linear-gradient(90deg,#4ade80,#a3e635);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .hero .lede{font-size:19px;line-height:1.6;color:#c9d6ce;max-width:560px;margin:0 0 32px}
+  .hero .btns{display:flex;flex-wrap:wrap;gap:12px}
+  .btn.pri{background:var(--green);color:#fff;box-shadow:0 10px 30px rgba(22,163,74,.35)}
+  .btn.pri:hover{background:#18b552}
+  .btn.ghost{color:#fff;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.04)}
+  .btn.ghost:hover{border-color:rgba(255,255,255,.45)}
+  .facts{display:flex;flex-wrap:wrap;gap:22px 34px;margin-top:40px;color:#a9b8af;font-size:14.5px}
+  .facts span{display:flex;align-items:center;gap:10px}
+  .facts .ic{color:var(--mint)}
+  .device{justify-self:center;position:relative;width:min(340px,80vw);aspect-ratio:9/16;border-radius:38px;padding:10px;
+    background:linear-gradient(145deg,#2a3a31,#0b1510);box-shadow:0 40px 90px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.08) inset}
+  .device video{width:100%;height:100%;object-fit:cover;border-radius:30px;display:block;background:#000}
+  .device .sound{position:absolute;right:22px;bottom:22px;display:inline-flex;align-items:center;gap:8px;padding:9px 13px;
+    border-radius:99px;border:0;background:rgba(10,20,14,.72);color:#fff;font:600 13px var(--font);cursor:pointer;backdrop-filter:blur(6px)}
+  .device .sound .ic{width:16px;height:16px}
+  .device-cap{text-align:center;color:#8fa198;font-size:13px;margin-top:14px}
+
+  /* ============ SECTIONS ============ */
+  section.blk{padding:84px 0 0}
+  .eyebrow{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--green-d)}
+  .blk h2{font-size:clamp(30px,3.6vw,42px);line-height:1.12;letter-spacing:-.025em;font-weight:800;margin:10px 0 12px}
+  .blk .intro{color:var(--dim);font-size:17.5px;max-width:680px;margin:0 0 34px}
+  .head-row{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap}
+
+  /* infographic */
+  .info{background:var(--panel);border:1px solid var(--line);border-radius:28px;padding:14px;
+    box-shadow:0 30px 60px -30px rgba(15,26,20,.25)}
+  .info img{display:block;width:100%;height:auto;border-radius:18px}
+  .info-bar{display:flex;flex-wrap:wrap;gap:10px;justify-content:space-between;align-items:center;padding:14px 10px 4px;color:var(--dim);font-size:14px}
+  .linkbtns{display:flex;gap:8px;flex-wrap:wrap}
+  .lb{display:inline-flex;align-items:center;gap:8px;padding:9px 14px;border-radius:11px;border:1px solid var(--line);
+    background:#fff;text-decoration:none;font-weight:600;font-size:14px;color:var(--ink)}
+  .lb:hover{border-color:var(--green);color:var(--green-d)}
+  .lb .ic{width:17px;height:17px}
+
+  /* app feature */
+  .feature{display:grid;gap:40px;align-items:center;background:linear-gradient(135deg,#ecf8f0,#fff 65%);
+    border:1px solid #d6eedd;border-radius:32px;padding:48px}
+  @media(min-width:860px){.feature{grid-template-columns:1.15fr .85fr}}
+  .feature h2{margin-top:10px}
+  .checks{list-style:none;padding:0;margin:0 0 30px;display:grid;gap:14px}
+  .checks li{display:flex;gap:14px;align-items:flex-start;font-size:16.5px}
+  .checks .ico{width:40px;height:40px;border-radius:12px;background:#fff;border:1px solid #d6eedd;display:grid;place-items:center;color:var(--green-d);flex:none}
+  .checks b{display:block;font-weight:700}
+  .checks span.t{color:var(--dim);font-size:15px}
+  .shot{justify-self:center;width:min(300px,75vw);border-radius:34px;padding:9px;background:#0f1a14;box-shadow:0 30px 60px -20px rgba(15,26,20,.45)}
+  .shot img{display:block;width:100%;height:auto;border-radius:26px}
+  .note{font-size:13px;color:var(--dim);margin-top:16px}
+
+  /* cards */
+  .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  a.card{position:relative;display:flex;flex-direction:column;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:22px;
+    padding:26px;text-decoration:none;transition:transform .18s,box-shadow .18s,border-color .18s}
+  a.card:hover{transform:translateY(-3px);border-color:#bfe3cb;box-shadow:0 18px 40px -18px rgba(22,163,74,.35)}
+  .card .ico{width:48px;height:48px;border-radius:14px;background:var(--soft);color:var(--green-d);display:grid;place-items:center;margin-bottom:10px}
+  .card .ico .ic{width:24px;height:24px}
+  .card h3{font-size:18.5px;letter-spacing:-.01em;line-height:1.3;margin:0}
+  .card p{margin:0;font-size:15px;color:var(--dim)}
+  .card .go{margin-top:auto;padding-top:12px;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:650;color:var(--green-d)}
+  .card .go .ic{width:16px;height:16px;transition:transform .15s}
+  a.card:hover .go .ic{transform:translateX(3px)}
+  .badge{position:absolute;top:22px;right:22px;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+    background:var(--green);color:#fff;border-radius:99px;padding:4px 10px}
+  .card.dark{background:var(--night2);border-color:var(--night2);color:#fff}
+  .card.dark p{color:#b7c5bc}
+  .card.dark .ico{background:rgba(74,222,128,.12);color:var(--mint)}
+  .card.dark .go{color:var(--mint)}
+
+  /* refs + footer */
+  .refs{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:space-between;border:1px dashed #cfd6d1;border-radius:20px;padding:20px 24px;color:var(--dim);font-size:15px}
+  footer{margin-top:90px;background:var(--night);color:#a9b8af;font-size:14.5px}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:18px 40px;justify-content:space-between;align-items:center;padding-top:36px;padding-bottom:36px}
+  footer a{color:#e7f2ea;text-decoration:none;font-weight:600}
+  footer a:hover{color:var(--mint)}
+  footer .brand{display:flex;align-items:center;gap:10px;color:#fff;font-weight:800;font-size:17px}
+  footer .brand .lg{width:30px;height:30px;border-radius:9px;background:var(--green);display:grid;place-items:center}
+  footer .brand .lg .ic{width:18px;height:18px;color:#fff}
+
   html[data-lang="hu"] .en{display:none}
   html[data-lang="en"] .hu{display:none}
-  @media(max-width:600px){h1{font-size:28px}.hero{padding:24px 20px}.hero h2{font-size:22px}.sec-h p{padding-left:0}}
+  @media(max-width:640px){.feature{padding:28px}.hero .wrap{padding-top:48px}section.blk{padding-top:64px}}
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
-  <div class="kicker"><span class="hu">EcoAI · AI-tudatosság</span><span class="en">EcoAI · AI awareness</span></div>
-  <h1>
-    <span class="hu">Lásd, mibe kerül egy AI-kérdés – és válassz okosabban</span>
-    <span class="en">See what an AI question costs – and choose smarter</span>
-  </h1>
-  <p class="sub">
-    <span class="hu">Hogyan lehet új felülettel és UX-szel növelni a tudatosságot a nagy AI modellek használatában:
-      modellválasztás, energia-visszajelzés küldés előtt és után, szelíd terelés – prototípusokkal, útmutatókkal és kampánnyal.</span>
-    <span class="en">How new interface and UX design can raise awareness in using large AI models:
-      model choice, energy feedback before and after sending, gentle nudges – with prototypes, guides and a campaign.</span>
-  </p>
 
-  <!-- HERO: egyetlen belépési pont -->
-  <div class="hero">
+<!-- ikonkészlet: egységes, vonalas SVG ikonok -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10Z"/><path d="M2 21c0-3 1.9-5.4 5.1-6"/></symbol>
+  <symbol id="i-zap" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8Z"/></symbol>
+  <symbol id="i-gauge" viewBox="0 0 24 24"><path d="m12 14 4-4"/><path d="M3.3 19a10 10 0 1 1 17.4 0"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/><path d="m9 12 2 2 4-4"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14"/><path d="m13 5 7 7-7 7"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m10 8 6 4-6 4V8Z"/></symbol>
+  <symbol id="i-monitor" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M11 18h2"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9Z"/><path d="M19 15v4M17 17h4"/></symbol>
+  <symbol id="i-message" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></symbol>
+  <symbol id="i-cpu" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></symbol>
+  <symbol id="i-flag" viewBox="0 0 24 24"><path d="M4 22V4"/><path d="M4 4h13l-2.5 4.5L17 13H4"/></symbol>
+  <symbol id="i-book" viewBox="0 0 24 24"><path d="M2 4h7a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H2Z"/><path d="M22 4h-7a3 3 0 0 0-3 3v13a2 2 0 0 1 2-2h8Z"/></symbol>
+  <symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></symbol>
+  <symbol id="i-pointer" viewBox="0 0 24 24"><path d="m4 4 7 17 2.5-7.5L21 11Z"/></symbol>
+  <symbol id="i-present" viewBox="0 0 24 24"><path d="M2 3h20"/><path d="M4 3v11a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1V3"/><path d="M12 15v6M8 21h8"/></symbol>
+  <symbol id="i-media" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="3"/><path d="m10 9 5 3-5 3V9Z"/></symbol>
+  <symbol id="i-layers" viewBox="0 0 24 24"><path d="M12 2 22 7 12 12 2 7Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></symbol>
+  <symbol id="i-max" viewBox="0 0 24 24"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></symbol>
+  <symbol id="i-volume" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/></symbol>
+  <symbol id="i-mute" viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4V5Z"/><path d="m22 9-6 6M16 9l6 6"/></symbol>
+  <symbol id="i-github" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-.9-2.6c3.1-.3 6.4-1.5 6.4-7a5.4 5.4 0 0 0-1.5-3.7 5 5 0 0 0-.1-3.8s-1.2-.3-3.9 1.5a13.4 13.4 0 0 0-7 0C6.3 1.7 5.1 2 5.1 2a5 5 0 0 0-.1 3.8A5.4 5.4 0 0 0 3.5 9.5c0 5.4 3.3 6.6 6.4 7a3.4 3.4 0 0 0-.9 2.6V23"/></symbol>
+</svg>
+
+<!-- ======================= HERO ======================= -->
+<header class="hero">
+  <div class="wrap">
     <div>
-      <div class="kicker">🌿 <span class="hu">Kezdd itt</span><span class="en">Start here</span></div>
-      <h2><span class="hu">EcoAI – próbáld ki a telefonodon</span><span class="en">EcoAI – try it on your phone</span></h2>
-      <p><span class="hu">A mobil wireframe működő, telepíthető alkalmazásként: modellválasztó energia szerint, küldés előtti
-        becslés, kérésenkénti kWh/CO₂ és saját lábnyom-dashboard. Offline is működik, minden adat a készüléken marad.</span>
-        <span class="en">The mobile wireframe as a working, installable app: energy-sorted model picker, pre-send estimate,
-        per-request kWh/CO₂ and your own footprint dashboard. Works offline, all data stays on the device.</span></p>
+      <span class="pill"><svg class="ic" style="width:16px;height:16px"><use href="#i-leaf"/></svg>
+        <span class="hu">EcoAI · Node AI Summit · Bohinj 2026</span><span class="en">EcoAI · Node AI Summit · Bohinj 2026</span></span>
+      <h1><span class="hu">Minden kattintásnak <em>súlya van.</em></span><span class="en">Every click <em>has a weight.</em></span></h1>
+      <p class="lede">
+        <span class="hu">Minden AI-kérdés valódi áramot fogyaszt, de a felület ezt elrejti. Megmutatjuk, mibe kerül, és segítünk könnyebbet választani: alkalmazással, útmutatókkal és egy kampánnyal.</span>
+        <span class="en">Every AI question uses real electricity, but the interface hides it. We show what it costs and help you choose lighter: with an app, guides and a campaign.</span>
+      </p>
       <div class="btns">
-        <a class="btn pri" href="app/"><span class="hu">Megnyitom az appot →</span><span class="en">Open the app →</span></a>
-        <a class="btn sec" href="beyond-the-chatbox.html"><span class="hu">Miért fontos? Olvasd el</span><span class="en">Why it matters</span></a>
+        <a class="btn pri" href="app/"><span class="hu">Kipróbálom az appot</span><span class="en">Try the app</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+        <a class="btn ghost" href="#info"><svg class="ic"><use href="#i-play"/></svg><span class="hu">Egy pillantásra</span><span class="en">At a glance</span></a>
+      </div>
+      <div class="facts">
+        <span><svg class="ic"><use href="#i-zap"/></svg><span class="hu">Kis kérdésre kis modell</span><span class="en">Small question, small model</span></span>
+        <span><svg class="ic"><use href="#i-gauge"/></svg><span class="hu">Becslés küldés előtt</span><span class="en">An estimate before you send</span></span>
+        <span><svg class="ic"><use href="#i-shield"/></svg><span class="hu">Bűntudatkeltés nélkül</span><span class="en">No guilt-tripping</span></span>
       </div>
     </div>
-    <ul>
-      <li>⚡ <span class="hu">Kis kérdésre kis modell – az app javasolja</span><span class="en">Small question, small model – the app suggests it</span></li>
-      <li>🔋 <span class="hu">Becslés még küldés előtt</span><span class="en">An estimate before you hit send</span></li>
-      <li>🍃 <span class="hu">Széria és jelvények, bűntudatkeltés nélkül</span><span class="en">Streaks and badges, no guilt-tripping</span></li>
-      <li class="note"><span class="hu">A válaszok szimuláltak, az energiaadatok szemléltető becslések.</span><span class="en">Replies are simulated; energy figures are illustrative estimates.</span></li>
-    </ul>
+    <div>
+      <div class="device">
+        <video id="herovid" autoplay muted loop playsinline preload="metadata" poster="media/video-hu-poster.jpg" src="media/video-hu.mp4"
+          aria-label="Egyperces videó: Egy kattintás súlya / One-minute video: The weight of a click"></video>
+        <button class="sound" id="soundbtn" type="button"><svg class="ic"><use href="#i-mute"/></svg><span class="hu">Hang be</span><span class="en">Sound on</span></button>
+      </div>
+      <div class="device-cap"><span class="hu">Egy perc, felirattal · </span><span class="en">One minute, Hungarian narration and subtitles · </span><a href="media.html" style="color:#b7f5cb"><span class="hu">Videó és média</span><span class="en">Video &amp; media</span></a></div>
+    </div>
   </div>
+</header>
 
-  <!-- 1 · PRÓBÁLD KI -->
-  <section id="try">
-    <div class="sec-h"><span class="num">1</span><h2><span class="hu">Próbáld ki</span><span class="en">Try it</span></h2>
-      <p><span class="hu">Interaktív prototípusok – kattints végig rajtuk.</span><span class="en">Interactive prototypes – click through them.</span></p></div>
+<main>
+<!-- ======================= INFOGRAFIKA ======================= -->
+<section class="blk" id="info">
+  <div class="wrap">
+    <div class="eyebrow"><span class="hu">Egy pillantásra</span><span class="en">At a glance</span></div>
+    <h2><span class="hu">Egy kattintás súlya – az AI energiaköltsége</span><span class="en">The weight of a click – energy-conscious AI</span></h2>
+    <p class="intro"><span class="hu">A láthatatlan pazarlás, a jobb felület, az energiacímke és a takarékos szokások egyetlen képen.</span>
+      <span class="en">Matching models to tasks, five habits for lighter AI use and real-world eco-labelling parallels in one picture.</span></p>
+    <figure class="info" style="margin:0">
+      <a class="hu" href="media/infographic-hu.jpg" target="_blank" rel="noopener"><img src="media/infographic-hu.jpg" width="2752" height="1536" loading="lazy"
+        alt="Infografika: Egy kattintás súlya – az AI energiaköltsége. Négy panel: minden kérdésnek ára van, változtasd meg a felületet, energiacímke az AI-modelleknek, szokások és jelzések a takarékosságért."></a>
+      <a class="en" href="media/infographic-en.jpg" target="_blank" rel="noopener"><img src="media/infographic-en.jpg" width="2752" height="1536" loading="lazy"
+        alt="Infographic: The Weight of a Click – energy-conscious AI. Matching models to task complexity, five habits for lighter AI use, and real-world eco-labelling parallels."></a>
+      <figcaption class="info-bar">
+        <span><span class="hu">NotebookLM-mel készült, a háttércikk alapján.</span><span class="en">Made with NotebookLM from the background article.</span></span>
+        <span class="linkbtns">
+          <a class="lb hu" href="media/infographic-hu.jpg" target="_blank" rel="noopener"><svg class="ic"><use href="#i-max"/></svg>Teljes méret</a>
+          <a class="lb en" href="media/infographic-en.jpg" target="_blank" rel="noopener"><svg class="ic"><use href="#i-max"/></svg>Full size</a>
+          <a class="lb" href="media.html"><svg class="ic"><use href="#i-media"/></svg><span class="hu">Podcast, előadások, cikk</span><span class="en">Podcast, talks, article</span></a>
+        </span>
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ======================= APP ======================= -->
+<section class="blk" id="app">
+  <div class="wrap">
+    <div class="feature">
+      <div>
+        <div class="eyebrow"><span class="hu">Kezdd itt</span><span class="en">Start here</span></div>
+        <h2><span class="hu">EcoAI – próbáld ki a telefonodon</span><span class="en">EcoAI – try it on your phone</span></h2>
+        <p class="intro" style="margin-bottom:26px"><span class="hu">Telepíthető, offline is működő alkalmazás. Minden adat a készüléken marad.</span>
+          <span class="en">An installable app that works offline. All data stays on your device.</span></p>
+        <ul class="checks">
+          <li><span class="ico"><svg class="ic"><use href="#i-gauge"/></svg></span><span><b><span class="hu">Modellválasztó energia szerint</span><span class="en">Energy-sorted model picker</span></b>
+            <span class="t"><span class="hu">Becslés még küldés előtt, kérésenkénti kWh és CO₂.</span><span class="en">An estimate before you send, kWh and CO₂ per request.</span></span></span></li>
+          <li><span class="ico"><svg class="ic"><use href="#i-leaf"/></svg></span><span><b><span class="hu">Saját lábnyom</span><span class="en">Your own footprint</span></b>
+            <span class="t"><span class="hu">Heti trend és javaslatok, csendben, követés nélkül.</span><span class="en">Weekly trend and suggestions, quietly, with no tracking.</span></span></span></li>
+          <li><span class="ico"><svg class="ic"><use href="#i-shield"/></svg></span><span><b><span class="hu">Jutalom, nem szégyenítés</span><span class="en">Rewards, not shaming</span></b>
+            <span class="t"><span class="hu">Széria és jelvények a könnyebb választásért.</span><span class="en">Streaks and badges for the lighter choice.</span></span></span></li>
+        </ul>
+        <a class="btn pri" href="app/"><span class="hu">Megnyitom az appot</span><span class="en">Open the app</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+        <p class="note"><span class="hu">A válaszok szimuláltak, az energiaadatok szemléltető becslések.</span><span class="en">Replies are simulated; energy figures are illustrative estimates.</span></p>
+      </div>
+      <div class="shot">
+        <img class="hu" src="media/app-hu.jpg" width="840" height="1720" loading="lazy" alt="Az EcoAI app kezdőképernyője">
+        <img class="en" src="media/app-en.jpg" width="840" height="1720" loading="lazy" alt="EcoAI app start screen">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================= 1 · PRÓBÁLD KI ======================= -->
+<section class="blk" id="try">
+  <div class="wrap">
+    <div class="eyebrow"><span class="hu">Próbáld ki</span><span class="en">Try it</span></div>
+    <h2><span class="hu">Interaktív prototípusok</span><span class="en">Interactive prototypes</span></h2>
+    <p class="intro"><span class="hu">Kattints végig rajtuk: így nézhetne ki egy energiatudatos AI-felület.</span><span class="en">Click through them: this is what an energy-aware AI interface could look like.</span></p>
     <div class="grid">
       <a class="card" href="index-en.html" data-hu="hu.html">
-        <span class="ico">🖥️</span>
+        <span class="ico"><svg class="ic"><use href="#i-monitor"/></svg></span>
         <h3><span class="hu">Asztali wireframe</span><span class="en">Desktop wireframe</span></h3>
-        <p><span class="hu">Márkás modellválasztó (OpenAI / Anthropic / Google / helyi), élő idő-költség-energia becslés,
-          válasz meta-sáv, nudge-ek, útválasztás és dashboard.</span>
-          <span class="en">Brand-aware model picker (OpenAI / Anthropic / Google / local), live time-cost-energy estimates,
-          response meta bar, nudges, routing and a dashboard.</span></p>
+        <p><span class="hu">Márkás modellválasztó, élő idő-, költség- és energiabecslés, válasz meta-sáv, terelés, útválasztás és dashboard.</span>
+          <span class="en">Brand-aware model picker, live time-cost-energy estimates, response meta bar, nudges, routing and a dashboard.</span></p>
+        <span class="go"><span class="hu">Megnyitom</span><span class="en">Open</span><svg class="ic"><use href="#i-arrow"/></svg></span>
       </a>
       <a class="card" href="mobile-app.html" data-hu="mobile-app-hu.html">
-        <span class="ico">📱</span>
+        <span class="ico"><svg class="ic"><use href="#i-phone"/></svg></span>
         <h3><span class="hu">Mobil app wireframe</span><span class="en">Mobile app wireframe</span></h3>
-        <p><span class="hu">4 képernyő: Chat (modellválasztó + küldés), Lábnyom (heti trend, javaslatok), Modellek és Széria (jutalmak, jelvények).</span>
-          <span class="en">4 screens: Chat (model picker + send), Footprint (weekly trend, suggestions), Models and Streak (rewards, badges).</span></p>
+        <p><span class="hu">Négy képernyő: csevegés modellválasztóval, lábnyom, modellek, széria és jelvények.</span>
+          <span class="en">Four screens: chat with model picker, footprint, models, and streak with badges.</span></p>
+        <span class="go"><span class="hu">Megnyitom</span><span class="en">Open</span><svg class="ic"><use href="#i-arrow"/></svg></span>
       </a>
       <a class="card" href="eco-feedback.html" data-hu="eco-feedback-hu.html">
-        <span class="ico">✨</span>
+        <span class="ico"><svg class="ic"><use href="#i-sparkle"/></svg></span>
         <h3><span class="hu">Eco-feedback animáció</span><span class="en">Eco-feedback animation</span></h3>
-        <p><span class="hu">A takarékos választás jutalma: gyűrű-mérő, kWh/CO₂ számláló, levél-robbanás, széria – 3 változat és viselkedési szabályok.</span>
-          <span class="en">A reward for the lighter choice: ring gauge, kWh/CO₂ counter, leaf burst, streak – 3 variants plus behaviour rules.</span></p>
+        <p><span class="hu">A takarékos választás jutalma: gyűrű-mérő, energiaszámláló, levél-robbanás, széria. Három változat.</span>
+          <span class="en">A reward for the lighter choice: ring gauge, energy counter, leaf burst, streak. Three variants.</span></p>
+        <span class="go"><span class="hu">Megnyitom</span><span class="en">Open</span><svg class="ic"><use href="#i-arrow"/></svg></span>
       </a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- 2 · OLVASD EL -->
-  <section id="read">
-    <div class="sec-h"><span class="num">2</span><h2><span class="hu">Olvasd el</span><span class="en">Read</span></h2>
-      <p><span class="hu">Útmutatók és háttér: melyik modell mire elég, és miért kell új UX.</span><span class="en">Guides and background: which model is enough for what, and why UX must change.</span></p></div>
+<!-- ======================= 2 · OLVASD EL ======================= -->
+<section class="blk" id="read">
+  <div class="wrap">
+    <div class="eyebrow"><span class="hu">Olvasd el</span><span class="en">Read</span></div>
+    <h2><span class="hu">Útmutatók és háttér</span><span class="en">Guides and background</span></h2>
+    <p class="intro"><span class="hu">Melyik modell mire elég, hogyan kérdezz kevesebb körből, és miért kell új UX.</span><span class="en">Which model is enough for what, how to ask in fewer rounds, and why UX must change.</span></p>
     <div class="grid">
       <a class="card" href="beyond-the-chatbox.html">
-        <span class="ico">💬</span>
+        <span class="ico"><svg class="ic"><use href="#i-message"/></svg></span>
         <h3><span class="hu">Túl a chatablakon</span><span class="en">Beyond the chatbox</span></h3>
-        <p><span class="hu">Kiáltvány: hatékonysági mátrix és három UX-elv (token-méter, szelíd terelés, Auto-Eco) vázlatokkal.</span>
+        <p><span class="hu">Kiáltvány: hatékonysági mátrix és három UX-elv (token-mérő, szelíd terelés, Auto-Eco) vázlatokkal.</span>
           <span class="en">Manifesto: an efficiency matrix and three UX principles (token meter, nudging, Auto-Eco) with sketches.</span></p>
+        <span class="go"><span class="hu">Elolvasom</span><span class="en">Read</span><svg class="ic"><use href="#i-arrow"/></svg></span>
       </a>
       <a class="card" href="models.html">
-        <span class="ico">🧠</span>
+        <span class="ico"><svg class="ic"><use href="#i-cpu"/></svg></span>
         <h3><span class="hu">Melyik modellt használd?</span><span class="en">Which model should you use?</span></h3>
-        <p><span class="hu">Feladat-alapú javaslatok példa-promptokkal, összehasonlító táblázat, 5 szabály és gyakori tévhitek.</span>
-          <span class="en">Task-based picks with example prompts, a comparison table, 5 rules and common myths.</span></p>
+        <p><span class="hu">Feladat-alapú javaslatok példa-promptokkal, összehasonlító táblázat, öt szabály és gyakori tévhitek.</span>
+          <span class="en">Task-based picks with example prompts, a comparison table, five rules and common myths.</span></p>
+        <span class="go"><span class="hu">Elolvasom</span><span class="en">Read</span><svg class="ic"><use href="#i-arrow"/></svg></span>
       </a>
       <a class="card" href="start.html">
-        <span class="ico">🚀</span>
+        <span class="ico"><svg class="ic"><use href="#i-flag"/></svg></span>
         <h3><span class="hu">Hogyan kezdj bele</span><span class="en">How to get started</span></h3>
-        <p><span class="hu">Öt kitölthető indító sablon másolás gombbal – hogy az AI kevesebb körből, kevesebb energiából dolgozzon.</span>
-          <span class="en">Five fill-in starter templates with a copy button – so AI gets it done in fewer rounds, with less energy.</span></p>
+        <p><span class="hu">Öt kitölthető indító sablon másolás gombbal, hogy az AI kevesebb körből, kevesebb energiából dolgozzon.</span>
+          <span class="en">Five fill-in starter templates with a copy button, so AI gets it done in fewer rounds, with less energy.</span></p>
+        <span class="go"><span class="hu">Elolvasom</span><span class="en">Read</span><svg class="ic"><use href="#i-arrow"/></svg></span>
       </a>
       <a class="card" href="story.html">
-        <span class="ico">📖</span>
+        <span class="ico"><svg class="ic"><use href="#i-book"/></svg></span>
         <h3><span class="hu">A projekt története</span><span class="en">The story of this project</span></h3>
-        <p><span class="hu">Egy aggálytól a működő appig – és őszintén arról, hogyan lehetett volna kevesebb energiából.</span>
-          <span class="en">From a concern to a working app – and an honest look at how it could have taken less energy.</span></p>
+        <p><span class="hu">Egy aggálytól a működő appig, és őszintén arról, hogyan lehetett volna kevesebb energiából.</span>
+          <span class="en">From a concern to a working app, and an honest look at how it could have taken less energy.</span></p>
+        <span class="go"><span class="hu">Elolvasom</span><span class="en">Read</span><svg class="ic"><use href="#i-arrow"/></svg></span>
       </a>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- 3 · VEGYÉL RÉSZT -->
-  <section id="act">
-    <div class="sec-h"><span class="num">3</span><h2><span class="hu">Vegyél részt</span><span class="en">Take part</span></h2>
-      <p><span class="hu">Kampány: írd alá, oszd meg, mutasd be.</span><span class="en">Campaign: sign, share, present.</span></p></div>
+<!-- ======================= 3 · VEGYÉL RÉSZT ======================= -->
+<section class="blk" id="act">
+  <div class="wrap">
+    <div class="eyebrow"><span class="hu">Vegyél részt</span><span class="en">Take part</span></div>
+    <h2><span class="hu">Kampány: írd alá, oszd meg, mutasd be</span><span class="en">Campaign: sign, share, present</span></h2>
+    <p class="intro"><span class="hu">Egy ember egy szokást változtat. Egy közös szabvány milliók alapbeállítását.</span><span class="en">One person changes a habit. A shared standard changes the default for millions.</span></p>
     <div class="grid">
+      <a class="card dark" href="media.html">
+        <span class="badge"><span class="hu">Új</span><span class="en">New</span></span>
+        <span class="ico"><svg class="ic"><use href="#i-media"/></svg></span>
+        <h3><span class="hu">Előadások és média</span><span class="en">Talks &amp; media</span></h3>
+        <p><span class="hu">Videó, podcast, infografika, két diasor a bohinji Node AI Summitról, háttércikk és megosztókép.</span>
+          <span class="en">Video, podcast, infographic, two slide decks from the Node AI Summit in Bohinj, an article and share images.</span></p>
+        <span class="go"><span class="hu">Megnézem</span><span class="en">Open</span><svg class="ic"><use href="#i-arrow"/></svg></span>
+      </a>
       <a class="card" href="petition.html" data-hu="petition-hu.html">
-        <span class="ico">✍️</span>
+        <span class="ico"><svg class="ic"><use href="#i-pen"/></svg></span>
         <h3><span class="hu">Petíció</span><span class="en">Petition</span></h3>
         <p><span class="hu">Szabványos energiacímke minden modellhez, őszinte becslés küldés előtt, valódi modellválasztás.</span>
           <span class="en">A standard energy label for every model, an honest pre-send estimate, a real model choice.</span></p>
+        <span class="go"><span class="hu">Elolvasom</span><span class="en">Read</span><svg class="ic"><use href="#i-arrow"/></svg></span>
       </a>
       <a class="card" href="the-weight-of-a-click.html" data-hu="the-weight-of-a-click-hu.html">
-        <span class="ico">🖱️</span>
+        <span class="ico"><svg class="ic"><use href="#i-pointer"/></svg></span>
         <h3>The Weight of a Click</h3>
         <p><span class="hu">60 másodperces, szerkesztői stílusú interaktív kampányoldal az AI környezeti lábnyomáról.</span>
           <span class="en">A 60-second editorial, interactive campaign page about AI's environmental footprint.</span></p>
+        <span class="go"><span class="hu">Megnyitom</span><span class="en">Open</span><svg class="ic"><use href="#i-arrow"/></svg></span>
       </a>
       <a class="card" href="powering-intelligence.html" data-hu="powering-intelligence-hu.html">
-        <span class="ico">⚡</span>
-        <h3><span class="hu">Prezentáció</span><span class="en">Presentation</span> – Powering Intelligence</h3>
+        <span class="ico"><svg class="ic"><use href="#i-present"/></svg></span>
+        <h3>Powering Intelligence</h3>
         <p><span class="hu">17 diás prezentáció a felelős AI-energiahasználatról, böngészőben lapozható.</span>
           <span class="en">A 17-slide presentation on responsible AI energy use, ready to browse.</span></p>
-      </a>
-      <a class="card" href="media.html">
-        <span class="ico">🎧</span>
-        <h3><span class="hu">Előadások és média</span><span class="en">Talks &amp; media</span></h3>
-        <p><span class="hu">Videó, podcast, infografika, két diasor a bohinji Node AI Summitról, háttércikk és megosztókép, magyarul és angolul.</span>
-          <span class="en">Video, podcast, infographic, two slide decks from the Node AI Summit in Bohinj, a background article and share images, in English and Hungarian.</span></p>
-        <div class="tags"><span class="tag new"><span class="hu">új</span><span class="en">new</span></span></div>
+        <span class="go"><span class="hu">Megnyitom</span><span class="en">Open</span><svg class="ic"><use href="#i-arrow"/></svg></span>
       </a>
     </div>
-  </section>
-
-  <!-- 4 · DESIGN REFERENCIÁK (csak referencia, más design-rendszer) -->
-  <section id="ref">
-    <div class="sec-h"><span class="num">4</span><h2><span class="hu">Design referenciák</span><span class="en">Design references</span></h2></div>
-    <div class="card ref">
-      <p><span class="hu">„Win-Win” kampányanyagok dizájn-exportja – csak referencia, más design-rendszerrel készült.</span>
-        <span class="en">Design exports of the “Win-Win” campaign material – reference only, built with a different design system.</span></p>
-      <div class="links">
-        <a href="social-graphic/Social.dc.html">📊 Social graphic</a>
-        <a href="one-pager/Main.dc.html">📄 One-pager</a>
-      </div>
-    </div>
-  </section>
-
-  <div class="foot">
-    <span class="hu">Minden oldal statikus HTML, külső betűtípus és követés nélkül. A nyelvet a felső sávban válthatod (HU / EN).
-      Forráskód: <a href="https://github.com/madcsaba/ai-awareness-wireframe">GitHub</a>.</span>
-    <span class="en">Every page is static HTML, with no external fonts and no tracking. Switch language in the top bar (HU / EN).
-      Source: <a href="https://github.com/madcsaba/ai-awareness-wireframe">GitHub</a>.</span>
   </div>
-</div>
+</section>
+
+<!-- ======================= DESIGN REFERENCIÁK ======================= -->
+<section class="blk" id="ref">
+  <div class="wrap">
+    <div class="refs">
+      <span style="display:flex;gap:12px;align-items:center"><svg class="ic"><use href="#i-layers"/></svg>
+        <span><span class="hu">Design referenciák: a „Win-Win” kampányanyagok exportja, más design-rendszerrel.</span>
+        <span class="en">Design references: exports of the “Win-Win” campaign material, built with a different design system.</span></span></span>
+      <span class="linkbtns">
+        <a class="lb" href="social-graphic/Social.dc.html">Social graphic</a>
+        <a class="lb" href="one-pager/Main.dc.html">One-pager</a>
+      </span>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span class="brand"><span class="lg"><svg class="ic"><use href="#i-leaf"/></svg></span>EcoAI</span>
+    <span><span class="hu">Statikus HTML, külső betűtípus és követő sütik nélkül. Kapcsolat: </span><span class="en">Static HTML, no external fonts, no tracking cookies. Contact: </span><a href="mailto:tech@ahang.hu">tech@ahang.hu</a></span>
+    <a href="https://github.com/madcsaba/ai-awareness-wireframe" style="display:inline-flex;gap:8px;align-items:center"><svg class="ic"><use href="#i-github"/></svg>GitHub</a>
+  </div>
+</footer>
 
 <script>
 /* a kártyák a nyelvhez igazodó oldalra visznek */
@@ -240,6 +403,17 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   }
   apply(document.documentElement.getAttribute("data-lang")||"hu");
   window.addEventListener("ecoai:lang", function(e){ apply(e.detail); });
+})();
+/* hero videó: némítva indul, gombbal hangosítható; csökkentett mozgásnál nem indul magától */
+(function(){
+  var v=document.getElementById("herovid"), b=document.getElementById("soundbtn");
+  if(!v||!b) return;
+  if(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches){ v.removeAttribute("autoplay"); v.pause(); }
+  b.addEventListener("click",function(){
+    v.muted=!v.muted; if(!v.muted){ v.controls=true; if(v.paused) v.play(); }
+    b.querySelector("use").setAttribute("href", v.muted?"#i-mute":"#i-volume");
+    b.style.display = v.muted ? "" : "none";
+  });
 })();
 </script>
 <script data-goatcounter="https://kiazami.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
