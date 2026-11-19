@@ -22,7 +22,7 @@ model choice, energy-cost feedback, nudging, a mobile app and a campaign.*
 | `start.html` | Hogyan kezdj bele – 5 kitölthető indító sablon / 5 starter templates | HU/EN |
 | `story.html` | A projekt története – és mennyi energiába került / The story | HU/EN |
 | `petition-hu.html`, `petition.html` | Petíció a szabványos AI energiacímkéért / Petition for an AI energy label | HU, EN |
-| [Node AI Summit 2026 – előadás / talk](https://claude.ai/artifact/4QyC65hJ8pcSRKngcxxuuf) | Diasor a Bohinji Node AI Summitra: történet, idővonal, az oldal funkciói, modellválasztó, csatlakozás / Slides for the Node AI Summit in Bohinj | EN |
+| Node AI Summit 2026 – előadás / talk: [magyarul](https://claude.ai/artifact/MZvk6JUWrV4PuiY2YkLHHt) · [in English](https://claude.ai/artifact/4QyC65hJ8pcSRKngcxxuuf) | Diasor a bohinji Node AI Summitról (2026. november 10.): történet, idővonal, az oldal funkciói, modellválasztó, csatlakozás / Slides about the project born at the Node AI Summit in Bohinj | HU, EN |
 | [AI modellválasztó / AI model selector](https://madcsaba.github.io/ai_modell_selector/) | Testvéroldal: feladat alapján modellt ajánl ([angolul / in English](https://madcsaba.github.io/ai_modell_selector/en.html)) / Sister site: recommends a model for your task | HU, EN |
 | `the-weight-of-a-click.html`, `powering-intelligence.html` | Kampányoldalak (átvett) / Campaign pages | EN |
 | `social-graphic/`, `one-pager/` | Dizájn-export, referencia / Design exports | EN |
