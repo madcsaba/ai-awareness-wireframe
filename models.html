@@ -757,9 +757,10 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     function detectFromText() {
       var t = norm($("#task").value);
       Array.from(state.autoNeeds).forEach(function (id) { state.needs.delete(id); });
-      state.autoNeeds = new Set(NEEDS.filter(function (n) { return n.rx.test(t); }).map(function (n) { return n.id; }));
+      var en = lang() === "en";
+      state.autoNeeds = new Set(NEEDS.filter(function (n) { return (en && n.rxEn ? n.rxEn : n.rx).test(t); }).map(function (n) { return n.id; }));
       Array.from(state.autoNeeds).forEach(function (id) { state.needs.add(id); });
-      var o = D.rxOpen.test(t), e = D.rxEU.test(t);
+      var o = (en ? D.rxOpenEn : D.rxOpen).test(t), e = (en ? D.rxEUEn : D.rxEU).test(t);
       if (o !== state.autoOpen) { $("#cOpen").checked = o; state.autoOpen = o; }
       if (e !== state.autoEu) { $("#cEu").checked = e; state.autoEu = e; }
       renderNeeds();
