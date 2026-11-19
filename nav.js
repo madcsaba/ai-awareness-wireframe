@@ -20,6 +20,7 @@
     "mobile-app-hu.html": ["mobile-app.html", "mobile-app-hu.html"],
     "models.html": ["models.html", "models.html"],
     "story.html": ["story.html", "story.html"],
+    "media.html": ["media.html", "media.html"],
     "beyond-the-chatbox.html": ["beyond-the-chatbox.html", "beyond-the-chatbox.html"],
     "start.html": ["start.html", "start.html"],
     "eco-feedback.html": ["eco-feedback.html", "eco-feedback-hu.html"],
@@ -78,7 +79,8 @@
       [hu ? "Vegyél részt" : "Take part", [
         ["✍️", "Petíció", "Petition", "petition.html", "petition-hu.html", "HU/EN"],
         ["🖱️", "The Weight of a Click", "The Weight of a Click", "the-weight-of-a-click.html", "the-weight-of-a-click-hu.html", "HU/EN"],
-        ["⚡", "Prezentáció", "Presentation", "powering-intelligence.html", "powering-intelligence-hu.html", "HU/EN"]]],
+        ["⚡", "Prezentáció", "Presentation", "powering-intelligence.html", "powering-intelligence-hu.html", "HU/EN"],
+        ["🎧", "Előadások és média", "Talks & media", "media.html", "media.html", "HU/EN"]]],
       [hu ? "Design referenciák" : "Design references", [
         ["📊", "Social graphic", "Social graphic", "social-graphic/Social.dc.html", "social-graphic/Social.dc.html", "EN"],
         ["📄", "One-pager", "One-pager", "one-pager/Main.dc.html", "one-pager/Main.dc.html", "EN"]]]
