@@ -22,237 +22,356 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
 </script>
 <style>
   :root{--bg:#f6f7f9;--panel:#fff;--line:#e3e6ea;--ink:#1a1d21;--dim:#6b7280;
-    --acc:#2563eb;--green:#16a34a;--amber:#d97706;--red:#dc2626;
+    --acc:#2563eb;--acc-soft:#eef3fe;--green:#16a34a;--green-soft:#eefaf2;--amber:#d97706;--red:#dc2626;
+    --soft:#fbfcfd;--soft2:#f1f4f8;--warnbg:#fdf8ee;--warnline:#f3ddb6;--warnink:#9a5b12;
     --anthropic:#d97757;--openai:#10a37f;--google:#4285f4;--local:#16a34a;--deepseek:#4d6bfe;--opencode:#0f172a;
     --display:ui-sans-serif,system-ui,"Segoe UI",Helvetica,Arial;
-    --mono:ui-monospace,SFMono-Regular,Menlo,monospace}
+    --serif:Georgia,"Times New Roman",serif;
+    --mono:ui-monospace,SFMono-Regular,Menlo,monospace;
+    --r:18px;--shadow:0 1px 2px rgba(16,24,40,.04),0 10px 28px -14px rgba(16,24,40,.14);
+    --navh:50px;--subh:50px}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--display);padding:44px 18px 70px}
-  .wrap{max-width:960px;margin:0 auto}
-  h1{font-size:28px;margin:0 0 6px;letter-spacing:-.02em}
-  .sub{color:var(--dim);margin:0 0 26px;max-width:680px}
-  h2{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);margin:38px 0 14px}
+  html{scroll-behavior:smooth;scroll-padding-top:calc(var(--navh) + var(--subh) + 14px)}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::after{transition:none!important}}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--display);padding:0 0 96px;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
   html[data-lang="hu"] .en{display:none}
   html[data-lang="en"] .hu{display:none}
+  button,select,input,textarea{font:inherit;color:inherit}
+  :focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+  .ic{width:1em;height:1em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;
+    stroke-linejoin:round;vertical-align:-.14em}
   .logo{width:18px;height:18px;border-radius:5px;display:inline-flex;align-items:center;justify-content:center;
     color:#fff;font-size:11px;font-weight:800;flex:0 0 auto;vertical-align:-3px}
   .logo.anthropic{background:var(--anthropic)}.logo.openai{background:var(--openai)}
   .logo.google{background:var(--google)}.logo.local{background:var(--local)}.logo.deepseek{background:var(--deepseek)}
-  .logo.opencode{background:var(--opencode)}
+  .logo.opencode{background:var(--opencode)}.logo.mistral{background:#fa523f}.logo.other{background:#94a3b8}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+  .hint{font-size:12.5px;color:var(--dim);margin-top:7px}
+  .num{font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums}
 
-  /* 1 · chips */
+  /* ── hero ── */
+  .hero{padding:58px 0 30px;max-width:780px}
+  .eyebrow{display:inline-flex;align-items:center;gap:7px;margin:0 0 16px;font-size:12px;font-weight:700;
+    letter-spacing:.07em;text-transform:uppercase;color:var(--green);background:var(--green-soft);
+    border:1px solid #cdeed8;border-radius:99px;padding:5px 12px}
+  h1{font:400 clamp(34px,5.6vw,56px)/1.05 var(--serif);letter-spacing:-.025em;margin:0 0 16px}
+  .sub{color:var(--dim);font-size:17.5px;line-height:1.55;margin:0 0 20px;max-width:640px}
+  .facts{display:flex;flex-wrap:wrap;gap:8px 20px;list-style:none;padding:0;margin:0;font-size:13.5px;color:var(--dim)}
+  .facts li{display:inline-flex;align-items:center;gap:7px}
+  .facts .ic{color:var(--acc)}
+  .facts b{color:var(--ink);font-variant-numeric:tabular-nums}
+
+  /* ── sticky alnavigáció ── */
+  .subnav{position:sticky;top:var(--navh);z-index:50;background:rgba(246,247,249,.88);
+    -webkit-backdrop-filter:saturate(1.5) blur(12px);backdrop-filter:saturate(1.5) blur(12px);
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .subnav .wrap{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;height:var(--subh);align-items:center}
+  .subnav .wrap::-webkit-scrollbar{display:none}
+  .subnav a{flex:none;display:inline-flex;align-items:center;gap:7px;color:var(--dim);text-decoration:none;
+    font-size:13.5px;font-weight:600;padding:7px 13px;border-radius:99px;white-space:nowrap;transition:background .15s,color .15s}
+  .subnav a:hover{color:var(--ink);background:#e9ecf1}
+  .subnav a.on{color:#fff;background:var(--ink)}
+
+  /* ── szekciók ── */
+  .sec{padding:44px 0 6px}
+  .sec-head{margin:0 0 20px;max-width:720px}
+  .sec-head h2{font:400 clamp(25px,3.2vw,32px)/1.15 var(--serif);letter-spacing:-.015em;margin:0}
+  .sec-sub{margin:7px 0 0;color:var(--dim);font-size:15px}
+  .sec-sub a{color:var(--acc)}
+
+  /* ── kereső ── */
+  .finder{display:grid;gap:16px;grid-template-columns:minmax(0,1fr);grid-template-areas:"input" "res" "opts"}
+  @media(min-width:980px){.finder{grid-template-columns:minmax(0,1.32fr) minmax(350px,1fr);
+    grid-template-areas:"input res" "opts res";align-items:start}}
+  .f-input{grid-area:input;padding:24px}
+  .f-opts{grid-area:opts;padding:8px 24px 18px}
+  .f-res{grid-area:res;padding:22px}
+  @media(min-width:980px){.f-res{position:sticky;top:calc(var(--navh) + var(--subh) + 16px);
+    max-height:calc(100vh - var(--navh) - var(--subh) - 32px);overflow:auto;overscroll-behavior:contain}}
+  .lbl{display:block;font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);
+    font-weight:700;margin:16px 0 8px}
+  .lbl.big{font:400 22px/1.25 var(--serif);letter-spacing:-.01em;text-transform:none;color:var(--ink);margin:0 0 12px}
+  .f-input textarea{width:100%;min-height:104px;resize:vertical;border:1.5px solid var(--line);border-radius:14px;
+    padding:13px 15px;font:16.5px/1.5 var(--display);background:var(--soft);color:var(--ink);transition:border-color .15s,box-shadow .15s}
+  .f-input textarea:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 4px var(--acc-soft);background:#fff}
+  .samples{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px;align-items:center}
+  .samples .hint{margin:0 3px 0 0}
+  .samples button{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;
+    border-radius:99px;padding:7px 13px;font-size:13px;cursor:pointer;color:var(--ink);min-height:36px;transition:.15s}
+  .samples button .ic{color:var(--dim)}
+  .samples button:hover{border-color:var(--acc);color:var(--acc)}
+  .samples button:hover .ic{color:var(--acc)}
   .chips{display:flex;gap:8px;flex-wrap:wrap}
-  .chip{border:1px solid var(--line);background:#fff;border-radius:99px;padding:9px 15px;
-    font:inherit;font-size:14px;cursor:pointer;transition:.12s}
-  .chip:hover{border-color:#c9ced6;transform:translateY(-1px)}
+  .chip{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line);background:#fff;border-radius:99px;
+    padding:8px 15px;font-size:14px;cursor:pointer;min-height:40px;transition:background .15s,border-color .15s,color .15s}
+  .chip:hover{border-color:#c3cad4}
   .chip.on{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
+  .checks{display:grid;gap:4px}
+  .check{display:flex;gap:11px;align-items:center;font-size:14px;cursor:pointer;color:var(--ink);min-height:38px}
+  .check input[type=checkbox]{-webkit-appearance:none;appearance:none;width:38px;height:22px;border-radius:99px;
+    background:#d3d9e0;position:relative;flex:none;margin:0;cursor:pointer;transition:background .15s}
+  .check input[type=checkbox]::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;
+    background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.25);transition:transform .15s}
+  .check input[type=checkbox]:checked{background:var(--acc)}
+  .check input[type=checkbox]:checked::after{transform:translateX(16px)}
+  .check select{border:1px solid var(--line);border-radius:10px;padding:7px 10px;font-size:13.5px;background:#fff;color:var(--ink)}
+  details.refine{margin-top:12px;border-top:1px solid var(--line)}
+  details.refine > summary,details.more > summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:9px;
+    font-weight:700;font-size:14px;padding:13px 0 6px}
+  details.refine > summary::-webkit-details-marker,details.more > summary::-webkit-details-marker{display:none}
+  details.refine > summary small{font-weight:400;color:var(--dim);font-size:12.5px}
+  details.refine > summary::after,details.more > summary::after{content:"";margin-left:auto;width:7px;height:7px;
+    border-right:2px solid var(--dim);border-bottom:2px solid var(--dim);transform:rotate(45deg) translateY(-2px);transition:transform .2s}
+  details.refine[open] > summary::after,details.more[open] > summary::after{transform:rotate(-135deg)}
+  .vol{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .vol label{display:grid;gap:4px;font-size:12.5px;color:var(--dim)}
+  .vol input{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:14px var(--mono);background:#fff;color:var(--ink);width:100%}
 
-  /* 2 · task cards */
-  .task{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;margin-bottom:14px}
-  .task.hide{display:none}
-  .task h3{margin:0 0 4px;font-size:17px}
-  .task .why{color:var(--dim);font-size:13.5px;margin:0 0 14px}
+  /* ── ajánló panel ── */
+  .res-head{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .res-head h3{margin:0;font:400 24px/1.2 var(--serif);letter-spacing:-.01em}
+  #resMeta{display:block;margin-top:4px}
+  .ghost{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:#fff;border-radius:99px;
+    padding:6px 12px;font-size:12.5px;font-weight:600;color:var(--ink);cursor:pointer;white-space:nowrap;transition:.15s}
+  .ghost:hover{border-color:var(--acc);color:var(--acc)}
+  .ghost .s2{display:none}.ghost.ok{border-color:var(--green);color:var(--green)}
+  .ghost.ok .s1{display:none}.ghost.ok .s2{display:inline}
+  .prio-box{background:var(--soft2);border-radius:14px;padding:4px 14px 10px;margin:14px 0 14px}
+  .prio-box .lbl{margin-top:10px}
+  .prio{width:100%;accent-color:var(--acc)}
+  .range-ends{display:flex;justify-content:space-between;font-size:12px;color:var(--dim);margin-top:2px}
+  #prioDesc{margin:6px 0 0;color:var(--ink)}
   .picks{display:grid;gap:10px}
   @media(min-width:700px){.picks{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}}
-  .pick{border:1.5px solid var(--line);border-radius:13px;padding:12px 13px;background:#fbfcfd;position:relative;cursor:pointer;transition:border-color .15s,background .15s}
-  .pick:hover{border-color:#c9ced6}.pick:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-  .pick.best::after{content:"✓";position:absolute;top:9px;right:11px;color:var(--green);font-weight:800}
-  .pick.best{border-color:var(--green);background:#f2fbf5}
-  .pick .rank{font-size:10.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--dim)}
+  #picks .picks{grid-template-columns:minmax(0,1fr)}
+  .pick{border:1.5px solid var(--line);border-radius:14px;padding:12px 14px;background:#fff;position:relative;cursor:pointer;
+    transition:border-color .15s,background .15s,box-shadow .15s}
+  .pick:hover{border-color:#c3cad4}
+  .pick.best{border-color:var(--green);background:var(--green-soft)}
+  .pick.best::after{content:"";position:absolute;top:12px;right:12px;width:20px;height:20px;border-radius:50%;
+    background:var(--green) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M20 6 9 17l-5-5'/%3E%3C/svg%3E") center/12px no-repeat}
+  .pick .rank{font-size:10.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--dim)}
   .pick.best .rank{color:var(--green)}
-  .pick b{display:block;font-size:14.5px;margin-top:3px}
-  .pick .vend{font-size:11.5px;color:var(--dim)}
-  .pick .meta{font:11.5px var(--mono);color:var(--dim);margin-top:7px;display:flex;gap:9px;flex-wrap:wrap}
-  .prompt{margin-top:14px;background:#f1f4f8;border-left:3px solid var(--acc);border-radius:0 10px 10px 0;
-    padding:11px 13px;font:13px/1.55 var(--mono);color:#334155}
-  .prompt .lbl{display:block;font:600 10.5px var(--display);letter-spacing:.07em;text-transform:uppercase;
-    color:var(--acc);margin-bottom:5px}
-  .avoid{margin-top:10px;font-size:13px;color:var(--amber);background:#fdf8ee;border:1px solid #f3ddb6;
-    border-radius:10px;padding:9px 12px}
-  .avoid b{color:#9a5b12}
+  .pick b{display:flex;align-items:center;gap:7px;font-size:15px;margin-top:3px;padding-right:24px}
+  .pick .vend{font-size:12px;color:var(--dim)}
+  .pick .meta{font:11.5px var(--mono);color:var(--dim);margin-top:7px;display:flex;gap:10px;flex-wrap:wrap}
+  .pick .meta span{display:inline-flex;align-items:center;gap:4px}
+  .pick .cost{display:block;font:700 15px var(--mono);color:var(--acc);margin-top:9px}
+  .pick .cost small{font:12px var(--display);color:var(--dim);font-weight:400}
+  .pick .kwh{display:flex;align-items:center;gap:5px;font:12px var(--mono);color:var(--green);margin-top:3px}
+  .pwhy{margin:8px 0 0;padding-left:17px;font-size:13px;color:#4b5563}
+  .pwhy li{margin:2px 0}
+  #picks .pick.best{padding:16px;box-shadow:0 0 0 4px var(--green-soft)}
+  #picks .pick.best b{font-size:18px}
+  #picks .pick:not(.best) .pwhy,#picks .pick:not(.best) p{display:none}
+  #picks .pick:not(.best) .cost{display:inline-block;margin-right:10px}
+  #picks .pick:not(.best) .kwh{display:inline-flex}
+  .empty{text-align:center;padding:26px 18px;display:grid;gap:9px;justify-items:center}
+  .empty button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;font-size:13.5px;cursor:pointer}
+  .noscript-note{background:var(--warnbg);border:1px solid var(--warnline);border-radius:12px;padding:14px 16px;font-size:13.5px;margin-bottom:12px}
 
-  /* 3 · model cards */
-  details.model{background:var(--panel);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+  /* ── feladatkártyák (bento) ── */
+  #chips{margin-bottom:16px}
+  .bento{display:grid;gap:16px}
+  @media(min-width:900px){.bento{grid-template-columns:1fr 1fr}}
+  .task{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow);
+    display:flex;flex-direction:column}
+  .task.hide{display:none}
+  .task h3{display:flex;align-items:center;gap:12px;margin:0 0 8px;font-size:18px;line-height:1.3;letter-spacing:-.01em}
+  .tile{width:38px;height:38px;border-radius:12px;display:inline-grid;place-items:center;background:var(--acc-soft);
+    color:var(--acc);font-size:18px;flex:none}
+  .task[data-cat="sum"] .tile{background:#f3efff;color:#7c3aed}
+  .task[data-cat="ana"] .tile{background:#fff4e8;color:#c2410c}
+  .task[data-cat="wri"] .tile{background:#fdeef6;color:#be185d}
+  .task[data-cat="chat"] .tile{background:#e9f7fb;color:#0e7490}
+  .task[data-cat="priv"] .tile{background:var(--green-soft);color:var(--green)}
+  .task .why{color:var(--dim);font-size:14px;margin:0 0 14px}
+  .task[data-cat] .picks{grid-template-columns:minmax(0,1fr);gap:8px}
+  .task[data-cat] .pick{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:12px;align-items:center;
+    padding:10px 44px 10px 14px}
+  .task[data-cat] .pick .rank{grid-column:1;grid-row:1}
+  .task[data-cat] .pick b{grid-column:1;grid-row:2;margin:0;padding:0}
+  .task[data-cat] .pick .vend{grid-column:2;grid-row:1;text-align:right}
+  .task[data-cat] .pick .meta{grid-column:2;grid-row:2;margin:0;justify-content:flex-end}
+  .task[data-cat] .pick.best::after{top:50%;margin-top:-10px}
+  details.more{margin-top:12px;border-top:1px dashed var(--line)}
+  details.more > summary{font-size:13.5px;color:var(--acc)}
+  .prompt{position:relative;margin:6px 0 2px;background:var(--soft2);border-radius:12px;padding:12px 48px 12px 14px;
+    font:13px/1.6 var(--mono);color:#334155}
+  .prompt .lbl{display:none}
+  .copy{position:absolute;top:8px;right:8px;width:32px;height:32px;border-radius:10px;border:1px solid var(--line);
+    background:#fff;display:grid;place-items:center;cursor:pointer;color:var(--dim);font-size:15px;transition:.15s}
+  .copy:hover{color:var(--acc);border-color:var(--acc)}
+  .copy.ok{color:var(--green);border-color:var(--green)}
+  .avoid{margin-top:12px;font-size:13px;line-height:1.55;color:#7a4a0e;background:var(--warnbg);border:1px solid var(--warnline);
+    border-radius:12px;padding:10px 13px}
+  .avoid b{color:var(--warnink);display:inline-flex;align-items:center;gap:5px}
+
+  /* ── modell-kártyák ── */
+  #cards{display:grid;gap:10px;align-items:start}
+  @media(min-width:900px){#cards{grid-template-columns:1fr 1fr}}
+  details.model{background:var(--panel);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:box-shadow .2s,border-color .2s}
+  details.model[open]{box-shadow:var(--shadow);border-color:#d5dae1}
   details.model summary{cursor:pointer;padding:15px 18px;font-weight:700;font-size:15px;list-style:none;
-    display:flex;align-items:center;gap:9px}
+    display:flex;align-items:center;gap:9px;flex-wrap:wrap}
   details.model summary::-webkit-details-marker{display:none}
-  details.model summary::after{content:"+";margin-left:auto;color:var(--dim);font-weight:400;font-size:19px}
-  details.model[open] summary::after{content:"–"}
+  details.model summary::after{content:"";margin-left:auto;width:7px;height:7px;border-right:2px solid var(--dim);
+    border-bottom:2px solid var(--dim);transform:rotate(45deg) translateY(-2px);transition:transform .2s}
+  details.model[open] summary::after{transform:rotate(-135deg)}
   details.model .body{padding:0 18px 17px;font-size:13.5px;color:var(--dim)}
   details.model .body b{color:var(--ink)}
   .cols{display:grid;gap:12px;margin-top:10px}
   @media(min-width:700px){.cols{grid-template-columns:1fr 1fr}}
-  .col{background:#fbfcfd;border:1px solid var(--line);border-radius:11px;padding:11px 13px}
+  .col{background:var(--soft);border:1px solid var(--line);border-radius:11px;padding:11px 13px}
   .col h4{margin:0 0 6px;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim)}
   .col ul{margin:0;padding-left:17px}
   .col li{margin:3px 0}
-  .bar{height:7px;border-radius:99px;background:#eceff3;overflow:hidden;margin-top:9px;display:flex}
-  .bar i{display:block;height:100%}
+  .pill{font-size:11px;font-weight:600;border-radius:99px;padding:2px 9px;background:#eef1f5;color:var(--dim);white-space:nowrap}
+  .pill.g{background:#e7f7ed;color:var(--green)}.pill.a{background:#fdf3e3;color:var(--amber)}
+  .pips{display:inline-flex;gap:2px;vertical-align:middle}
+  .pips i{width:7px;height:7px;border-radius:2px;background:#e3e6ea}
+  .pips i.on{background:var(--acc)}
+  .approx{color:var(--amber);cursor:help;font-weight:700}
 
-  /* 4 · OpenCode választó – színezett kezdőmondatokkal */
-  .oc{background:var(--panel);border:1px solid var(--line);border-left:5px solid var(--c,var(--acc));
-    border-radius:0 14px 14px 0;padding:16px 18px;margin-bottom:12px}
-  .oc .lead{display:flex;align-items:center;gap:8px;margin:0 0 7px;font-size:15px;font-weight:800;
-    color:var(--c,var(--acc));letter-spacing:-.01em}
-  .oc .lead .logo{width:20px;height:20px}
-  .oc p{margin:0;font-size:13.5px;color:var(--dim);line-height:1.6}
+  /* ── OpenCode ── */
+  .oc-grid{display:grid;gap:14px}
+  @media(min-width:900px){.oc-grid{grid-template-columns:1fr 1fr}}
+  .oc{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--c,var(--acc));
+    border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow)}
+  .oc .lead{display:flex;align-items:center;gap:9px;margin:0 0 8px;font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+  .oc .lead .logo{width:24px;height:24px;border-radius:7px;font-size:12px}
+  .oc p{margin:0;font-size:14px;color:var(--dim);line-height:1.6}
   .oc b{color:var(--ink)}
-  .oc .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
-  .oc .tg{font:11.5px var(--mono);background:#f1f4f8;border:1px solid var(--line);border-radius:8px;
+  .oc .tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+  .oc .tg{font:11.5px var(--mono);background:var(--soft2);border:1px solid var(--line);border-radius:8px;
     padding:4px 9px;color:#334155;white-space:nowrap}
   .oc.free{--c:var(--green)}.oc.oai{--c:var(--openai)}.oc.gog{--c:var(--google)}.oc.hint{--c:var(--amber)}
-  .oc code{font:12px var(--mono);background:#f1f4f8;border:1px solid var(--line);border-radius:6px;
+  .oc code,.foot code{font:12px var(--mono);background:var(--soft2);border:1px solid var(--line);border-radius:6px;
     padding:1px 5px;color:#334155;white-space:nowrap}
 
-  /* 5 · table */
-  .tbl-wrap{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px}
-  table{width:100%;border-collapse:collapse;font-size:13.5px;min-width:640px}
+  /* ── összes modell tábla ── */
+  .cat-tools{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
+  .cat-tools .search{flex:1 1 240px;min-width:0;position:relative;display:flex;align-items:center}
+  .cat-tools .search .ic{position:absolute;left:12px;color:var(--dim);pointer-events:none}
+  .cat-tools input[type=search]{width:100%;border:1px solid var(--line);border-radius:12px;padding:10px 12px 10px 36px;
+    font-size:14px;background:#fff;color:var(--ink)}
+  .cat-tools select{border:1px solid var(--line);border-radius:12px;padding:10px 12px;font-size:14px;background:#fff;color:var(--ink)}
+  .cat-tools button{border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:12px;
+    padding:10px 15px;font-weight:600;font-size:14px;cursor:pointer}
+  .cat-tools button[hidden]{display:none}
+  .cat-tools button:disabled{opacity:.5;cursor:not-allowed}
+  .tbl-wrap{overflow:auto;max-height:74vh;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+  table{width:100%;border-collapse:separate;border-spacing:0;font-size:13.5px;min-width:640px}
   th,td{text-align:left;padding:11px 13px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);background:#fbfcfd}
+  th{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--dim);background:var(--soft)}
+  #tbl thead th{position:sticky;top:0;z-index:2;background:#f7f8fa}
   tr:last-child td{border-bottom:0}
   td.num{font-family:var(--mono);font-size:12.5px;white-space:nowrap}
-  .pill{font-size:11px;border-radius:99px;padding:2px 9px;background:#eef1f5;color:var(--dim);white-space:nowrap}
-  .pill.g{background:#e7f7ed;color:var(--green)}.pill.a{background:#fdf3e3;color:var(--amber)}
-
-  /* 6 · rules */
-  .rules{display:grid;gap:11px}
-  @media(min-width:700px){.rules{grid-template-columns:1fr 1fr}}
-  .rule{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--green);
-    border-radius:0 13px 13px 0;padding:14px 16px;font-size:14px}
-  .rule b{display:block;margin-bottom:3px}
-  .rule span{color:var(--dim);font-size:13px}
-
-  /* 7 · warnings */
-  .warn{background:#fdf8ee;border:1px solid #f3ddb6;border-radius:14px;padding:18px 20px}
-  .warn li{margin:9px 0;font-size:14px}
-  .warn b{color:#9a5b12}
-  .foot{margin-top:34px;font-size:12.5px;color:var(--dim);border-top:1px solid var(--line);padding-top:16px}
-  .foot a{color:var(--acc);text-decoration:none}
-
-  /* 8 · kereső-motor (models-data.js) */
-  .logo.mistral{background:#fa523f}.logo.other{background:#94a3b8}
-  .lbl{display:block;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--dim);
-    font-weight:700;margin:14px 0 7px}
-  .eng{display:grid;gap:6px 26px}
-  @media(min-width:760px){.eng{grid-template-columns:1.55fr 1fr}}
-  .eng textarea{width:100%;min-height:74px;resize:vertical;border:1px solid var(--line);border-radius:11px;
-    padding:10px 12px;font:14px/1.5 var(--display);background:#fbfcfd;color:var(--ink)}
-  .samples{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
-  .samples button{border:1px solid var(--line);background:#fff;border-radius:99px;padding:5px 11px;
-    font:12.5px var(--display);cursor:pointer;color:var(--dim)}
-  .samples button:hover{border-color:var(--acc);color:var(--acc)}
-  .checks{display:grid;gap:7px}
-  .check{display:flex;gap:8px;align-items:center;font-size:13.5px;cursor:pointer;color:var(--dim)}
-  .check input{accent-color:var(--acc);width:15px;height:15px}
-  .check select{border:1px solid var(--line);border-radius:8px;padding:5px 8px;font:13px var(--display);
-    background:#fff;color:var(--ink)}
-  .prio{width:100%;accent-color:var(--acc)}
-  .range-ends{display:flex;justify-content:space-between;font-size:11.5px;color:var(--dim);margin-top:3px}
-  .vol{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-  .vol label{display:grid;gap:3px;font-size:12px;color:var(--dim)}
-  .vol input{border:1px solid var(--line);border-radius:8px;padding:6px 9px;font:13.5px var(--mono);
-    background:#fff;color:var(--ink);width:100%}
-  .hint{font-size:12px;color:var(--dim);margin-top:7px}
-  .res-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin:20px 0 10px}
-  .res-head h3{margin:0;font-size:15px}
-  .pwhy{margin:8px 0 0;padding-left:16px;font-size:12.5px;color:var(--dim)}
-  .pwhy li{margin:2px 0}
-  .pick .cost{display:block;font:700 14px var(--mono);color:var(--acc);margin-top:8px}
-  .pick .cost small{font:11.5px var(--display);color:var(--dim);font-weight:400}
-  .pick .kwh{font:11.5px var(--mono);color:var(--green);margin-top:3px;display:block}
-  .empty{text-align:center;padding:26px 18px;display:grid;gap:9px;justify-items:center}
-  .empty button{border:1px solid var(--line);background:#fff;border-radius:10px;padding:8px 14px;
-    font:13.5px var(--display);cursor:pointer}
-  .noscript-note{background:#fdf8ee;border:1px solid #f3ddb6;border-radius:12px;padding:14px 16px;font-size:13.5px}
-
-  /* 9 · dinamikus katalógus-tábla + összehasonlítás */
-  .cat-tools{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
-  .cat-tools input[type=search]{flex:1 1 220px;min-width:0;border:1px solid var(--line);border-radius:10px;
-    padding:8px 11px;font:13.5px var(--display);background:#fff;color:var(--ink)}
-  .cat-tools select{border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:13.5px var(--display);
-    background:#fff;color:var(--ink)}
-  .cat-tools button{border:1px solid var(--acc);background:var(--acc);color:#fff;border-radius:10px;
-    padding:8px 13px;font:600 13.5px var(--display);cursor:pointer}
-  .cat-tools button[hidden]{display:none}
+  td.num .ic{color:var(--green)}
   #tbl table{min-width:880px}
   #tbl th button{all:unset;cursor:pointer;font:inherit;letter-spacing:inherit;text-transform:inherit;color:inherit}
   #tbl th button:hover{color:var(--acc)}
+  #tbl th button:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:4px}
   #tbl td.fit{min-width:120px}
   .fitbar{display:flex;align-items:center;gap:7px}
   .fitbar i.track{flex:1;height:6px;border-radius:99px;background:#eceff3;overflow:hidden;min-width:44px}
   .fitbar i.on{display:block;height:100%;background:var(--acc);border-radius:99px}
-  .pips{display:inline-flex;gap:2px;vertical-align:middle}
-  .pips i{width:7px;height:7px;border-radius:2px;background:#e3e6ea}
-  .pips i.on{background:var(--acc)}
   .cbcol{width:34px}
-  .cbcol input{accent-color:var(--acc);width:16px;height:16px;cursor:pointer}
-  #cmpBox{margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:14px;
-    padding:16px 18px;overflow-x:auto}
-  #cmpBox h3{margin:0 0 10px;font-size:14px}
+  .cbcol input{accent-color:var(--acc);width:18px;height:18px;cursor:pointer}
+  #tbody tr:hover td{background:var(--soft)}
+  #cmpBox{margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+    padding:18px 20px;overflow-x:auto;box-shadow:var(--shadow)}
+  #cmpBox h3{margin:0 0 10px;font:400 20px var(--serif)}
   #cmpBox table{min-width:0;font-size:13px}
   #cmpBox th[scope=row]{font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--dim);
     white-space:nowrap;background:transparent;position:static}
   #cmpBox td.best{color:var(--green);font-weight:700}
   #cmpBox .legend{font-size:12px;color:var(--dim);margin-top:9px}
-  .approx{color:var(--amber);cursor:help;font-weight:700}
-  .num{font-family:var(--mono);font-size:12.5px;font-variant-numeric:tabular-nums}
-  #tbody tr:hover{background:#fbfcfd}
-  #tbody tr{cursor:default}
-  .cat-tools button:disabled{opacity:.5;cursor:not-allowed}
   @media(max-width:640px){.hide-sm{display:none}}
+
+  /* ── szabályok ── */
+  .rules{display:grid;gap:12px}
+  @media(min-width:700px){.rules{grid-template-columns:1fr 1fr}}
+  @media(min-width:1040px){.rules{grid-template-columns:repeat(3,1fr)}}
+  .rule{display:grid;grid-template-columns:auto 1fr;gap:4px 14px;align-content:start;background:var(--panel);
+    border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow)}
+  .rule .n{grid-row:span 2;font:400 38px/1 var(--serif);color:var(--green);font-style:normal;min-width:24px}
+  .rule b{font-size:15px;line-height:1.4}
+  .rule > span{color:var(--dim);font-size:13.5px}
+
+  /* ── tévhitek ── */
+  .myths{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+  @media(min-width:800px){.myths{grid-template-columns:1fr 1fr}}
+  .myths li{background:var(--warnbg);border:1px solid var(--warnline);border-radius:var(--r);padding:18px 20px;
+    font-size:14px;color:#5b4a33}
+  .myths li b{display:block;font:400 19px/1.3 var(--serif);color:var(--warnink);margin-bottom:7px;
+    text-decoration:line-through;text-decoration-color:rgba(154,91,18,.4);text-decoration-thickness:1.5px}
+
+  .foot{margin-top:52px;font-size:13px;color:var(--dim);border-top:1px solid var(--line);padding-top:18px}
+  .foot a{color:var(--acc);text-decoration:none}
+  .foot a:hover{text-decoration:underline}
+
+  /* ── mobil: lebegő ajánlás-sáv ── */
+  .mbar{position:fixed;left:12px;right:12px;bottom:12px;z-index:60;display:flex;align-items:center;gap:10px;
+    background:var(--ink);color:#fff;text-decoration:none;border-radius:16px;padding:12px 16px;font-size:14px;
+    box-shadow:0 12px 30px -8px rgba(0,0,0,.4);transform:translateY(160%);transition:transform .25s ease}
+  .mbar.show{transform:none}
+  .mbar .ic{color:#4ade80}
+  .mbar b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mbar .go{margin-left:auto;opacity:.75;font-size:13px;white-space:nowrap}
+  @media(min-width:980px){.mbar{display:none}}
 </style>
 </head>
 <body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-bolt" viewBox="0 0 24 24"><path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol><symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol><symbol id="i-code" viewBox="0 0 24 24"><path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/></symbol><symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol><symbol id="i-sigma" viewBox="0 0 24 24"><path d="M18 7V4H6l6 8-6 8h12v-3"/></symbol><symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol><symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6L4.5 19.5A1 1 0 0 0 5.4 21h13.2a1 1 0 0 0 .9-1.5L14 9V3M7 15h10"/></symbol><symbol id="i-pen" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></symbol><symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol><symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol><symbol id="i-leaf" viewBox="0 0 24 24"><path d="M11 20A7 7 0 0 1 4 13c0-5 4-9 16-9 0 12-4 16-9 16z"/><path d="M4 21c3-6 7-9 12-11"/></symbol><symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 5-10 5L2 7z"/><path d="m2 17 10 5 10-5M2 12l10 5 10-5"/></symbol><symbol id="i-server" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="8" rx="2"/><rect x="2" y="13" width="20" height="8" rx="2"/><path d="M6 7h.01M6 17h.01"/></symbol><symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol><symbol id="i-sparkle" viewBox="0 0 24 24"><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8z"/></symbol><symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></symbol><symbol id="i-table" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></symbol><symbol id="i-terminal" viewBox="0 0 24 24"><path d="m4 17 6-6-6-6M12 19h8"/></symbol><symbol id="i-rules" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></symbol><symbol id="i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01"/></symbol><symbol id="i-arrowup" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol></svg>
 <div class="wrap">
+  <header class="hero">
+    <p class="eyebrow"><svg class="ic" aria-hidden="true"><use href="#i-leaf"/></svg><span class="hu">Modellválasztó · energiával számolva</span><span class="en">Model finder · energy included</span></p>
+    <h1><span class="hu">Melyik modellt használd?</span><span class="en">Which model should you use?</span></h1>
+    <p class="sub"><span class="hu">Írd le egy mondatban, mire kell — azonnal kapsz három javaslatot havi költséggel és energiaigénnyel. A részleteket csak akkor nyisd ki, ha kellenek.</span><span class="en">Describe what you need in one sentence — get three picks right away, with monthly cost and energy use. Open the details only when you need them.</span></p>
+    <ul class="facts" id="facts"></ul>
+  </header>
+</div>
+<nav class="subnav" aria-label="Az oldal részei / On this page"><div class="wrap"><a href="#engine"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg><span class="hu">Ajánló</span><span class="en">Finder</span></a><a href="#tasks"><svg class="ic" aria-hidden="true"><use href="#i-grid"/></svg><span class="hu">Feladatok</span><span class="en">Tasks</span></a><a href="#modelcards"><svg class="ic" aria-hidden="true"><use href="#i-layers"/></svg><span class="hu">Modellek</span><span class="en">Models</span></a><a href="#comparison"><svg class="ic" aria-hidden="true"><use href="#i-table"/></svg><span class="hu">Összes modell</span><span class="en">All models</span></a><a href="#opencode"><svg class="ic" aria-hidden="true"><use href="#i-terminal"/></svg><span class="hu">OpenCode</span><span class="en">OpenCode</span></a><a href="#rules"><svg class="ic" aria-hidden="true"><use href="#i-rules"/></svg><span class="hu">5 szabály</span><span class="en">5 rules</span></a><a href="#myths"><svg class="ic" aria-hidden="true"><use href="#i-help"/></svg><span class="hu">Tévhitek</span><span class="en">Myths</span></a></div></nav>
+<main class="wrap">
 
-  <h1>
-    <span class="hu">🧠 Melyik modellt használd?</span>
-    <span class="en">🧠 Which model should you use?</span>
-  </h1>
-  <p class="sub">
-    <span class="hu">Gyors döntéstámogató: mire jó egy-egy modell, konkrét példákkal. Válaszd ki, mit szeretnél
-      csinálni — a javaslatok alul megjelennek. A színek és márkák megegyeznek a többi oldallal.</span>
-    <span class="en">Quick decision guide: what each model is good for, with concrete examples. Pick what you
-      want to do — the recommendations appear below. Colors and brands match the rest of the site.</span>
-  </p>
-
-  <!-- 1 · KERESŐ-MOTOR (models-data.js: feladat → igények → szűrők → top-3 + havi költség + energia) -->
-  <h2 id="engine"><span class="hu">1 · Írd le, mire kell a modell</span><span class="en">1 · Describe what you need the model for</span></h2>
+  <!-- 1 · AJÁNLÓ (models-data.js: feladat → igények → szűrők → top-3 + havi költség + energia) -->
+  <section class="sec" id="engine" aria-label="Ajánló / Finder">
   <noscript><div class="noscript-note"><b>JavaScript nélkül a kereső nem működik</b> — a lenti modell-kártyák és a tudnivalók azért elérhetők.</div></noscript>
-  <div class="task" id="engineBox">
-    <div class="eng">
-      <div>
-        <label class="lbl" for="task"><span class="hu">Feladat</span><span class="en">Task</span></label>
-        <textarea id="task" placeholder="Írd le egy-két mondatban, pl.: „Magyar nyelvű ügyfélszolgálati chatbot, napi több ezer kérdéssel”"></textarea>
-        <div class="samples" aria-label="Példák">
+  <div class="finder" id="engineBox">
+    <div class="card f-input">
+      <label class="lbl big" for="task"><span class="hu">Mire kell a modell?</span><span class="en">What do you need the model for?</span></label>
+      <textarea id="task" placeholder="Írd le egy-két mondatban, pl.: „Magyar nyelvű ügyfélszolgálati chatbot, napi több ezer kérdéssel”"></textarea>
+      <div class="samples" aria-label="Példák">
           <span class="hint" style="margin:0 4px 0 0"><span class="hu">Példák:</span><span class="en">Examples:</span></span>
-          <button type="button" data-sample="chat"><span class="hu">💬 Chatbot</span><span class="en">💬 Chatbot</span></button>
-          <button type="button" data-sample="code"><span class="hu">💻 Kódoló ágens</span><span class="en">💻 Coding agent</span></button>
-          <button type="button" data-sample="pdf"><span class="hu">📄 Hosszú PDF-ek</span><span class="en">📄 Long PDFs</span></button>
-          <button type="button" data-sample="priv"><span class="hu">🔒 Saját szerver</span><span class="en">🔒 Own server</span></button>
-          <button type="button" data-sample="math"><span class="hu">🧮 Matek, logika</span><span class="en">🧮 Maths, logic</span></button>
+          <button type="button" data-sample="chat"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg><span class="hu">Chatbot</span><span class="en">Chatbot</span></button>
+          <button type="button" data-sample="code"><svg class="ic" aria-hidden="true"><use href="#i-code"/></svg><span class="hu">Kódoló ágens</span><span class="en">Coding agent</span></button>
+          <button type="button" data-sample="pdf"><svg class="ic" aria-hidden="true"><use href="#i-file"/></svg><span class="hu">Hosszú PDF-ek</span><span class="en">Long PDFs</span></button>
+          <button type="button" data-sample="priv"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg><span class="hu">Saját szerver</span><span class="en">Own server</span></button>
+          <button type="button" data-sample="math"><svg class="ic" aria-hidden="true"><use href="#i-sigma"/></svg><span class="hu">Matek, logika</span><span class="en">Maths, logic</span></button>
         </div>
-        <span class="lbl"><span class="hu">Igények — a leírásból felismerjük, kézzel is állítható</span><span class="en">Needs — detected from your text, adjustable by hand</span></span>
+    </div>
+    <div class="card f-opts">
+      <span class="lbl"><span class="hu">Igények — a leírásból felismerjük, kézzel is állítható</span><span class="en">Needs — detected from your text, adjustable by hand</span></span>
         <div class="chips" id="needs" role="group"></div>
-        <span class="lbl"><span class="hu">Feltételek</span><span class="en">Constraints</span></span>
-        <div class="checks">
-          <label class="check"><input type="checkbox" id="cOpen"><span class="hu">Csak nyílt súlyú (saját szerveren futtatható)</span><span class="en">Open weights only (runnable on your own server)</span></label>
+      <span class="lbl"><span class="hu">Feltételek</span><span class="en">Constraints</span></span>
+      <div class="checks">
+        <label class="check"><input type="checkbox" id="cOpen"><span class="hu">Csak nyílt súlyú (saját szerveren futtatható)</span><span class="en">Open weights only (runnable on your own server)</span></label>
           <label class="check"><input type="checkbox" id="cEu"><span class="hu">Csak EU-s szolgáltató</span><span class="en">EU providers only</span></label>
           <label class="check"><input type="checkbox" id="cStable"><span class="hu">Csak stabil (nem előzetes) verzió</span><span class="en">Stable versions only (no preview)</span></label>
-          <label class="check"><span class="hu">Legalább ennyi kontextus:</span><span class="en">At least this much context:</span>
+      </div>
+      <details class="refine">
+        <summary><svg class="ic" aria-hidden="true"><use href="#i-sliders"/></svg><span class="hu">Finomhangolás</span><span class="en">Fine-tune</span>
+          <small><span class="hu">kontextus, havi forgalom</span><span class="en">context, monthly volume</span></small></summary>
+        <div class="checks"><label class="check"><span class="hu">Legalább ennyi kontextus:</span><span class="en">At least this much context:</span>
             <select id="cCtx">
               <option value="0"><span class="hu">mindegy</span><span class="en">any</span></option>
               <option value="128000">128K (~300 <span class="hu">oldal</span><span class="en">pages</span>)</option>
               <option value="256000">256K (~600 <span class="hu">oldal</span><span class="en">pages</span>)</option>
               <option value="1000000">1M (~2 500 <span class="hu">oldal</span><span class="en">pages</span>)</option>
-            </select></label>
-        </div>
-      </div>
-      <div>
-        <label class="lbl" for="prio"><span class="hu">Mi a fontosabb?</span><span class="en">What matters more?</span></label>
-        <input type="range" class="prio" id="prio" min="0" max="100" step="5" value="30">
-        <div class="range-ends"><span><span class="hu">Legjobb minőség</span><span class="en">Best quality</span></span><span><span class="hu">Legalacsonyabb költség</span><span class="en">Lowest cost</span></span></div>
-        <p class="hint" id="prioDesc"></p>
+            </select></label></div>
         <span class="lbl"><span class="hu">Várható havi forgalom</span><span class="en">Expected monthly volume</span></span>
         <div class="vol">
           <label><span class="hu">Bemenet (M token)</span><span class="en">Input (M tokens)</span><input type="number" id="volIn" min="0" step="1" value="20" inputmode="decimal"></label>
@@ -260,180 +379,209 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
         </div>
         <p class="hint"><span class="hu">1 M token ≈ 2 500 oldal magyar szöveg. A havi költség a listaárból számol, kedvezmények nélkül. A havi energia 1 kérés ≈ 500 kimenő tokennel becsül.</span>
           <span class="en">1 M tokens ≈ 2,500 pages of Hungarian text. Monthly cost uses list prices, no discounts. Monthly energy assumes 1 request ≈ 500 output tokens.</span></p>
+      </details>
+    </div>
+    <aside class="card f-res" id="resPanel" aria-labelledby="resTitle">
+      <div class="res-head">
+        <h3 id="resTitle"><span class="hu">Ajánlás</span><span class="en">Recommendation</span></h3>
+        <button type="button" class="ghost" id="share"><svg class="ic" aria-hidden="true"><use href="#i-link"/></svg><span class="s1"><span class="hu">Link másolása</span><span class="en">Copy link</span></span><span class="s2"><span class="hu">Másolva</span><span class="en">Copied</span></span></button>
       </div>
-    </div>
-    <div class="res-head">
-      <h3><span class="hu">Ajánlás</span><span class="en">Recommendation</span></h3>
       <span class="hint" id="resMeta" aria-live="polite"></span>
-    </div>
-    <div class="picks" id="picks"></div>
+      <div class="prio-box">
+        <label class="lbl" for="prio"><span class="hu">Mi a fontosabb?</span><span class="en">What matters more?</span></label>
+        <input type="range" class="prio" id="prio" min="0" max="100" step="5" value="30">
+        <div class="range-ends"><span><span class="hu">Legjobb minőség</span><span class="en">Best quality</span></span><span><span class="hu">Legalacsonyabb költség</span><span class="en">Lowest cost</span></span></div>
+        <p class="hint" id="prioDesc"></p>
+      </div>
+      <div id="picks"></div>
+    </aside>
   </div>
+  </section>
 
-  <!-- 2 · CHIPS -->
-  <h2><span class="hu">2 · Mit szeretnél csinálni?</span><span class="en">2 · What do you want to do?</span></h2>
+  <!-- 2 · FELADATOK -->
+  <section class="sec" id="tasks">
+  <div class="sec-head"><h2><span class="hu">Feladatok szerint</span><span class="en">By task</span></h2><p class="sec-sub"><span class="hu">Kész javaslatok hat gyakori feladatra — példa-prompttal és azzal, mikor ne ezt válaszd.</span><span class="en">Ready-made picks for six common jobs — with an example prompt and when not to use them.</span></p></div>
   <div class="chips" id="chips">
     <button class="chip on" data-f="all"><span class="hu">Mind</span><span class="en">All</span></button>
-    <button class="chip" data-f="sum"><span class="hu">📝 Összefoglaló</span><span class="en">📝 Summary</span></button>
-    <button class="chip" data-f="code"><span class="hu">💻 Kód</span><span class="en">💻 Code</span></button>
-    <button class="chip" data-f="ana"><span class="hu">🔬 Elemzés</span><span class="en">🔬 Analysis</span></button>
-    <button class="chip" data-f="wri"><span class="hu">✍️ Kreatív szöveg</span><span class="en">✍️ Creative writing</span></button>
-    <button class="chip" data-f="chat"><span class="hu">💬 Beszélgetés</span><span class="en">💬 Chat</span></button>
-    <button class="chip" data-f="priv"><span class="hu">🔒 Privát / fájlok</span><span class="en">🔒 Private / files</span></button>
+    <button class="chip" data-f="sum"><svg class="ic" aria-hidden="true"><use href="#i-list"/></svg><span class="hu">Összefoglaló</span><span class="en">Summary</span></button>
+    <button class="chip" data-f="code"><svg class="ic" aria-hidden="true"><use href="#i-code"/></svg><span class="hu">Kód</span><span class="en">Code</span></button>
+    <button class="chip" data-f="ana"><svg class="ic" aria-hidden="true"><use href="#i-flask"/></svg><span class="hu">Elemzés</span><span class="en">Analysis</span></button>
+    <button class="chip" data-f="wri"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg><span class="hu">Kreatív szöveg</span><span class="en">Creative writing</span></button>
+    <button class="chip" data-f="chat"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg><span class="hu">Beszélgetés</span><span class="en">Chat</span></button>
+    <button class="chip" data-f="priv"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg><span class="hu">Privát / fájlok</span><span class="en">Private / files</span></button>
   </div>
 
-  <!-- 3 · TASK CARDS -->
-  <h2><span class="hu">3 · Erre a célra ezt</span><span class="en">3 · Best pick for the job</span></h2>
+  <div class="bento">
 
   <div class="task" data-cat="sum">
-    <h3><span class="hu">📝 Egy hosszú dokumentum összefoglalása</span><span class="en">📝 Summarizing a long document</span></h3>
+    <h3><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-list"/></svg></span><span class="hu">Egy hosszú dokumentum összefoglalása</span><span class="en">Summarizing a long document</span></h3>
     <p class="why"><span class="hu">Strukturált kivonat, kulcspontok, bullet-point átirat — a tartalom közvetlen átadása a cél, nem az éleslátás.</span>
       <span class="en">Structured extract, key points, bullet rewrite — the job is faithful compression, not deep insight.</span></p>
     <div class="picks">
       <div data-model="gpt-6-luna" class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
         <b><span class="logo openai">O</span> GPT-5 mini</b><span class="vend">OpenAI</span>
-        <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,0001 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~1 s</span></div></div>
       <div data-model="claude-haiku-5-5" class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
         <b><span class="logo anthropic">A</span> Claude Haiku</b><span class="vend">Anthropic</span>
-        <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,0001 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~1 s</span></div></div>
       <div data-model="gemini-3.8-flash" class="pick"><span class="rank"><span class="hu">3. hosszú szöveghez</span><span class="en">3rd, for long text</span></span>
         <b><span class="logo google">G</span> Gemini Flash</b><span class="vend">Google</span>
-        <div class="meta"><span>⚡ 0,0002 kWh</span><span>⏱ ~1 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,0002 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~1 s</span></div></div>
     </div>
+    <details class="more"><summary><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></summary>
     <div class="prompt"><span class="lbl"><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></span>
       <span class="hu">„Foglald össze ezt a 40 oldalas tanulmányt 5 pontba. Pontonként 1 mondat + a forrás oldalszáma. Ne véleményt írj, csak tényeket."</span>
       <span class="en">“Summarize this 40-page study into 5 bullets. One sentence per point + the source page number. Facts only, no opinion.”</span></div>
-    <div class="avoid"><b><span class="hu">⚠ Mikor ne:</span><span class="en">⚠ When not to:</span></b>
+    </details>
+    <div class="avoid"><b><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg><span class="hu">Mikor ne:</span><span class="en">When not to:</span></b>
       <span class="hu"> ha pontos idézeteket vagy számokat kell kinyerned — a kis modellek olykor „kiszépítik" a tartalmat; ellenőrizd a forrással.</span>
       <span class="en"> if you need exact quotes or numbers — small models sometimes smooth over the content; verify against the source.</span></div>
   </div>
 
   <div class="task" data-cat="code">
-    <h3><span class="hu">💻 Kódolás, hibakeresés, refaktorálás</span><span class="en">💻 Coding, debugging, refactoring</span></h3>
+    <h3><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-code"/></svg></span><span class="hu">Kódolás, hibakeresés, refaktorálás</span><span class="en">Coding, debugging, refactoring</span></h3>
     <p class="why"><span class="hu">Itt a pontosság a tét: egy rossz sor többe kerül, mint a gyors válasz. Közepes a minimum.</span>
       <span class="en">Accuracy is the stakes here: a wrong line costs more than a slow reply. Mid-tier is the minimum.</span></p>
     <div class="picks">
       <div data-model="claude-sonnet-5-5" class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
         <b><span class="logo anthropic">A</span> Claude Sonnet</b><span class="vend">Anthropic</span>
-        <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,001 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~3 s</span></div></div>
       <div data-model="gpt-6.1-terra" class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
         <b><span class="logo openai">O</span> GPT-5</b><span class="vend">OpenAI</span>
-        <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,001 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~3 s</span></div></div>
       <div data-model="claude-opus-5-5" class="pick"><span class="rank"><span class="hu">3. nagy átalakításhoz</span><span class="en">3rd, big rewrites</span></span>
         <b><span class="logo anthropic">A</span> Claude Opus</b><span class="vend">Anthropic</span>
-        <div class="meta"><span>⚡ 0,03 kWh</span><span>⏱ ~25 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,03 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~25 s</span></div></div>
       <div data-model="deepseek-v4-pro" class="pick"><span class="rank"><span class="hu">olcsó alternatíva</span><span class="en">budget alternative</span></span>
         <b><span class="logo deepseek">D</span> DeepSeek V3</b><span class="vend">DeepSeek</span>
-        <div class="meta"><span>⚡ 0,0005 kWh</span><span>⏱ ~3 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,0005 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~3 s</span></div></div>
     </div>
+    <details class="more"><summary><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></summary>
     <div class="prompt"><span class="lbl"><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></span>
       <span class="hu">„Ebben a fájlban a 42. sor hibát dob. Magyarázd meg, miért, és adj 3 soros javítást — csak a javított kódot, komment nélkül."</span>
       <span class="en">“Line 42 in this file throws an error. Explain why and give a 3-line fix — just the corrected code, no comments.”</span></div>
-    <div class="avoid"><b><span class="hu">⚠ Mikor ne:</span><span class="en">⚠ When not to:</span></b>
+    </details>
+    <div class="avoid"><b><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg><span class="hu">Mikor ne:</span><span class="en">When not to:</span></b>
       <span class="hu"> egyszerű formázásra, log-vágásra vagy tesztnév-rename-re: felesleges a közepes modell, elég a mini.</span>
       <span class="en"> for simple formatting, log trimming or test renames: mid-tier is overkill, the mini is enough.</span></div>
   </div>
 
   <div class="task" data-cat="ana">
-    <h3><span class="hu">🔬 Összetett elemzés, kutatás, vita</span><span class="en">🔬 Complex analysis, research, debate</span></h3>
+    <h3><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-flask"/></svg></span><span class="hu">Összetett elemzés, kutatás, vita</span><span class="en">Complex analysis, research, debate</span></h3>
     <p class="why"><span class="hu">Több lépcsős következtetés, hosszú kontextus, bizonyíték-mérlegelés — itt a nehéz modell a helyén van.</span>
       <span class="en">Multi-step reasoning, long context, weighing evidence — this is where the heavy model earns its cost.</span></p>
     <div class="picks">
       <div data-model="claude-opus-5-5" class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
         <b><span class="logo anthropic">A</span> Claude Opus</b><span class="vend">Anthropic</span>
-        <div class="meta"><span>⚡ 0,03 kWh</span><span>⏱ ~25 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,03 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~25 s</span></div></div>
       <div data-model="gpt-6-astra" class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
         <b><span class="logo openai">O</span> GPT-5 Pro</b><span class="vend">OpenAI</span>
-        <div class="meta"><span>⚡ 0,04 kWh</span><span>⏱ ~30 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,04 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~30 s</span></div></div>
       <div data-model="gemini-4-argon" class="pick"><span class="rank"><span class="hu">3. nyitott kérdésekre</span><span class="en">3rd, open questions</span></span>
         <b><span class="logo google">G</span> Gemini Deep Think</b><span class="vend">Google</span>
-        <div class="meta"><span>⚡ 0,05 kWh</span><span>⏱ ~35 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,05 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~35 s</span></div></div>
       <div data-model="deepseek-v4-pro" class="pick"><span class="rank"><span class="hu">nyílt modell, lépésenként</span><span class="en">open model, step by step</span></span>
         <b><span class="logo deepseek">D</span> DeepSeek R1</b><span class="vend">DeepSeek</span>
-        <div class="meta"><span>⚡ 0,02 kWh</span><span>⏱ ~30 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,02 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~30 s</span></div></div>
     </div>
+    <details class="more"><summary><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></summary>
     <div class="prompt"><span class="lbl"><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></span>
       <span class="hu">„Vetess össze két megoldást erre a problémára: mérlegeld az érveket pro és kontra, jelezd, hol gyenge a bizonyíték, és adj ajánlást a bizonytalanság jelzésével."</span>
       <span class="en">“Compare two approaches to this problem: weigh pro and con arguments, flag where the evidence is weak, and give a recommendation with your confidence level.”</span></div>
-    <div class="avoid"><b><span class="hu">⚠ Mikor ne:</span><span class="en">⚠ When not to:</span></b>
+    </details>
+    <div class="avoid"><b><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg><span class="hu">Mikor ne:</span><span class="en">When not to:</span></b>
       <span class="hu"> ne kezdd itt: előbb a közepes modellen futtasd át — ha az elakad, csak akkor lépj feljebb (a legtöbb „nehéz" feladat 80%-a nem igényli).</span>
       <span class="en"> don't start here: run it on the mid-tier first — only move up if it struggles (most “hard” tasks don't need it).</span></div>
   </div>
 
   <div class="task" data-cat="wri">
-    <h3><span class="hu">✍️ Kreatív szöveg, marketing, e-mail</span><span class="en">✍️ Creative copy, marketing, email</span></h3>
+    <h3><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-pen"/></svg></span><span class="hu">Kreatív szöveg, marketing, e-mail</span><span class="en">Creative copy, marketing, email</span></h3>
     <p class="why"><span class="hu">Stílus és hangvétel számít, de a tények egyszerűek — a közepes modell itt a legjobb ár/érzés arány.</span>
       <span class="en">Tone matters but the facts are simple — mid-tier gives the best style-per-watt ratio.</span></p>
     <div class="picks">
       <div data-model="claude-sonnet-5-5" class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
         <b><span class="logo anthropic">A</span> Claude Sonnet</b><span class="vend">Anthropic</span>
-        <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,001 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~3 s</span></div></div>
       <div data-model="gpt-6.1-terra" class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
         <b><span class="logo openai">O</span> GPT-5</b><span class="vend">OpenAI</span>
-        <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,001 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~3 s</span></div></div>
       <div data-model="gpt-6-luna" class="pick"><span class="rank"><span class="hu">3. gyors vázlat</span><span class="en">3rd, quick draft</span></span>
         <b><span class="logo openai">O</span> GPT-5 mini</b><span class="vend">OpenAI</span>
-        <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,0001 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~1 s</span></div></div>
     </div>
+    <details class="more"><summary><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></summary>
     <div class="prompt"><span class="lbl"><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></span>
       <span class="hu">„Írj 3 változatot ennek az e-mailnek: (1) udvarias és hivatalos, (2) barátságos és rövid, (3) egy mondatban. Ugyanaz a tartalom mindháromban."</span>
       <span class="en">“Write 3 versions of this email: (1) formal and polite, (2) friendly and short, (3) one sentence. Same content in all three.”</span></div>
-    <div class="avoid"><b><span class="hu">⚠ Mikor ne:</span><span class="en">⚠ When not to:</span></b>
+    </details>
+    <div class="avoid"><b><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg><span class="hu">Mikor ne:</span><span class="en">When not to:</span></b>
       <span class="hu"> tényigényes szövegnél (jogi, orvosi, pénzügyi) — a stílus nem pótolja a pontosságot; ellenőrizd vagy nagy modellt használj.</span>
       <span class="en"> for fact-heavy copy (legal, medical, financial) — style doesn't substitute for accuracy; verify or go bigger.</span></div>
   </div>
 
   <div class="task" data-cat="chat">
-    <h3><span class="hu">💬 Napi beszélgetés, kérdés-felelet</span><span class="en">💬 Everyday chat, Q&amp;A</span></h3>
+    <h3><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-chat"/></svg></span><span class="hu">Napi beszélgetés, kérdés-felelet</span><span class="en">Everyday chat, Q&amp;A</span></h3>
     <p class="why"><span class="hu">A legtöbb kérdésre a gyors, olcsó modell is jól válaszol — a nagy modell itt pazarlás.</span>
       <span class="en">For most questions a fast, cheap model answers fine — the large model is waste here.</span></p>
     <div class="picks">
       <div data-model="gpt-6-luna" class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
         <b><span class="logo openai">O</span> GPT-5 mini</b><span class="vend">OpenAI</span>
-        <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,0001 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~1 s</span></div></div>
       <div data-model="claude-haiku-5-5" class="pick"><span class="rank"><span class="hu">2.</span><span class="en">2nd</span></span>
         <b><span class="logo anthropic">A</span> Claude Haiku</b><span class="vend">Anthropic</span>
-        <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,0001 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~1 s</span></div></div>
       <div data-model="gpt-6.1-terra" class="pick"><span class="rank"><span class="hu">3. „okosabb" válasz kell</span><span class="en">3rd, needs more depth</span></span>
         <b><span class="logo openai">O</span> GPT-5</b><span class="vend">OpenAI</span>
-        <div class="meta"><span>⚡ 0,001 kWh</span><span>⏱ ~3 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,001 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~3 s</span></div></div>
     </div>
+    <details class="more"><summary><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></summary>
     <div class="prompt"><span class="lbl"><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></span>
       <span class="hu">„Magyarázd el a kamatlábat úgy, mintha 12 évesnek mondanád — 3 mondat, példával a zsebpénzből."</span>
       <span class="en">“Explain interest rates like I'm 12 — 3 sentences, with an allowance example.”</span></div>
-    <div class="avoid"><b><span class="hu">⚠ Mikor ne:</span><span class="en">⚠ When not to:</span></b>
+    </details>
+    <div class="avoid"><b><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg><span class="hu">Mikor ne:</span><span class="en">When not to:</span></b>
       <span class="hu"> ha a válasz döntést vagy pénzt érint — ilyenkor duplázd meg: kérdezz rá, vagy lépj közepes szintre.</span>
       <span class="en"> when the answer informs a decision or money — double-check it, or step up to mid-tier.</span></div>
   </div>
 
   <div class="task" data-cat="priv">
-    <h3><span class="hu">🔒 Privát adatok, offline munka, érzékeny fájlok</span><span class="en">🔒 Private data, offline work, sensitive files</span></h3>
+    <h3><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg></span><span class="hu">Privát adatok, offline munka, érzékeny fájlok</span><span class="en">Private data, offline work, sensitive files</span></h3>
     <p class="why"><span class="hu">Ha nem mehet felhőbe, a helyi modell az egyetlen jó válasz — és nulla felhőenergiával fut.</span>
       <span class="en">If it can't go to the cloud, a local model is the only right answer — and it runs on zero cloud energy.</span></p>
     <div class="picks">
       <div data-model="local-open" class="pick best"><span class="rank"><span class="hu">1. ajánlott</span><span class="en">1st choice</span></span>
         <b><span class="logo local">L</span> Llama / Mistral</b><span class="vend"><span class="hu">helyben fut</span><span class="en">on-device</span></span>
-        <div class="meta"><span>⚡ 0 kWh cloud</span><span>⏱ ~3 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0 kWh cloud</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~3 s</span></div></div>
       <div data-model="claude-haiku-5-5" class="pick"><span class="rank"><span class="hu">2. felhővel is jó</span><span class="en">2nd, cloud OK</span></span>
         <b><span class="logo anthropic">A</span> Claude Haiku</b><span class="vend">Anthropic</span>
-        <div class="meta"><span>⚡ 0,0001 kWh</span><span>⏱ ~1 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,0001 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~1 s</span></div></div>
       <div data-model="gemini-3.8-flash" class="pick"><span class="rank"><span class="hu">3. hosszú fájlok</span><span class="en">3rd, long files</span></span>
         <b><span class="logo google">G</span> Gemini Flash</b><span class="vend">Google</span>
-        <div class="meta"><span>⚡ 0,0002 kWh</span><span>⏱ ~1 s</span></div></div>
+        <div class="meta"><span><svg class="ic" aria-hidden="true"><use href="#i-bolt"/></svg> 0,0002 kWh</span><span><svg class="ic" aria-hidden="true"><use href="#i-clock"/></svg> ~1 s</span></div></div>
     </div>
+    <details class="more"><summary><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></summary>
     <div class="prompt"><span class="lbl"><span class="hu">Példa-prompt</span><span class="en">Example prompt</span></span>
       <span class="hu">„Olvasd el ezt a szerződést, és sorold fel a 3 legvállalkozásunkra nézve kockázatos záradékot — a szövegből idézve."</span>
       <span class="en">“Read this contract and list the 3 clauses most risky for our company — quoting the text.”</span></div>
-    <div class="avoid"><b><span class="hu">⚠ Mikor ne:</span><span class="en">⚠ When not to:</span></b>
+    </details>
+    <div class="avoid"><b><svg class="ic" aria-hidden="true"><use href="#i-alert"/></svg><span class="hu">Mikor ne:</span><span class="en">When not to:</span></b>
       <span class="hu"> a helyi kis modellek gyengébbek összetett magyar nyelvű szövegen — érzékeny + bonyolult? inkább anonimizálj, aztán küldd felhőbe.</span>
       <span class="en"> local small models are weaker on complex text — sensitive + complex? anonymize first, then consider the cloud.</span></div>
   </div>
 
+  </div>
+  </section>
+
   <!-- 4 · MODEL CARDS – a models-data.js katalógusból töltődik -->
-  <h2 id="modelcards"><span class="hu">4 · Modell-kártyák részletesen</span><span class="en">4 · Model cards in detail</span></h2>
+  <section class="sec" id="modelcards">
+  <div class="sec-head"><h2><span class="hu">Modellek részletesen</span><span class="en">Models in detail</span></h2><p class="sec-sub"><span class="hu">Erősségek, gyengeségek és értékelések modellenként. Kattints a névre a kinyitáshoz.</span><span class="en">Strengths, weaknesses and ratings per model. Click a name to expand.</span></p></div>
   <div id="cards"></div>
+  </section>
 
   <!-- 5 · OPENCODE VÁLASZTÓ -->
-  <h2 id="opencode"><span class="hu">5 · Mit válassz OpenCode-ban?</span><span class="en">5 · What to pick in OpenCode?</span></h2>
+  <section class="sec" id="opencode">
+  <div class="sec-head"><h2><span class="hu">Mit válassz OpenCode-ban?</span><span class="en">What to pick in OpenCode?</span></h2><p class="sec-sub"><span class="hu">Fejlesztőknek: melyik modellcsalád jár az előfizetésedhez, és hogyan válts közöttük.</span><span class="en">For developers: which model family comes with your plan, and how to switch.</span></p></div>
+  <div class="oc-grid">
 
   <div class="oc free">
     <p class="lead"><span class="logo opencode">◉</span>
@@ -501,10 +649,14 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     </div>
   </div>
 
+  </div>
+  </section>
+
   <!-- 6 · DINAMIKUS KATALÓGUS (models-data.js) -->
-  <h2 id="comparison"><span class="hu">6 · Összes modell – rendezhető, összehasonlítható</span><span class="en">6 · Every model – sortable, comparable</span></h2>
+  <section class="sec" id="comparison">
+  <div class="sec-head"><h2><span class="hu">Összes modell</span><span class="en">Every model</span></h2><p class="sec-sub"><span class="hu">Rendezd bármelyik oszlop szerint, és jelölj ki legfeljebb négy modellt az egymás melletti összehasonlításhoz.</span><span class="en">Sort by any column and tick up to four models to compare them side by side.</span></p></div>
   <div class="cat-tools">
-    <input type="search" id="q" placeholder="Keresés név vagy címke alapján" aria-label="Keresés a modellek között">
+    <label class="search"><svg class="ic" aria-hidden="true"><use href="#i-search"/></svg><input type="search" id="q" placeholder="Keresés név vagy címke alapján" aria-label="Keresés a modellek között"></label>
     <select id="provF" aria-label="Szolgáltató"><option value="all">Mind</option></select>
     <span class="hint" id="catMeta" style="margin-left:auto"></span>
     <button type="button" id="cmpOpen" hidden></button>
@@ -517,29 +669,34 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
   </div>
   <div id="cmpBox" hidden></div>
   <div class="hint" style="margin-top:10px">
-    <span class="hu">Az illeszkedés a kiválasztott igényekre adott szerkesztői értékelés és a havi költség súlyozott átlaga (a 2. szekció csúszkájával). Az értékelések becslések, nem mérések. A szolgáltatók nem közölnek kérésenkénti energiafogyasztást: a <b>⚡ kWh</b> érték szerkesztői becslés kérésenként. <span class="approx" title="közelítő adat">≈</span> = a források eltértek vagy közelítő az adat; döntés előtt nézd meg a szolgáltató árlistáját.</span>
-    <span class="en">Fit is a weighted average of editorial ratings for the selected needs and the monthly cost (slider in section 2). Ratings are estimates, not measurements. Providers don't publish per-request energy: the <b>⚡ kWh</b> figure is an editorial per-request estimate. <span class="approx" title="approximate data">≈</span> = sources disagree or the figure is approximate; check the provider's price list before deciding.</span>
+    <span class="hu">Az illeszkedés a kiválasztott igényekre adott szerkesztői értékelés és a havi költség súlyozott átlaga (az Ajánló csúszkájával). Az értékelések becslések, nem mérések. A szolgáltatók nem közölnek kérésenkénti energiafogyasztást: a <b>kWh</b> érték szerkesztői becslés kérésenként. <span class="approx" title="közelítő adat">≈</span> = a források eltértek vagy közelítő az adat; döntés előtt nézd meg a szolgáltató árlistáját.</span>
+    <span class="en">Fit is a weighted average of editorial ratings for the selected needs and the monthly cost (the Finder's slider). Ratings are estimates, not measurements. Providers don't publish per-request energy: the <b>kWh</b> figure is an editorial per-request estimate. <span class="approx" title="approximate data">≈</span> = sources disagree or the figure is approximate; check the provider's price list before deciding.</span>
   </div>
 
+  </section>
+
   <!-- 7 · RULES -->
-  <h2 id="rules"><span class="hu">7 · Öt szabály, ami 90%-ban elég</span><span class="en">7 · Five rules that cover 90% of cases</span></h2>
+  <section class="sec" id="rules">
+  <div class="sec-head"><h2><span class="hu">Öt szabály, ami 90%-ban elég</span><span class="en">Five rules that cover 90% of cases</span></h2><p class="sec-sub"><span class="hu">Ha csak ennyit jegyzel meg, már jól választasz.</span><span class="en">Remember just these and you'll pick well.</span></p></div>
   <div class="rules">
-    <div class="rule"><b><span class="hu">1 · Ha 3 mondatnál rövidebb a válasz, elég a kis modell.</span><span class="en">1 · If the answer fits in 3 sentences, use the small model.</span></b>
+    <div class="rule"><i class="n" aria-hidden="true">1</i><b><span class="hu">Ha 3 mondatnál rövidebb a válasz, elég a kis modell.</span><span class="en">If the answer fits in 3 sentences, use the small model.</span></b>
       <span><span class="hu">A legtöbb napi kérdés ide tartozik.</span><span class="en">Most everyday questions land here.</span></span></div>
-    <div class="rule"><b><span class="hu">2 · Kódnál a közepes a minimum, a nagy csak átalakításhoz.</span><span class="en">2 · For code, mid-tier is the floor; big only for rewrites.</span></b>
+    <div class="rule"><i class="n" aria-hidden="true">2</i><b><span class="hu">Kódnál a közepes a minimum, a nagy csak átalakításhoz.</span><span class="en">For code, mid-tier is the floor; big only for rewrites.</span></b>
       <span><span class="hu">Egy hibás sor többe kerül, mint a várakozás.</span><span class="en">A wrong line costs more than waiting.</span></span></div>
-    <div class="rule"><b><span class="hu">3 · Kategorizálni, címkézni, válogatni soha a nagy modellel.</span><span class="en">3 · Never use the large model to classify or tag.</span></b>
+    <div class="rule"><i class="n" aria-hidden="true">3</i><b><span class="hu">Kategorizálni, címkézni, válogatni soha a nagy modellel.</span><span class="en">Never use the large model to classify or tag.</span></b>
       <span><span class="hu">Itt a kis modell ugyanolyan jó, 100× takarékosabb.</span><span class="en">The small model is just as good, 100× cheaper.</span></span></div>
-    <div class="rule"><b><span class="hu">4 · Előbb közepes, csak ha elakad, lépj feljebb.</span><span class="en">4 · Start mid-tier; step up only when it struggles.</span></b>
+    <div class="rule"><i class="n" aria-hidden="true">4</i><b><span class="hu">Előbb közepes, csak ha elakad, lépj feljebb.</span><span class="en">Start mid-tier; step up only when it struggles.</span></b>
       <span><span class="hu">A „nehéz" feladatok ~80%-a nem igényli a nagy modellt.</span><span class="en">About 80% of “hard” tasks don't need the big model.</span></span></div>
-    <div class="rule"><b><span class="hu">5 · Érzékeny adat: helyi modell, vagy anonimizálás előbb.</span><span class="en">5 · Sensitive data: local model, or anonymize first.</span></b>
+    <div class="rule"><i class="n" aria-hidden="true">5</i><b><span class="hu">Érzékeny adat: helyi modell, vagy anonimizálás előbb.</span><span class="en">Sensitive data: local model, or anonymize first.</span></b>
       <span><span class="hu">A kényelem nem éri meg az adatszivárgást.</span><span class="en">Convenience isn't worth a data leak.</span></span></div>
   </div>
 
+  </section>
+
   <!-- 8 · WARNINGS -->
-  <h2><span class="hu">8 · Gyakori tévhitek</span><span class="en">8 · Common myths</span></h2>
-  <div class="warn">
-    <ul>
+  <section class="sec" id="myths">
+  <div class="sec-head"><h2><span class="hu">Gyakori tévhitek</span><span class="en">Common myths</span></h2><p class="sec-sub"><span class="hu">Amit sokan gondolnak — és ami valójában igaz.</span><span class="en">What many people think — and what's actually true.</span></p></div>
+    <ul class="myths">
       <li><b><span class="hu">„A nagy modell mindig pontosabb."</span><span class="en">“The big model is always more accurate.”</span></b>
         <span class="hu"> Egyszerű feladaton a kis modell ugyanolyan jó — a különbség összetett következtetésnél jön elő.</span>
         <span class="en"> On simple tasks the small model matches it — the gap appears only in complex reasoning.</span></li>
@@ -553,28 +710,97 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
         <span class="hu"> Egyetlen kérés valóban kevés — de napi szinten a modellválasztás a legnagyobb fogható különbség.</span>
         <span class="en"> A single request is tiny — but at daily scale, model choice is the biggest lever you control.</span></li>
     </ul>
-  </div>
+  </section>
 
   <div class="foot">
     <span class="hu">Kapcsolódó oldalak:
-      <a href="index-en.html">🖥️ desktop wireframe</a> ·
-      <a href="mobile-app.html">📱 mobil app</a> ·
-      <a href="eco-feedback.html">✨ eco-feedback</a> ·
-      <a href="petition.html">✍️ petíció</a> ·
-      <a href="https://madcsaba.github.io/ai_modell_selector/">💰 Modellválasztó</a> —
+      <a href="index-en.html">desktop wireframe</a> ·
+      <a href="mobile-app.html">mobil app</a> ·
+      <a href="eco-feedback.html">eco-feedback</a> ·
+      <a href="petition.html">petíció</a> ·
+      <a href="https://madcsaba.github.io/ai_modell_selector/">Modellválasztó</a> —
       az ajánlott modellek ugyanazokat a márkákat és színeket használják.</span>
     <span class="en">Related pages:
-      <a href="index-en.html">🖥️ desktop wireframe</a> ·
-      <a href="mobile-app.html">📱 mobile app</a> ·
-      <a href="eco-feedback.html">✨ eco-feedback</a> ·
-      <a href="petition.html">✍️ petition</a> ·
-      <a href="https://madcsaba.github.io/ai_modell_selector/">💰 Model selector</a> —
+      <a href="index-en.html">desktop wireframe</a> ·
+      <a href="mobile-app.html">mobile app</a> ·
+      <a href="eco-feedback.html">eco-feedback</a> ·
+      <a href="petition.html">petition</a> ·
+      <a href="https://madcsaba.github.io/ai_modell_selector/">Model selector</a> —
       recommended models share the same brands and colors.</span>
     <span class="hu" style="display:block;margin-top:6px">A kereső, a kártyák és a tábla adatai egy közös fájlból jönnek (<code>models-data.js</code>), amit a <a href="https://madcsaba.github.io/ai_modell_selector/">Modellválasztó</a> is használ.</span>
     <span class="en" style="display:block;margin-top:6px">The finder, cards and table all read one shared file (<code>models-data.js</code>), also used by the <a href="https://madcsaba.github.io/ai_modell_selector/">Model selector</a>.</span>
   </div>
 
-</div>
+</main>
+
+<a class="mbar" id="mbar" href="#resPanel" aria-hidden="true" tabindex="-1"><svg class="ic" aria-hidden="true"><use href="#i-sparkle"/></svg><span class="hu">Ajánlás:</span><span class="en">Top pick:</span> <b id="mbarName">–</b>
+  <span class="go"><span class="hu">Megnézem</span><span class="en">View</span> <svg class="ic" aria-hidden="true"><use href="#i-arrowup"/></svg></span></a>
+
+<script>
+  /* ── segédek: másolás, alnavigáció, mobil sáv, prompt-másolás ── */
+  (function () {
+    function copyText(t, done) {
+      function fb() {
+        var ta = document.createElement("textarea");
+        ta.value = t; ta.setAttribute("readonly", ""); ta.style.position = "fixed"; ta.style.opacity = "0";
+        document.body.appendChild(ta); ta.select();
+        try { document.execCommand("copy"); done(); } catch (e) {}
+        document.body.removeChild(ta);
+      }
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(t).then(done, fb); else fb();
+    }
+    window.ecoCopy = copyText;
+    var ICO = function (n) { return '<svg class="ic" aria-hidden="true"><use href="#i-' + n + '"/></svg>'; };
+
+    document.querySelectorAll(".prompt").forEach(function (p) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "copy"; b.setAttribute("aria-label", "Másolás / Copy");
+      b.innerHTML = ICO("copy"); p.appendChild(b);
+    });
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest && e.target.closest(".copy"); if (!b) return;
+      var l = document.documentElement.lang === "en" ? "en" : "hu";
+      var sp = b.parentNode.querySelector(":scope > span." + l);
+      var t = (sp ? sp.textContent : "").trim().replace(/^[„“"]\s*/, "").replace(/\s*[”"]$/, "");
+      copyText(t, function () {
+        b.classList.add("ok"); b.innerHTML = ICO("check");
+        setTimeout(function () { b.classList.remove("ok"); b.innerHTML = ICO("copy"); }, 1600);
+      });
+    });
+
+    var links = [].slice.call(document.querySelectorAll(".subnav a"));
+    var secs = links.map(function (a) { return document.getElementById(a.getAttribute("href").slice(1)); });
+    var last = null, tick = false;
+    function spy() {
+      tick = false;
+      var cur = null, lim = 140;
+      secs.forEach(function (el, i) { if (el && el.getBoundingClientRect().top <= lim) cur = links[i]; });
+      if (cur === last) return;
+      last = cur;
+      links.forEach(function (a) {
+        var on = a === cur;
+        a.classList.toggle("on", on);
+        if (on) { a.setAttribute("aria-current", "true"); a.parentNode.scrollTo({ left: a.offsetLeft - 20, behavior: "smooth" }); }
+        else a.removeAttribute("aria-current");
+      });
+    }
+    window.addEventListener("scroll", function () { if (!tick) { tick = true; requestAnimationFrame(spy); } }, { passive: true });
+    spy();
+
+    var mbar = document.getElementById("mbar"), rp = document.getElementById("resPanel"), eng = document.getElementById("engine");
+    if (mbar && rp && eng && "IntersectionObserver" in window) {
+      var st = { rp: true, eng: true };
+      var mo = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { st[e.target === rp ? "rp" : "eng"] = e.isIntersecting; });
+        var show = st.eng && !st.rp;
+        mbar.classList.toggle("show", show);
+        mbar.setAttribute("aria-hidden", show ? "false" : "true");
+        mbar.tabIndex = show ? 0 : -1;
+      });
+      mo.observe(rp); mo.observe(eng);
+    }
+  })();
+</script>
 
 <script>
   /* ============ EcoAI modell-kereső – minden adat a models-data.js-ből ============ */
@@ -640,6 +866,8 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
       for (var i = 1; i <= 5; i++) s += '<i class="' + (i <= n ? "on" : "") + '"></i>';
       return s + "</span>";
     };
+    var ICO = function (n) { return '<svg class="ic" aria-hidden="true"><use href="#i-' + n + '"/></svg>'; };
+    var BOLT = ICO("bolt"), CLOCK = ICO("clock");
     var stars = function (n) { var s = ""; for (var i = 1; i <= 5; i++) s += i <= n ? "★" : "☆"; return s; };
     var badges = function (m) {
       var b = [];
@@ -808,8 +1036,10 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
                                     "Usually “EU only” and “open weights only” together over-filter, or the image-input need.") +
           '</p><button type="button" id="relax">' + L("Feltételek törlése", "Clear constraints") + "</button></div>";
         $("#relax").onclick = relax;
+        var mn0 = document.getElementById("mbarName"); if (mn0) mn0.textContent = "–";
         return;
       }
+      var mn = document.getElementById("mbarName"); if (mn) mn.textContent = ok[0].m.name;
       var ranks = [L("1. ajánlott", "1st choice"), L("2.", "2nd"), L("3.", "3rd")];
       box.innerHTML = '<div class="picks">' + ok.slice(0, 3).map(function (s, i) {
         var m = s.m, pr = PROVIDERS[m.p] || PROVIDERS.other, cav = caveatsFor(m);
@@ -825,7 +1055,7 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
           '<ul class="pwhy">' + reasonsFor(s, byCost).map(function (r) { return "<li>" + esc(r) + "</li>"; }).join("") + "</ul>" +
           (cav.length ? '<p style="font-size:11.5px;color:var(--amber);margin:7px 0 0">' + esc(cav.join(" ")) + "</p>" : "") +
           '<span class="cost">' + (s.cost == null ? L("saját hardver", "own hardware") : fmtUsd(s.cost) + ' <small>' + L("/ hó", "/ mo") + "</small>") + "</span>" +
-          '<span class="kwh">⚡ ' + kwhTxt + "</span>" +
+          '<span class="kwh">' + BOLT + ' ' + kwhTxt + "</span>" +
           '<div class="meta"><span>' + fmtCtx(m.ctx) + "</span><span>" +
             (m.in == null ? "–" : fmtUsd(m.in) + " / " + fmtUsd(m.out)) + "</span></div>" +
         "</div>";
@@ -842,8 +1072,8 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
         var v = p.querySelector(".vend");
         if (v) v.textContent = m.p === "local" ? L("helyben fut", "on-device") : m.free ? L("ingyenes", "free") : pr.name;
         var meta = p.querySelector(".meta");
-        if (meta) meta.innerHTML = "<span>⚡ " + (m.kwh === 0 ? "0 kWh cloud" : fmtKwh(m.kwh) + " kWh") +
-          "</span><span>⏱ ~" + m.lat + " s</span>";
+        if (meta) meta.innerHTML = "<span>" + BOLT + " " + (m.kwh === 0 ? "0 kWh cloud" : fmtKwh(m.kwh) + " kWh") +
+          "</span><span>" + CLOCK + " ~" + m.lat + " s</span>";
       });
     }
 
@@ -857,8 +1087,8 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
         var cons = m.cons ? (en ? m.cons.en : m.cons.hu) : null;
         var avg = (m.r.code + m.r.reason + m.r.write) / 3;
         var li = function (x) { return "<li>" + esc(x) + "</li>"; };
-        var meta = "⚡ " + (m.kwh === 0 ? L("0 cloud energy", "0 cloud energy") : fmtKwh(m.kwh) + " " + L("kWh/kérés", "kWh/request")) +
-          " · ⏱ ~" + m.lat + " " + L("mp", "s") +
+        var meta = BOLT + " " + (m.kwh === 0 ? L("0 cloud energy", "0 cloud energy") : fmtKwh(m.kwh) + " " + L("kWh/kérés", "kWh/request")) +
+          " · " + CLOCK + " ~" + m.lat + " " + L("mp", "s") +
           " · " + L("minőség", "quality") + ": " + stars(Math.round(avg)) + " (" + avg.toFixed(1).replace(".", ",") + "/5)" +
           " · " + fmtCtx(m.ctx) + " · " + (m.in == null ? L("nincs API-díj", "no API fee") : fmtUsd(m.in) + " / " + fmtUsd(m.out)) +
           (m.approx && m.approx.length ? ' <span class="approx" title="' + L("közelítő adat", "approximate data") + '">≈</span>' : "");
@@ -899,7 +1129,7 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
       { key: "in", hu: "Be $/1M", en: "In $/1M", num: true },
       { key: "out", hu: "Ki $/1M", en: "Out $/1M", num: true },
       { key: "cost", hu: "Havi $", en: "Monthly $", num: true },
-      { key: "kwh", hu: "⚡ kWh", en: "⚡ kWh", num: true },
+      { key: "kwh", hu: "kWh", en: "kWh", num: true },
       { key: "caps", hu: "Kód · Érv · Írás", en: "Code · Reason · Write", nosort: true, hideSm: true },
       { key: "cmp", hu: "Jelölés", en: "Select", nosort: true }
     ];
@@ -972,7 +1202,7 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
           '<td class="num">' + fmtUsd(m.in) + "</td>" +
           '<td class="num">' + fmtUsd(m.out) + "</td>" +
           '<td class="num">' + (s.cost == null ? '<span class="hint">' + L("saját hw", "own hw") + "</span>" : fmtUsd(s.cost)) + "</td>" +
-          '<td class="num">⚡ ' + fmtKwh(m.kwh) + "</td>" +
+          '<td class="num">' + BOLT + ' ' + fmtKwh(m.kwh) + "</td>" +
           '<td class="hide-sm">' + pips(m.r.code) + " " + pips(m.r.reason) + " " + pips(m.r.write) + "</td>" +
           '<td class="cbcol"><input type="checkbox" data-cmp="' + esc(m.id) + '"' + (on ? " checked" : "") +
             (!on && full ? " disabled" : "") + ' aria-label="' + esc(m.name) + " " + L("összehasonlításhoz", "for comparison") + '"></td>' +
@@ -1023,12 +1253,12 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
         var v = volume();
         var kb = bestNum(function (s) { return s.m.kwh; }, -1);
         var mb = bestNum(function (s) { return monthlyKwh(s.m, v); }, -1);
-        rows.push([L("⚡ kWh / kérés", "⚡ kWh / request"), sc.map(function (s) {
-          return cell(s.m.kwh, kb, '<b class="num">⚡ ' + fmtKwh(s.m.kwh) + "</b>");
+        rows.push([L("kWh / kérés", "kWh / request"), sc.map(function (s) {
+          return cell(s.m.kwh, kb, '<b class="num">' + BOLT + ' ' + fmtKwh(s.m.kwh) + "</b>");
         }).join("")]);
-        rows.push([L("⚡ kWh / hó", "⚡ kWh / month"), sc.map(function (s) {
+        rows.push([L("kWh / hó", "kWh / month"), sc.map(function (s) {
           var x = monthlyKwh(s.m, v);
-          return cell(x, mb, '<b class="num">⚡ ' + (x < 0.05 ? "<0,05" : x.toLocaleString("hu-HU", { maximumFractionDigits: 1 })) + "</b>");
+          return cell(x, mb, '<b class="num">' + BOLT + ' ' + (x < 0.05 ? "<0,05" : x.toLocaleString("hu-HU", { maximumFractionDigits: 1 })) + "</b>");
         }).join("")]);
       })();
       (function () {
@@ -1113,15 +1343,71 @@ document.documentElement.setAttribute("data-lang",l);document.documentElement.la
     });
     $("#cmpOpen").addEventListener("click", renderCmp);
 
+    /* ============================== HERO-TÉNYEK ============================== */
+    function renderFacts() {
+      var f = document.getElementById("facts"); if (!f) return;
+      var provN = Object.keys(PROVIDERS).filter(function (p) { return MODELS.some(function (m) { return m.p === p; }); }).length;
+      f.innerHTML = "<li>" + ICO("layers") + "<b>" + MODELS.length + "</b> " + L("modell", "models") + "</li>" +
+        "<li>" + ICO("server") + "<b>" + provN + "</b> " + L("szolgáltató", "providers") + "</li>" +
+        "<li>" + BOLT + L("energia és költség kérésenként", "energy and cost per request") + "</li>" +
+        (D.date ? "<li>" + ICO("calendar") + L("Adatok: ", "Data: ") + esc(lang() === "en" ? (D.dateEn || D.date) : D.date) + "</li>" : "");
+    }
+
+    /* ============================== URL-ÁLLAPOT (megosztható ajánlás) ============================== */
+    function syncURL() {
+      if (!window.history || !history.replaceState || !window.URLSearchParams) return;
+      var p = new URLSearchParams();
+      var t = $("#task").value.trim(); if (t) p.set("t", t);
+      if (state.needs.size) p.set("n", Array.from(state.needs).join(","));
+      if ($("#cOpen").checked) p.set("o", "1");
+      if ($("#cEu").checked) p.set("e", "1");
+      if ($("#cStable").checked) p.set("s", "1");
+      if (+$("#cCtx").value) p.set("c", $("#cCtx").value);
+      if ($("#prio").value !== "30") p.set("p", $("#prio").value);
+      if ($("#volIn").value !== "20") p.set("vi", $("#volIn").value);
+      if ($("#volOut").value !== "4") p.set("vo", $("#volOut").value);
+      var qs = p.toString();
+      try { history.replaceState(null, "", location.pathname + (qs ? "?" + qs : "") + location.hash); } catch (e) {}
+    }
+    function readURL() {
+      if (!window.URLSearchParams) return false;
+      var p = new URLSearchParams(location.search);
+      if (!p.has("t") && !p.has("n")) return false;
+      $("#task").value = p.get("t") || "";
+      detectFromText();
+      if (p.has("n")) {
+        var ids = p.get("n").split(",").filter(function (id) { return NEEDS.some(function (n) { return n.id === id; }); });
+        var det = state.autoNeeds;
+        state.needs = new Set(ids);
+        state.autoNeeds = new Set(Array.from(det).filter(function (x) { return state.needs.has(x); }));
+      }
+      $("#cOpen").checked = p.get("o") === "1";
+      $("#cEu").checked = p.get("e") === "1";
+      $("#cStable").checked = p.get("s") === "1";
+      if (p.has("c") && $("#cCtx").querySelector('option[value="' + p.get("c").replace(/[^0-9]/g, "") + '"]')) $("#cCtx").value = p.get("c");
+      if (p.has("p")) $("#prio").value = p.get("p");
+      if (p.has("vi")) $("#volIn").value = p.get("vi");
+      if (p.has("vo")) $("#volOut").value = p.get("vo");
+      return true;
+    }
+    $("#share").addEventListener("click", function () {
+      var b = this; syncURL();
+      (window.ecoCopy || function () {})(location.href, function () {
+        b.classList.add("ok"); setTimeout(function () { b.classList.remove("ok"); }, 1800);
+      });
+    });
+
     /* ============================== INDULÁS ============================== */
-    function renderAll() { renderPicks(); renderTable(); }
+    function renderAll() { renderPicks(); renderTable(); syncURL(); }
     function initAll() {
-      renderNeeds(); prioText(); renderPicks(); hydratePicks(); renderCards();
+      renderFacts(); renderNeeds(); prioText(); renderPicks(); hydratePicks(); renderCards();
       renderHead(); renderProvF(); renderTable(); renderCmpBtn(); renderCmp();
     }
     window.addEventListener("ecoai:lang", initAll);
-    $("#task").value = lang() === "en" ? SAMPLES.chat.en : SAMPLES.chat.hu;
-    detectFromText();
+    if (!readURL()) {
+      $("#task").value = lang() === "en" ? SAMPLES.chat.en : SAMPLES.chat.hu;
+      detectFromText();
+    }
     initAll();
   })();
 </script>
